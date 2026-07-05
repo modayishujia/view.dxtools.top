@@ -778,7 +778,6 @@ function toggleLang(){
     const v=el.getAttribute('data-'+lang);
     if(v) el.innerHTML=v;
   });
-  // Redraw charts that contain text
   const activeSection=document.querySelector('.section.active');
   if(activeSection){
     const id=activeSection.id.replace('sec-','');
@@ -794,7 +793,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(v) el.innerHTML=v;
   });
 });
-}
 
 // ===== NAVIGATION =====
 function showSection(id,el){
