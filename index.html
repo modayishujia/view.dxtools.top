@@ -1,5 +1,1406 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=dashboard.html"></head>
-<body><p>Redirecting to <a href="dashboard.html">Dashboard</a>...</p></body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI算力资本流向监控 | AI Compute Capital Flow Dashboard</title>
+<meta name="description" content="投资人级AI算力资本流向监控仪表盘。追踪数据中心投资、存储芯片价格、半导体供应链动态。数据来源：Morgan Stanley, Goldman Sachs, TrendForce, Jefferies。">
+<meta name="keywords" content="AI投资,数据中心,存储芯片,半导体,DRAM,NAND,HBM,资本流向,算力,人工智能投资,D3.js,投资人仪表盘">
+<meta name="author" content="iGaves">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://view.dxtools.top/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://view.dxtools.top/">
+<meta property="og:title" content="AI算力资本流向监控 | AI Compute Capital Flow Dashboard">
+<meta property="og:description" content="投资人级AI算力资本流向监控仪表盘。追踪数据中心投资、存储芯片价格、半导体供应链动态。数据来源：Morgan Stanley, Goldman Sachs, TrendForce, Jefferies。">
+<meta property="og:image" content="https://view.dxtools.top/getqrcode.jpeg">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@iGaves">
+<meta name="twitter:title" content="AI算力资本流向监控 | AI Compute Capital Flow Dashboard">
+<meta name="twitter:description" content="投资人级AI算力资本流向监控仪表盘。追踪数据中心投资、存储芯片价格、半导体供应链动态。">
+<meta name="twitter:image" content="https://view.dxtools.top/getqrcode.jpeg">
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AI Compute Capital Flow Dashboard",
+  "description": "投资人级AI算力资本流向监控仪表盘，追踪数据中心投资、存储芯片价格、半导体供应链动态",
+  "url": "https://view.dxtools.top/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "iGaves",
+    "url": "https://x.com/iGaves"
+  },
+  "dateModified": "2026-07-05"
+}
+</script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+:root{--sidebar:140px;--bg:#f0f2f5;--surface:#fff;--text:#111827;--text2:#6b7280;--text3:#9ca3af;--blue:#3b82f6;--blue-l:#eff6ff;--green:#10b981;--green-l:#ecfdf5;--red:#ef4444;--red-l:#fef2f2;--orange:#f59e0b;--orange-l:#fffbeb;--purple:#8b5cf6;--purple-l:#f5f3ff;--border:#e5e7eb;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--radius:16px;--radius-s:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);background:#111827;color:#fff;padding:20px 0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50}
+.sidebar .logo{padding:0 20px 24px;font-size:15px;font-weight:800;letter-spacing:-.3px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sidebar .logo span{color:var(--blue)}
+.sidebar nav{flex:1;padding:0 12px}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-s);color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;font-weight:500;transition:all .2s;cursor:pointer}
+.sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.sidebar nav a.active{color:#fff;background:rgba(59,130,246,.2)}
+.sidebar nav a .icon{width:20px;text-align:center;font-size:14px}
+.sidebar .lang-toggle{margin:12px;padding:8px 12px;border-radius:var(--radius-s);background:rgba(255,255,255,.08);font-size:12px;color:rgba(255,255,255,.6);cursor:pointer;text-align:center;transition:all .2s;border:none;width:calc(100% - 24px)}
+.sidebar .lang-toggle:hover{background:rgba(255,255,255,.15);color:#fff}
+.sidebar .update-info{padding:16px 20px 0;font-size:10px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.1)}
+.main{margin-left:var(--sidebar);flex:1;padding:28px 32px;min-width:0;overflow-x:hidden}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.top-bar h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.top-bar h1 span{color:var(--blue)}
+.top-bar .badge{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600}
+.badge.ok{background:var(--green-l);color:#047857}.badge.warn{background:var(--orange-l);color:#b45309}.badge.bad{background:var(--red-l);color:#dc2626}
+.section{display:none}.section.active{display:block}
+.section-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+.kpi{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;border-top:3px solid transparent}
+.kpi.b{border-top-color:var(--blue)}.kpi.g{border-top-color:var(--green)}.kpi.r{border-top-color:var(--red)}.kpi.o{border-top-color:var(--orange)}.kpi.p{border-top-color:var(--purple)}
+.kpi .lbl{font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.kpi .val{font-size:32px;font-weight:800;letter-spacing:-1px}.kpi .val.b{color:var(--blue)}.kpi .val.g{color:var(--green)}.kpi .val.r{color:var(--red)}.kpi .val.o{color:var(--orange)}.kpi .val.p{color:var(--purple)}
+.kpi .chg{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;margin-top:4px;padding:2px 8px;border-radius:6px}
+.kpi .chg.up{background:var(--green-l);color:#047857}.kpi .chg.dn{background:var(--red-l);color:#dc2626}.kpi .chg.fl{background:#f3f4f6;color:var(--text2)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.g23{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
+.g32{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px}
+@media(max-width:1024px){.kpi-row{grid-template-columns:repeat(3,1fr)}.g2,.g3,.g23,.g32{grid-template-columns:1fr}.sidebar{display:none}.main{margin-left:0}}
+.card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);overflow:visible}
+.card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.card-t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}.card-s{font-size:11px;color:var(--text2);margin-top:2px}
+.help-icon{width:16px;height:16px;border-radius:50%;background:#e5e7eb;color:#6b7280;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;cursor:help;flex-shrink:0;position:relative}
+.help-icon:hover{background:#d1d5db}
+.help-icon .help-tip{display:none;position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:280px;padding:12px 14px;background:#111827;color:#fff;border-radius:10px;font-size:11px;line-height:1.5;font-weight:400;z-index:200;box-shadow:0 4px 12px rgba(0,0,0,.2);pointer-events:none;white-space:normal}
+.help-icon .help-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#111827}
+.help-icon:hover .help-tip{display:block}
+.chart{width:100%;overflow:hidden}.chart svg{width:100%;display:block;overflow:hidden}
+.tag{display:inline-block;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700}
+.tag.g{background:var(--green-l);color:#047857}.tag.r{background:var(--red-l);color:#dc2626}.tag.o{background:var(--orange-l);color:#b45309}.tag.b{background:var(--blue-l);color:#2563eb}
+.tbl{width:100%;border-collapse:collapse;table-layout:fixed}
+.tbl th{text-align:left;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:0 8px 10px;border-bottom:1px solid var(--border)}
+.tbl td{padding:12px 8px;border-bottom:1px solid var(--border);font-size:12px;word-break:break-word}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .n{font-family:'SF Mono','Fira Code',monospace;font-weight:700;font-size:12px}
+.tbl .pos{color:#047857}.tbl .neg{color:#dc2626}
+.rec{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:var(--radius);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:20px;margin-bottom:20px}
+.rec h3{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
+.rec .verdict{font-size:24px;font-weight:800}.rec .verdict .hl{color:var(--orange)}
+.rec .sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:4px;line-height:1.5}
+.rec .act{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,.06);border-radius:var(--radius-s);font-size:11px;margin-bottom:6px}
+.rec .act .dot{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.rec .act .dot.u{background:rgba(239,68,68,.15)}.rec .act .dot.w{background:rgba(245,159,10,.15)}.rec .act .dot.o{background:rgba(16,185,129,.15)}
+.rec .cat{font-size:12px;color:rgba(255,255,255,.5);padding-left:12px;position:relative;margin-bottom:5px}
+.rec .cat::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--orange)}
+.tip{position:absolute;background:#111827;color:#fff;padding:6px 12px;border-radius:8px;font-size:11px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:100;white-space:nowrap}
+  .footer{text-align:center;padding:20px 0;color:var(--text3);font-size:11px}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:768px){.rec{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="logo">⚡ AI <span>Capital</span></div>
+  <nav>
+    <a class="active" onclick="showSection('overview',this)"><span class="icon">📊</span><span class="ln" data-en="Overview" data-zh="总览">总览</span></a>
+    <a onclick="showSection('inflow',this)"><span class="icon">💰</span><span class="ln" data-en="Inflow" data-zh="资金流入">资金流入</span></a>
+    <a onclick="showSection('risk',this)"><span class="icon">⚠️</span><span class="ln" data-en="Risk" data-zh="风险信号">风险信号</span></a>
+    <a onclick="showSection('valuation',this)"><span class="icon">📈</span><span class="ln" data-en="Valuation" data-zh="估值">估值</span></a>
+    <a onclick="showSection('regional',this)"><span class="icon">🌏</span><span class="ln" data-en="Regional" data-zh="区域">区域</span></a>
+    <a onclick="showSection('storage',this)"><span class="icon">💾</span><span class="ln" data-en="Storage" data-zh="存储价格">存储价格</span></a>
+    <a onclick="showSection('detail',this)"><span class="icon">📋</span><span class="ln" data-en="Monitor" data-zh="监控">监控</span></a>
+    <a onclick="showSection('about',this)"><span class="icon">ℹ️</span><span class="ln" data-en="About" data-zh="关于">关于</span></a>
+  </nav>
+  <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN / 中</button>
+  <div class="update-info"><span class="ln" data-en="Last: 2026-07-05 W27" data-zh="最后: 2026-07-05 第27周">最后: 2026-07-05 第27周</span></div>
+</div>
+
+<div class="main">
+  <div class="top-bar">
+    <h1>AI Compute <span class="ln" data-en="Capital Flow" data-zh="资本流向">资本流向</span></h1>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--green-l);border-radius:20px;font-size:12px;font-weight:500;color:#047857">
+        <div style="width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite"></div>
+        <span class="ln" data-en="Data as of Jul 5, 2026" data-zh="数据更新至 2026年7月5日">数据更新至 2026年7月5日</span>
+      </div>
+      <div class="badge warn"><span class="ln" data-en="⚠ Positive + Escalating Warnings" data-zh="⚠ 正向 + 升级警示">⚠ 正向 + 升级警示</span></div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="sec-overview">
+    <!-- Investment Recommendation with embedded data -->
+    <div class="rec">
+      <div>
+        <h3><span class="ln" data-en="INVESTMENT STANCE" data-zh="投资立场">投资立场</span></h3>
+        <div class="verdict"><span class="ln" data-en='Underweight <span class="hl">Data Center REITs</span>' data-zh='低配 <span class="hl">数据中心REITs</span>'>低配 <span class="hl">数据中心REITs</span></span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px">
+          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
+            <div style="font-size:9px;color:rgba(255,255,255,.4)">CAPEX/REV</div>
+            <div style="font-size:16px;font-weight:800;color:var(--orange)">31%</div>
+            <div style="font-size:9px;color:rgba(255,255,255,.35)">peak 32%</div>
+          </div>
+          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
+            <div style="font-size:9px;color:rgba(255,255,255,.4)">P/AFFO</div>
+            <div style="font-size:16px;font-weight:800;color:var(--red)">25-28x</div>
+            <div style="font-size:9px;color:rgba(255,255,255,.35)">avg 16x</div>
+          </div>
+          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
+            <div style="font-size:9px;color:rgba(255,255,255,.4)">UTIL</div>
+            <div style="font-size:16px;font-weight:800;color:var(--orange)">68%</div>
+            <div style="font-size:9px;color:rgba(255,255,255,.35)">↓79%</div>
+          </div>
+          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
+            <div style="font-size:9px;color:rgba(255,255,255,.4)">RISK</div>
+            <div style="font-size:16px;font-weight:800;color:var(--orange)">6/10</div>
+            <div style="font-size:9px;color:rgba(255,255,255,.35)">↑ from 5</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3><span class="ln" data-en="ACTIONS" data-zh="操作建议">操作建议</span></h3>
+        <div class="act"><div class="dot u">↓</div><div><b>Underweight</b> DLR — P/FFO 22.5x, Q2 7/23</div></div>
+        <div class="act"><div class="dot w">→</div><div><b>Hold</b> EQIX — P/AFFO 28x, Citi top pick</div></div>
+        <div class="act"><div class="dot u">↓</div><div><b>Avoid</b> CRWV — Spec grade, neg FCF</div></div>
+        <div class="act"><div class="dot o">↑</div><div><b>Watch</b> <span class="ln" data-en="ME/APAC" data-zh="中东/亚太">中东/亚太</span> — AirTrunk, HUMAIN</div></div>
+      </div>
+      <div>
+        <h3><span class="ln" data-en="CATALYSTS 30D" data-zh="30天催化剂">30天催化剂</span></h3>
+        <div class="cat">7/23 DLR Q2 — capex/booking</div>
+        <div class="cat"><span class="ln" data-en="Late Jul Q2 mega-cap — capex guidance" data-zh="7月下旬 四巨头Q2 — capex指引">7月下旬 四巨头Q2 — capex指引</span></div>
+        <div class="cat"><span class="ln" data-en="Meta compute sale follow-up" data-zh="Meta算力出售后续">Meta算力出售后续</span></div>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi b"><div class="lbl"><span class="ln" data-en="9-CSP Capex" data-zh="九大CSP Capex">九大CSP Capex</span></div><div class="val b">$830B</div><div class="chg up">↑ +77%</div></div>
+      <div class="kpi g"><div class="lbl"><span class="ln" data-en="Inflow Score" data-zh="流入评分">流入评分</span></div><div class="val g">9<span style="font-size:16px;color:var(--text3)">/10</span></div><div class="chg fl"><span class="ln" data-en="→ Strong" data-zh="→ 强劲">→ 强劲</span></div></div>
+      <div class="kpi r"><div class="lbl"><span class="ln" data-en="Risk Score" data-zh="风险评分">风险评分</span></div><div class="val r">6<span style="font-size:16px;color:var(--text3)">/10</span></div><div class="chg dn"><span class="ln" data-en="↑ from 5" data-zh="↑ 自5">↑ 自5</span></div></div>
+      <div class="kpi o"><div class="lbl"><span class="ln" data-en="DC Utilization" data-zh="DC利用率">DC利用率</span></div><div class="val o">68%</div><div class="chg dn"><span class="ln" data-en="↓ from 79%" data-zh="↓ 自79%">↓ 自79%</span></div></div>
+      <div class="kpi p"><div class="lbl"><span class="ln" data-en="Moratoriums" data-zh="禁令数">禁令数</span></div><div class="val p">300+</div><div class="chg dn"><span class="ln" data-en="↑ 275 in '26" data-zh="↑ 275项在2026">↑ 275项在2026</span></div></div>
+    </div>
+
+    <!-- Valuation + Capex/Revenue (decision-critical) -->
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="P/AFFO vs Historical" data-zh="P/AFFO vs 历史均值">P/AFFO vs 历史均值</span><span class="help-icon">?<span class="help-tip"><b>P/AFFO (Price / Adjusted Funds From Operations)</b><br><span class="ln" data-en="The most important REIT valuation metric. Compares current stock price to cash-generating ability. Historical avg for US REITs is ~16x. When P/AFFO is 25-28x, you're paying 60-75% premium. This is the single best indicator of whether DC REITs are overpriced." data-zh="REIT最核心的估值指标。比较股价与现金生成能力。美国REIT历史均值约16倍。当前25-28倍意味着溢价60-75%。这是判断DC REITs是否高估的最佳单一指标。">REIT最核心的估值指标。比较股价与现金生成能力。美国REIT历史均值约16倍。当前25-28倍意味着溢价60-75%。这是判断DC REITs是否高估的最佳单一指标。</span></span></span></div><div class="card-s"><span class="ln" data-en="60-75% premium to sector" data-zh="溢价60-75%">溢价60-75%</span></div></div><div class="tag r"><span class="ln" data-en="Overvalued" data-zh="高估">高估</span></div></div>
+        <div id="c-ffo" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Capex / Revenue Ratio" data-zh="Capex/收入比率">Capex/收入比率</span><span class="help-icon">?<span class="help-tip"><b>Capex/Revenue Ratio</b><br><span class="ln" data-en="Measures how much of every revenue dollar goes back into capital expenditure. At 31%, Big Tech is spending nearly 1/3 of revenue on AI infrastructure. The dot-com peak was 32%. When this ratio exceeds 30%, it signals potential overinvestment — companies may be building capacity faster than demand justifies." data-zh="衡量每1美元收入中有多少回投到资本开支。31%意味着大四巨头将近1/3收入投入AI基建。互联网泡沫峰值为32%。超过30%意味着可能过度投资——建设速度可能超过需求。">衡量每1美元收入中有多少回投到资本开支。31%意味着大四巨头将近1/3收入投入AI基建。互联网泡沫峰值为32%。超过30%意味着可能过度投资——建设速度可能超过需求。</span></span></span></div><div class="card-s"><span class="ln" data-en="vs dot-com peak 32%" data-zh="vs 互联网泡沫峰值32%">vs 互联网泡沫峰值32%</span></div></div><div class="tag r">&gt;30%</div></div>
+        <div id="c-ratio" class="chart"></div>
+      </div>
+    </div>
+
+    <!-- Top 3 Events + Regional Flow -->
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Top 3 Events" data-zh="Top 3 关键事件">Top 3 关键事件</span><span class="help-icon">?<span class="help-tip"><b>Key Events (Top 3)</b><br><span class="ln" data-en="The three most impactful events from the past 90 days, selected for investment decision relevance. Color-coded: Green = bullish, Red = bearish, Orange = neutral/warning. Each includes the market reaction and what it means for the sector." data-zh="过去90天中对投资决策影响最大的3个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。每个事件包含市场反应和对行业的影响。">过去90天中对投资决策影响最大的3个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。每个事件包含市场反应和对行业的影响。</span></span></span></div></div></div>
+        <div id="c-top3" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Regional: Investment vs Risk" data-zh="区域: 投资额 vs 风险">区域: 投资额 vs 风险</span><span class="help-icon">?<span class="help-tip"><b>Regional Capital Flow Analysis</b><br><span class="ln" data-en="Three quantified metrics per region: Blue = 2026E capex ($B), Green = YoY growth rate (%), Red = regulatory risk (0-5 scale based on moratorium count). Key insight: North America has the most capital but highest risk; Middle East has fastest growth with zero regulatory阻力." data-zh="每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。">每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。</span></span></span></div><div class="card-s"><span class="ln" data-en="2026E capex, YoY growth, reg risk" data-zh="2026E Capex、增速、监管风险">2026E Capex、增速、监管风险</span></div></div></div>
+        <div id="c-region" class="chart"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFLOW -->
+  <div class="section" id="sec-inflow">
+    <div class="section-title">💰 <span class="ln" data-en="Capital Inflow Indicators" data-zh="资金流入指标">资金流入指标</span></div>
+    <div class="g23">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Hyperscaler Capex Trajectory" data-zh="超大规模厂商 Capex 趋势">超大规模厂商 Capex 趋势</span><span class="help-icon">?<span class="help-tip"><b>Hyperscaler Capex (Grouped Bar)</b><br><span class="ln" data-en="Annual AI capital expenditure by the four largest cloud companies. Grouped bars allow precise year-over-year comparison per company. 2026E total of $7,050B represents a 77% YoY increase. This is the most direct measure of money flowing into AI compute infrastructure." data-zh="四大云巨头年度AI资本开支。分组柱状图便于逐年精确对比。2026E合计$7050亿，同比+77%。这是衡量AI算力基建资金流入最直接的指标。">四大云巨头年度AI资本开支。分组柱状图便于逐年精确对比。2026E合计$7050亿，同比+77%。这是衡量AI算力基建资金流入最直接的指标。</span></span></span></div><div class="card-s">2023–2026E · USD Billions</div></div><div class="tag g">+77%</div></div>
+        <div id="c-capex" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Share 2026" data-zh="2026占比">2026占比</span></div></div></div>
+        <div id="c-donut" class="chart" style="display:flex;justify-content:center"></div>
+        <div id="c-donut-leg" style="display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="SPV Deals" data-zh="SPV交易">SPV交易</span><span class="help-icon">?<span class="help-tip"><b>SPV (Special Purpose Vehicle) Financing</b><br><span class="ln" data-en="Off-balance-sheet financing structures used by tech companies to fund data centers without recording debt on their books. Total exposure estimated at $1.8T. Key risk: opacity — investors can't see the true leverage. Similar structures preceded the 2008 financial crisis." data-zh="科技公司用于数据中心融资的表外工具，债务不计入资产负债表。总敞口估计$1.8万亿。核心风险：不透明——投资者无法看到真实杠杆率。类似结构曾出现在2008年金融危机前。">科技公司用于数据中心融资的表外工具，债务不计入资产负债表。总敞口估计$1.8万亿。核心风险：不透明——投资者无法看到真实杠杆率。类似结构曾出现在2008年金融危机前。</span></span></span></div><div class="card-s"><span class="ln" data-en="Off-balance-sheet" data-zh="表外融资">表外融资</span></div></div><div class="tag o">$1.8T</div></div>
+        <div id="c-spv" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="New Capital Entry" data-zh="新资本入场">新资本入场</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2)">
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>Berkshire → Alphabet</b> $10B · DC · Jun 26</div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>Saudi PIF/HUMAIN</b> $930B · Hexagon 480MW</div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>AirTrunk/Blackstone</b> $21B · India 3GW</div>
+          <div style="padding:8px 0"><b>Stargate UAE</b> $30B+ · Phase 1 Q3</div>
+        </div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Goldman Sachs Forecast" data-zh="高盛预测">高盛预测</span></div></div></div>
+        <div style="text-align:center;padding:16px 0">
+          <div style="font-size:42px;font-weight:800;color:var(--green)">$5.3T</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px"><span class="ln" data-en="2025-2030 AI spending (↑ from $4.5T)" data-zh="2025-2030 AI支出 (上调自$4.5万亿)">2025-2030 AI支出 (上调自$4.5万亿)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Global DC Power Capacity" data-zh="全球DC电力容量">全球DC电力容量</span></div></div></div>
+        <div style="text-align:center;padding:16px 0">
+          <div style="font-size:42px;font-weight:800;color:var(--blue)">155<span style="font-size:20px">GW</span></div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px">+29% YoY · <span class="ln" data-en="AI Server &gt; General Server" data-zh="AI服务器用电首超通用服务器">AI服务器用电首超通用服务器</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="section" id="sec-risk">
+    <div class="section-title">⚠️ <span class="ln" data-en="Risk & Outflow Signals" data-zh="风险与流出信号">风险与流出信号</span></div>
+    <div class="g2">
+      <div class="card" style="">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Meta Sells Spare Compute" data-zh="Meta出售闲置算力">Meta出售闲置算力</span></div><div class="card-s">2026-07-01 · <span class="ln" data-en="Extreme Divergence" data-zh="分歧极大">分歧极大</span></div></div><div class="tag r">⚠</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="padding:8px;background:var(--green-l);border-radius:8px;text-align:center"><div style="font-size:10px;color:var(--text2)">META</div><div style="font-size:18px;font-weight:800;color:var(--green)">+9%</div></div>
+          <div style="padding:8px;background:var(--red-l);border-radius:8px;text-align:center"><div style="font-size:10px;color:var(--text2)">CRWV</div><div style="font-size:18px;font-weight:800;color:var(--red)">-13%</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text2)">
+          <div style="margin-bottom:4px"><span style="color:var(--red)">●</span> <b><span class="ln" data-en="Bearish: Compute overcapacity?" data-zh="悲观: 算力过剩?">悲观: 算力过剩?</span></b> <span class="ln" data-en="Largest internal compute user starts selling" data-zh="最大内部算力用户开始出售">最大内部算力用户开始出售</span></div>
+          <div><span style="color:var(--green)">●</span> <b><span class="ln" data-en="Bullish: Commercialization loop" data-zh="乐观: 商业化闭环">乐观: 商业化闭环</span></b> <span class="ln" data-en="SemiAnalysis: capex still staggering" data-zh="SemiAnalysis: capex仍将惊人">SemiAnalysis: capex仍将惊人</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="US Moratorium Wave" data-zh="美国禁令潮">美国禁令潮</span></div></div><div class="tag r">300+</div></div>
+        <div style="font-size:12px;color:var(--text2)">
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>300+</b> <span class="ln" data-en="total restrictions since 2023" data-zh="自2023年起禁令总数">自2023年起禁令总数</span></div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>275+</b> <span class="ln" data-en="issued in 2026 alone" data-zh="2026年内出台">2026年内出台</span></div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>27</b> <span class="ln" data-en="states advancing bills" data-zh="州推进法案">州推进法案</span></div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>69</b> <span class="ln" data-en="counties with formal moratoriums" data-zh="正式暂停令郡县">正式暂停令郡县</span></div>
+          <div style="padding:6px 0"><b>70%</b> <span class="ln" data-en="US adults oppose local DC" data-zh="美国成年人反对">美国成年人反对</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Moratorium Growth" data-zh="禁令增长曲线">禁令增长曲线</span><span class="help-icon">?<span class="help-tip"><b>US Data Center Moratorium Wave</b><br><span class="ln" data-en="Cumulative count of local/state restrictions on data center construction since 2023. The exponential curve from 30 (2023) to 300+ (2026) signals systemic political resistance, not isolated NIMBY cases. This is the primary supply-side risk for US data center expansion." data-zh="2023年以来美国数据中心建设限制的累计数量。从30（2023）到300+（2026）的指数增长曲线表明系统性政治阻力，而非个别NIMBY案例。这是美国数据中心扩张的首要供给端风险。">2023年以来美国数据中心建设限制的累计数量。从30（2023）到300+（2026）的指数增长曲线表明系统性政治阻力，而非个别NIMBY案例。这是美国数据中心扩张的首要供给端风险。</span></span></span></div></div></div>
+        <div id="c-morat" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Risk Radar" data-zh="风险雷达">风险雷达</span><span class="help-icon">?<span class="help-tip"><b>8-Dimension Risk Radar</b><br><span class="ln" data-en="Plots 8 risk factors on a 0-100% scale. Red dashed circle = 60% danger threshold. Capex/CF (90%) and Moratorium (85%) are the most critical risks currently. Hover points for details." data-zh="8个风险因子的0-100%量化评分。红色虚线圆=60%危险阈值。Capex/现金流(90%)和禁令(85%)是最关键风险。">8个风险因子的0-100%量化评分。红色虚线圆=60%危险阈值。Capex/现金流(90%)和禁令(85%)是最关键风险。</span></span></span></div></div><div class="card-s"><span class="ln" data-en="Red line = 60% danger" data-zh="红线 = 60%危险阈值">红线 = 60%危险阈值</span></div></div>
+        <div id="c-radar" class="chart" style="display:flex;justify-content:center"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUATION -->
+  <div class="section" id="sec-valuation">
+    <div class="section-title">📈 <span class="ln" data-en="Valuation Analysis" data-zh="估值分析">估值分析</span></div>
+
+    <!-- Conclusion Card -->
+    <div class="card" style="margin-bottom:14px">
+      <div style="display:flex;align-items:flex-start;gap:16px">
+        <div style="font-size:28px;flex-shrink:0">🎯</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px"><span class="ln" data-en="Conclusion: Data Center REITs Are Overvalued" data-zh="结论：数据中心 REITs 当前高估">结论：数据中心 REITs 当前高估</span></div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.7">
+            <span class="ln" data-en="The sector trades at 22-28x P/AFFO vs 16x historical average — a 40-75% premium. This premium assumes continued AI demand growth, but ignores: (1) 30-50% of announced projects won't materialize, (2) capex/revenue ratio approaching dot-com peak, (3) utilization already declining. Unless Q2 earnings show accelerating bookings, the risk/reward is asymmetric to the downside." data-zh="行业 P/AFFO 在 22-28 倍，较 16 倍历史均值溢价 40-75%。这一溢价假设 AI 需求持续增长，但忽略了三个关键风险：(1) 30-50% 的已宣布项目无法落地，(2) Capex/收入比率逼近互联网泡沫峰值，(3) 利用率已在下降。除非 Q2 财报显示预订加速，否则风险/回报不对称偏向下行。">行业 P/AFFO 在 22-28 倍，较 16 倍历史均值溢价 40-75%。这一溢价假设 AI 需求持续增长，但忽略了三个关键风险：(1) 30-50% 的已宣布项目无法落地，(2) Capex/收入比率逼近互联网泡沫峰值，(3) 利用率已在下降。除非 Q2 财报显示预订加速，否则风险/回报不对称偏向下行。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Valuation Comparison Cards -->
+    <div class="g3">
+      <div class="card" style="text-align:center">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:4px">EQIX</div>
+        <div style="font-size:32px;font-weight:800;color:var(--red)">28.0x</div>
+        <div style="font-size:12px;color:var(--text2);margin:4px 0">P/AFFO</div>
+        <div style="display:inline-block;padding:4px 12px;background:var(--red-l);border-radius:8px;font-size:12px;font-weight:600;color:var(--red)">+75% vs 16x avg</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text2)">
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="Price" data-zh="价格">价格</span>: $1,002</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)">EV/EBITDA: 26.0x</div>
+          <div style="padding:4px 0"><span class="ln" data-en="Target" data-zh="目标价">目标价</span>: $1,222 (Citi)</div>
+        </div>
+        <div style="margin-top:12px"><span class="tag b">Hold</span></div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:4px">DLR</div>
+        <div style="font-size:32px;font-weight:800;color:var(--red)">22.5x</div>
+        <div style="font-size:12px;color:var(--text2);margin:4px 0">P/AFFO</div>
+        <div style="display:inline-block;padding:4px 12px;background:var(--red-l);border-radius:8px;font-size:12px;font-weight:600;color:var(--red)">+41% vs 16x avg</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text2)">
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="Price" data-zh="价格">价格</span>: $178</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)">EV/EBITDA: 27.0x</div>
+          <div style="padding:4px 0"><span class="ln" data-en="Target" data-zh="目标价">目标价</span>: $232 (Bernstein)</div>
+        </div>
+        <div style="margin-top:12px"><span class="tag o">Underweight</span></div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:4px">CRWV</div>
+        <div style="font-size:32px;font-weight:800;color:var(--text3)">N/M</div>
+        <div style="font-size:12px;color:var(--text2);margin:4px 0">P/AFFO</div>
+        <div style="display:inline-block;padding:4px 12px;background:#f3f4f6;border-radius:8px;font-size:12px;font-weight:600;color:var(--text3)"><span class="ln" data-en="Neg FCF" data-zh="负现金流">负现金流</span></div>
+        <div style="margin-top:12px;font-size:12px;color:var(--text2)">
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="Price" data-zh="价格">价格</span>: $142</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)">EV/EBITDA: <span style="color:var(--red)">45.0x</span></div>
+          <div style="padding:4px 0"><span class="ln" data-en="FCF" data-zh="自由现金流">自由现金流</span>: -$30~40B</div>
+        </div>
+        <div style="margin-top:12px"><span class="tag r">Avoid</span></div>
+      </div>
+    </div>
+
+    <!-- Key Metrics Table -->
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Detailed Metrics" data-zh="详细指标">详细指标</span></div></div></div>
+      <div style="overflow-x:auto">
+      <table class="tbl">
+        <tr><th>Ticker</th><th><span class="ln" data-en="Price" data-zh="价格">价格</span></th><th>P/AFFO</th><th><span class="ln" data-en="Hist Avg" data-zh="历史均值">历史均值</span></th><th><span class="ln" data-en="Premium" data-zh="溢价">溢价</span></th><th>EV/EBITDA</th><th><span class="ln" data-en="Rating" data-zh="评级">评级</span></th><th><span class="ln" data-en="Analyst" data-zh="分析师">分析师</span></th></tr>
+        <tr><td><b>EQIX</b></td><td class="n">$1,002</td><td class="n neg">28.0x</td><td class="n" style="color:var(--text3)">16.0x</td><td class="n neg">+75%</td><td class="n">26.0x</td><td><span class="tag b">Hold</span></td><td style="font-size:11px;color:var(--text2)">Citi / Bernstein</td></tr>
+        <tr><td><b>DLR</b></td><td class="n">$178</td><td class="n neg">22.5x</td><td class="n" style="color:var(--text3)">16.0x</td><td class="n neg">+41%</td><td class="n">27.0x</td><td><span class="tag o">Under</span></td><td style="font-size:11px;color:var(--text2)">Bernstein</td></tr>
+        <tr><td><b>CRWV</b></td><td class="n">$142</td><td class="n" style="color:var(--text3)">N/M</td><td class="n" style="color:var(--text3)">—</td><td class="n" style="color:var(--text3)">—</td><td class="n neg">45.0x</td><td><span class="tag r">Avoid</span></td><td style="font-size:11px;color:var(--text2)">—</td></tr>
+      </table>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--text3)">*CRWV: neg FCF · P/AFFO = Price / Adjusted Funds From Operations · Hist Avg = US REIT sector long-term average</div>
+    </div>
+
+    <!-- Risk Matrix -->
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Valuation Risk Matrix" data-zh="估值风险矩阵">估值风险矩阵</span></div></div></div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;font-size:13px">
+        <div style="padding:12px;background:var(--green-l);border-radius:10px">
+          <div style="font-weight:700;color:#047857;margin-bottom:6px"><span class="ln" data-en="✓ What Supports the Premium" data-zh="✓ 支撑溢价的因素">✓ 支撑溢价的因素</span></div>
+          <div style="color:var(--text2);line-height:1.8">
+            <div>• <span class="ln" data-en="AI capex still growing +77% YoY" data-zh="AI capex 仍增长 +77% 同比">AI capex 仍增长 +77% 同比</span></div>
+            <div>• <span class="ln" data-en="Empty rate ~1% (extreme shortage)" data-zh="空置率 ~1%（极度短缺）">空置率 ~1%（极度短缺）</span></div>
+            <div>• <span class="ln" data-en="Revenue growth 15-20% for DLR/EQIX" data-zh="DLR/EQIX 营收增长 15-20%">DLR/EQIX 营收增长 15-20%</span></div>
+            <div>• <span class="ln" data-en="AI demand expected through 2027+" data-zh="AI 需求预计持续至 2027+">AI 需求预计持续至 2027+</span></div>
+          </div>
+        </div>
+        <div style="padding:12px;background:var(--red-l);border-radius:10px">
+          <div style="font-weight:700;color:#dc2626;margin-bottom:6px"><span class="ln" data-en="✗ What Could Cause Derating" data-zh="✗ 可能导致估值压缩的因素">✗ 可能导致估值压缩的因素</span></div>
+          <div style="color:var(--text2);line-height:1.8">
+            <div>• <span class="ln" data-en="Capex/revenue 31% (dot-com 32%)" data-zh="Capex/收入 31%（泡沫峰值 32%）">Capex/收入 31%（泡沫峰值 32%）</span></div>
+            <div>• <span class="ln" data-en="Utilization 68% (↓11ppt)" data-zh="利用率 68%（↓11个百分点）">利用率 68%（↓11个百分点）</span></div>
+            <div>• <span class="ln" data-en="300+ moratoriums blocking supply" data-zh="300+ 禁令阻碍供给">300+ 禁令阻碍供给</span></div>
+            <div>• <span class="ln" data-en="Q2 earnings miss = instant selloff" data-zh="Q2 财报不及预期 = 立即抛售">Q2 财报不及预期 = 立即抛售</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGIONAL -->
+  <div class="section" id="sec-regional">
+    <div class="section-title">🌏 <span class="ln" data-en="Regional Dynamics" data-zh="区域动态">区域动态</span></div>
+    <div class="card">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Supply-Demand Gap" data-zh="供需缺口">供需缺口</span><span class="help-icon">?<span class="help-tip"><b>Supply-Demand Gap (GW)</b><br><span class="ln" data-en="Compares planned data center capacity (16GW) vs actual under construction (5GW). The 69% gap means most announced projects won't materialize on time. Key bottleneck: power grid connection queues (5-7+ years in some regions). This is why capex announcements don't equal real capacity." data-zh="对比规划的数据中心容量(16GW)与实际在建容量(5GW)。69%的缺口意味着大部分已宣布的项目无法按时落地。关键瓶颈：电网接入排队（部分地区5-7年以上）。这就是为什么capex宣布不等于真实产能。">对比规划的数据中心容量(16GW)与实际在建容量(5GW)。69%的缺口意味着大部分已宣布的项目无法按时落地。关键瓶颈：电网接入排队（部分地区5-7年以上）。这就是为什么capex宣布不等于真实产能。</span></span></span></div></div><div class="tag r">69%</div></div>
+      <div id="c-gap" class="chart"></div>
+    </div>
+  </div>
+
+  <!-- STORAGE -->
+  <div class="section" id="sec-storage">
+    <div class="section-title">💾 <span class="ln" data-en="Storage Price Monitor (Korea Export)" data-zh="存储价格监控 (韩国出口)">存储价格监控 (韩国出口)</span></div>
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi r"><div class="lbl">DRAM <span class="ln" data-en="YoY" data-zh="同比">同比</span></div><div class="val r">+497%</div><div class="chg up"><span class="ln" data-en="↑ from +380%" data-zh="↑ 自+380%">↑ 自+380%</span></div></div>
+      <div class="kpi o"><div class="lbl">NAND <span class="ln" data-en="YoY" data-zh="同比">同比</span></div><div class="val o">+352%</div><div class="chg up"><span class="ln" data-en="↑ from +260%" data-zh="↑ 自+260%">↑ 自+260%</span></div></div>
+      <div class="kpi p"><div class="lbl">HBM <span class="ln" data-en="YoY" data-zh="同比">同比</span></div><div class="val p">+166%</div><div class="chg up"><span class="ln" data-en="↑ Sold out" data-zh="↑ 已售罄">↑ 已售罄</span></div></div>
+      <div class="kpi b"><div class="lbl"><span class="ln" data-en="HBM4 Price" data-zh="HBM4单价">HBM4单价</span></div><div class="val b">$700</div><div class="chg up"><span class="ln" data-en="↑ +30% vs HBM3E" data-zh="↑ 较HBM3E +30%">↑ 较HBM3E +30%</span></div></div>
+    </div>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Korea Export Price Trend" data-zh="韩国存储出口单价趋势">韩国存储出口单价趋势</span><span class="help-icon">?<span class="help-tip"><b>Korea Storage Export Price Trend (MoM %)</b><br><span class="ln" data-en="Tracks month-over-month price changes for DRAM, NAND, and HBM from Korean customs data. Korea produces ~70% of global HBM and ~50% of DRAM. When Korean export prices surge, it signals global AI memory tightness. DRAM +90% QoQ in Q1 is extraordinary — indicates acute supply shortage." data-zh="追踪韩国海关DRAM/NAND/HBM出口单价的环比变化。韩国生产全球约70%的HBM和50%的DRAM。韩国出口价格飙升意味着全球AI存储紧张。Q1 DRAM环比+90%是极端信号——表明供给严重短缺。">追踪韩国海关DRAM/NAND/HBM出口单价的环比变化。韩国生产全球约70%的HBM和50%的DRAM。韩国出口价格飙升意味着全球AI存储紧张。Q1 DRAM环比+90%是极端信号——表明供给严重短缺。</span></span></span></div><div class="card-s"><span class="ln" data-en="MoM % change · Source: Korea Customs" data-zh="环比变化% · 来源: 韩国海关">环比变化% · 来源: 韩国海关</span></div></div></div>
+        <div id="c-stor-price" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Contract Price QoQ" data-zh="合约价环比变化">合约价环比变化</span><span class="help-icon">?<span class="help-tip"><b>Storage Contract Price QoQ Changes</b><br><span class="ln" data-en="Quarter-over-quarter contract price changes for key storage products. Red bars = Q2 2026 actual, orange = Q3 2026 forecast. UFS +100% and LPDDR5X +89% in Q2 are extreme moves. The Q3 forecast shows deceleration but still positive — prices remain elevated." data-zh="主要存储产品合约价的季度环比变化。红色=Q2实际，橙色=Q3预测。UFS +100%和LPDDR5X +89%是极端涨幅。Q3预测显示放缓但仍为正——价格维持高位。">主要存储产品合约价的季度环比变化。红色=Q2实际，橙色=Q3预测。UFS +100%和LPDDR5X +89%是极端涨幅。Q3预测显示放缓但仍为正——价格维持高位。</span></span></span></div><div class="card-s"><span class="ln" data-en="Q2 2026 actual + Q3 forecast" data-zh="Q2实际 + Q3预测">Q2实际 + Q3预测</span></div></div></div>
+        <div id="c-stor-contract" class="chart"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Supply-Demand Gap by Category" data-zh="各维度供需缺口">各维度供需缺口</span><span class="help-icon">?<span class="help-tip"><b>Multi-Dimensional Supply Gap</b><br><span class="ln" data-en="Current deficit % for memory (Goldman Sachs), power capacity (Gartner), and new construction pipeline. Memory gap peaks 2027 at 5.9%. Power gap is structural — grid connection queues take 3+ years." data-zh="存储（高盛）、电力（Gartner）、新建管线的当前缺口百分比。存储缺口2027年达峰值5.9%。电力缺口是结构性的——电网接入排队需3年以上。">存储（高盛）、电力（Gartner）、新建管线的当前缺口百分比。存储缺口2027年达峰值5.9%。电力缺口是结构性的——电网接入排队需3年以上。</span></span></span></div><div class="card-s"><span class="ln" data-en="Sources: Goldman Sachs, Gartner, Sightline Climate" data-zh="来源: 高盛, Gartner, Sightline Climate">来源: 高盛, Gartner, Sightline Climate</span></div></div></div>
+      <div id="c-gap-multidim" class="chart" style="min-height:200px"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Relief Timeline" data-zh="缓解时间线">缓解时间线</span><span class="help-icon">?<span class="help-tip"><b>When Will Supply Catch Up?</b><br><span class="ln" data-en="Key capacity milestones and expected easing points. SK Hynix M15X mid-2027, Samsung P5 2028, Micron 25万片 2028. Goldman Sachs: peak tightness 2027, easing starts 2028." data-zh="关键产能里程碑和预期缓解节点。SK海力士M15X 2027年中，三星P5 2028年，美光25万片 2028年。高盛：2027年最紧，2028年开始缓解。">关键产能里程碑和预期缓解节点。SK海力士M15X 2027年中，三星P5 2028年，美光25万片 2028年。高盛：2027年最紧，2028年开始缓解。</span></span></span></div></div></div>
+      <div id="c-gap-timeline" class="chart" style="min-height:500px"></div>
+      <div style="margin-top:16px;padding:16px;background:var(--bg);border-radius:12px;font-size:13px;color:var(--text2);line-height:1.7">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px"><span class="ln" data-en="📊 Summary: Supply Tightness Persists Through 2027, Easing in 2028" data-zh="📊 汇总：供给紧张持续至 2027，2028 年开始缓解">📊 汇总：供给紧张持续至 2027，2028 年开始缓解</span></div>
+        <div><span class="ln" data-en="Goldman Sachs forecasts DRAM supply gap will widen from 4.9% (2026) to 5.9% (2027 peak), before narrowing to 3.9% in 2028 as new capacity comes online. Key catalysts: SK Hynix M15X fab (mid-2027), Samsung Pyeongtaek P5 (2028), Micron capacity doubling to 250K wafers/month (2028). Power grid remains the binding constraint — connection queues run 3-7 years. Bottom line: memory prices stay elevated through 2027, with first signs of relief in H2 2028." data-zh="高盛预测 DRAM 供给缺口从 2026 年 4.9% 扩大至 2027 年 5.9%（峰值），2028 年随新产能上线收窄至 3.9%。关键催化剂：SK 海力士 M15X（2027年中）、三星平泽 P5（2028年）、美光产能翻倍至 25 万片/月（2028年）。电力电网仍是约束瓶颈——接入排队 3-7 年。结论：存储价格高位维持至 2027 年，2028 下半年首次出现缓解迹象。">高盛预测 DRAM 供给缺口从 2026 年 4.9% 扩大至 2027 年 5.9%（峰值），2028 年随新产能上线收窄至 3.9%。关键催化剂：SK 海力士 M15X（2027年中）、三星平泽 P5（2028年）、美光产能翻倍至 25 万片/月（2028年）。电力电网仍是约束瓶颈——接入排队 3-7 年。结论：存储价格高位维持至 2027 年，2028 下半年首次出现缓解迹象。</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Key Drivers" data-zh="核心驱动因素">核心驱动因素</span></div></div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:12px;color:var(--text2)">
+        <div style="padding:12px;background:var(--red-l);border-radius:10px">
+          <div style="font-weight:700;color:var(--red);margin-bottom:4px"><span class="ln" data-en="Demand Pull" data-zh="需求拉动">需求拉动</span></div>
+          <div><span class="ln" data-en="AI server uses 8-10x DRAM vs standard server. HBM supply sold out through 2026." data-zh="单台AI服务器DRAM用量是普通服务器8-10倍。HBM 2026年产能已全部售罄。">单台AI服务器DRAM用量是普通服务器8-10倍。HBM 2026年产能已全部售罄。</span></div>
+        </div>
+        <div style="padding:12px;background:var(--orange-l);border-radius:10px">
+          <div style="font-weight:700;color:var(--orange);margin-bottom:4px"><span class="ln" data-en="Supply Constraint" data-zh="供给约束">供给约束</span></div>
+          <div><span class="ln" data-en="Capacity shift to HBM/Server. Low-end NAND supply shrinking (eMMC). 2026 gap: DRAM 4.9%, NAND 4.2%, HBM 5.1%." data-zh="产能转向HBM/Server。低端NAND供给收缩。2026缺口: DRAM 4.9%, NAND 4.2%, HBM 5.1%。">产能转向HBM/Server。低端NAND供给收缩。2026缺口: DRAM 4.9%, NAND 4.2%, HBM 5.1%。</span></div>
+        </div>
+        <div style="padding:12px;background:var(--blue-l);border-radius:10px">
+          <div style="font-weight:700;color:var(--blue);margin-bottom:4px"><span class="ln" data-en="AI Supercycle" data-zh="AI超级周期">AI超级周期</span></div>
+          <div><span class="ln" data-en="2026 DRAM revenue hit $97B in Q1 (+80% QoQ). SK Hynix 72% operating margin. Price rise expected through 2027." data-zh="2026 Q1 DRAM营收$970亿(+80%环比)。SK海力士营业利润率72%。涨价预计持续至2027年。">2026 Q1 DRAM营收$970亿(+80%环比)。SK海力士营业利润率72%。涨价预计持续至2027年。</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Actual Price by Spec (USD)" data-zh="各规格实价走势 (USD)">各规格实价走势 (USD)</span><span class="help-icon">?<span class="help-tip"><b>Actual Storage Prices by Specification</b><br><span class="ln" data-en="Real contract/street prices with historical trend and Q3-Q4 forecast. Each chart shows full price history from 2024 to 2026 forecast. Solid = actual, dashed = forecast." data-zh="各规格存储产品的真实合约价，含历史走势和Q3-Q4预测。每个图表展示2024至2026预测的完整价格历史。实线=实际，虚线=预测。">各规格存储产品的真实合约价，含历史走势和Q3-Q4预测。每个图表展示2024至2026预测的完整价格历史。实线=实际，虚线=预测。</span></span></span></div><div class="card-s"><span class="ln" data-en="Solid = actual, Dashed = forecast · Sources: TrendForce, GS, Jefferies" data-zh="实线=实际, 虚线=预测 · 来源: TrendForce, 高盛, 杰富瑞">实线=实际, 虚线=预测 · 来源: TrendForce, 高盛, 杰富瑞</span></div></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div id="c-stor-hbm" class="card" style="padding:12px"></div>
+        <div id="c-stor-ddr5-64" class="card" style="padding:12px"></div>
+        <div id="c-stor-ssd" class="card" style="padding:12px"></div>
+        <div id="c-stor-ddr5-32" class="card" style="padding:12px"></div>
+      </div>
+    </div>
+
+    <!-- Consumer Electronics Impact -->
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="📱 Consumer Electronics Impact" data-zh="📱 消费电子冲击">📱 消费电子冲击</span><span class="help-icon">?<span class="help-tip"><b>Memory Price Impact on Consumer Electronics</b><br><span class="ln" data-en="How the memory supercycle is hitting device makers. Memory now 30-40% of smartphone BOM (was 10-15%). iPhone BOM approaching 45%. Smartphone shipments -13.9% YoY (steepest ever). PC prices up 500-1500 RMB. Apple Mac/iPad up 15-25%." data-zh="存储超级周期对消费电子的冲击。存储占手机BOM从10-15%升至30-40%。iPhone BOM接近45%。手机出货量同比-13.9%（历史最差）。PC涨价500-1500元。苹果Mac/iPad全线涨价15-25%。">存储超级周期对消费电子的冲击。存储占手机BOM从10-15%升至30-40%。iPhone BOM接近45%。手机出货量同比-13.9%（历史最差）。PC涨价500-1500元。苹果Mac/iPad全线涨价15-25%。</span></span></span></div></div></div>
+      <div class="g2" style="margin-bottom:0">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px"><span class="ln" data-en="Cost Pressure" data-zh="成本压力">成本压力</span></div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.8">
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="Memory BOM ratio: 10-15% → 30-40%" data-zh="存储占BOM比例: 10-15% → 30-40%">存储占BOM比例: <b style="color:var(--red)">10-15% → 30-40%</b></span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="iPhone 8GB LPDDR5X: $180/chip" data-zh="iPhone 8GB LPDDR5X: $180/颗">iPhone 8GB LPDDR5X: <b style="color:var(--red)">$180/颗</b></span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="iPhone memory BOM approaching 45%" data-zh="iPhone存储占BOM接近45%">iPhone存储占BOM: <b style="color:var(--red)">接近45%</b></span></div>
+            <div style="padding:4px 0"><span class="ln" data-en="Apple Mac/iPad: all models +15-25%" data-zh="苹果Mac/iPad: 全线涨价15-25%">苹果Mac/iPad: <b style="color:var(--red)">全线+15-25%</b></span></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px"><span class="ln" data-en="Shipment Impact" data-zh="出货量冲击">出货量冲击</span></div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.8">
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="Smartphone shipments: -13.9% YoY (record)" data-zh="手机出货量: -13.9% 同比 (历史最差)">手机出货量: <b style="color:var(--red)">-13.9% 同比 (历史最差)</b></span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="Total: 1.09B units (was 1.26B)" data-zh="总量: 10.9亿部 (原12.6亿)">总量: <b style="color:var(--red)">10.9亿部 (原12.6亿)</b></span></div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span class="ln" data-en="PC prices: +500-1500 RMB" data-zh="PC涨价: +500-1500元">PC涨价: <b style="color:var(--red)">+500-1500元</b></span></div>
+            <div style="padding:4px 0"><span class="ln" data-en="Lenovo: cheap PCs gone until 2030" data-zh="联想: $500电脑绝迹至2030">联想: <b style="color:var(--red)">$500电脑绝迹至2030</b></span></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:var(--orange-l);border-radius:10px;font-size:12px;color:var(--text2)">
+        <span style="font-weight:700;color:var(--orange)">⚠ 库克松口:</span> <span class="ln" data-en=""Apple CEO Tim Cook admitted memory costs will have 'increasingly larger impact' after June. iPhone 18 launch (H2 2026) will hit peak memory prices. Apple's pricing strategy sustainability is questionable." data-zh="苹果CEO库克承认6月后内存成本将产生'越来越大的影响'。iPhone 18发布（2026下半年）将撞上存储价格峰值。苹果定价策略的可持续性存疑。">苹果CEO库克承认6月后内存成本将产生'越来越大的影响'。iPhone 18发布（2026下半年）将撞上存储价格峰值。苹果定价策略的可持续性存疑。</span>
+      </div>
+    </div>
+
+    <!-- Memory Company Valuations -->
+    <div class="g2" style="margin-top:14px">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="📈 Memory Makers (Winners)" data-zh="📈 存储厂商 (受益方)">📈 存储厂商 (受益方)</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--green)">三星电子</b> — 目标价 85万KRW (Susquehanna) · 全产业链布局 · HBM+DDR5+eSSD</div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--green)">SK海力士</b> — 目标价 300万KRW (UBS) · ROE>80% · 拟赴美发行ADR · HBM全球第一</div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--green)">美光科技</b> — 目标价 $510 (Bernstein) · 但股价已远超目标 · 年初至今+297%</div>
+          <div style="padding:6px 0"><b style="color:var(--green)">铠侠</b> — 目标价 ¥79,000 (UBS首次覆盖) · NAND NAND NAND</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="📉 Device Makers (Losers)" data-zh="📉 终端厂商 (受损方)">📉 终端厂商 (受损方)</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--red)">苹果</b> — 内存BOM达45% · iPhone 18面临定价困境 · Mac/iPad全线涨价</div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--red)">三星手机</b> — 出货量全球第一但利润承压 · 折叠屏需求放缓</div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b style="color:var(--red)">联想/PC OEM</b> — $500电脑绝迹 · BOM成本暴涨 · 出货量下滑</div>
+          <div style="padding:6px 0"><b style="color:var(--red)">中低端手机品牌</b> — $100以下机型2026年出货量暴跌</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consumer Electronics Investor Conclusion -->
+    <div class="card" style="margin-top:14px">
+      <div style="font-size:16px;font-weight:700;margin-bottom:8px">🎯 <span class="ln" data-en="Consumer Electronics Investor Verdict" data-zh="消费电子投资人结论">消费电子投资人结论</span></div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8">
+        <span class="ln" data-en="The memory supercycle is a massive value transfer from device makers to memory suppliers. For 2026-2027: (1) Overweight memory stocks (Samsung, SK Hynix, Micron) — they control 95% of supply and are printing cash. (2) Underweight consumer electronics — smartphone shipments -13.9%, PC prices +500-1500 RMB, Apple margin compression imminent. (3) The key risk: if AI capex slows, memory prices could collapse 2028-2029, making current memory valuations dangerous. (4) Watch iPhone 18 pricing as the ultimate test of demand elasticity." data-zh="存储超级周期正在将巨额价值从终端厂商转移到存储供应商。2026-2027年策略：(1) 超配存储股（三星、SK海力士、美光）——控制95%供给，正在印钞。(2) 低配消费电子——手机出货量-13.9%，PC涨价500-1500元，苹果利润率即将承压。(3) 核心风险：若AI capex放缓，存储价格可能2028-2029年崩塌，当前存储估值极其危险。(4) 关注iPhone 18定价——需求弹性的终极测试。">存储超级周期正在将巨额价值从终端厂商转移到存储供应商。2026-2027年策略：(1) 超配存储股（三星、SK海力士、美光）——控制95%供给，正在印钞。(2) 低配消费电子——手机出货量-13.9%，PC涨价500-1500元，苹果利润率即将承压。(3) 核心风险：若AI capex放缓，存储价格可能2028-2029年崩塌，当前存储估值极其危险。(4) 关注iPhone 18定价——需求弹性的终极测试。</span>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="sec-detail">
+    <div class="section-title">📋 <span class="ln" data-en="Monitoring Dashboard" data-zh="监控仪表盘">监控仪表盘</span></div>
+
+    <!-- Red Alert Triggers -->
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h"><div><div class="card-t" style="color:var(--red)">🔴 <span class="ln" data-en="Red Alert Triggers (Not Yet Triggered)" data-zh="红色警报触发器（尚未触发）">红色警报触发器（尚未触发）</span></div></div></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="1. Capex Guidance Cut" data-zh="1. Capex 指引下修">1. Capex 指引下修</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Any hyperscaler cuts AI capex guidance → immediate sector selloff" data-zh="任何超大规模厂商下调AI capex指引 → 板块即时抛售">任何超大规模厂商下调AI capex指引 → 板块即时抛售</span></div>
+              <div style="margin-top:4px"><span class="ln" data-en="Current: All maintained or raised" data-zh="当前: 全部维持或上调">当前: 全部维持或上调</span> <span style="color:var(--green)">✓</span></div>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="2. SPV Default / Restructure" data-zh="2. SPV 违约/重组">2. SPV 违约/重组</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="$1.8T off-balance-sheet exposure — any default triggers contagion" data-zh="$1.8万亿表外敞口 — 任何违约引发连锁反应">$1.8万亿表外敞口 — 任何违约引发连锁反应</span></div>
+              <div style="margin-top:4px"><span class="ln" data-en="Current: CRWV still expanding" data-zh="当前: CoreWeave继续扩张">当前: CoreWeave继续扩张</span> <span style="color:var(--green)">✓</span></div>
+            </div>
+            <div style="padding:8px 0">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="3. Key Tenant Bankruptcy" data-zh="3. 核心客户破产">3. 核心客户破产</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="OpenAI / major cloud tenant failure → SPV cascade" data-zh="OpenAI / 主要云租户出问题 → SPV连锁反应">OpenAI / 主要云租户出问题 → SPV连锁反应</span></div>
+              <div style="margin-top:4px"><span class="ln" data-en="Current: No issues" data-zh="当前: 无异常">当前: 无异常</span> <span style="color:var(--green)">✓</span></div>
+            </div>
+          </div>
+          <div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="4. Federal DC Moratorium" data-zh="4. 联邦级数据中心禁令">4. 联邦级数据中心禁令</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Sanders+AOC bill passes Senate → halts ALL new US construction" data-zh="Sanders+AOC法案通过参议院 → 暂停全美新建">Sanders+AOC法案通过参议院 → 暂停全美新建</span></div>
+              <div style="margin-top:4px"><span class="ln" data-en="Current: Senate unlikely to pass" data-zh="当前: 参议院通过概率低">当前: 参议院通过概率低</span> <span style="color:var(--green)">✓</span></div>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="5. Memory Price Collapse" data-zh="5. 存储价格崩塌">5. 存储价格崩塌</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="DRAM contract prices drop >20% QoQ → supercycle end signal" data-zh="DRAM合约价环比跌>20% → 超级周期结束信号">DRAM合约价环比跌>20% → 超级周期结束信号</span></div>
+              <div style="margin-top:4px"><span class="ln" data-en="Current: Prices still rising" data-zh="当前: 价格仍在上涨">当前: 价格仍在上涨</span> <span style="color:var(--green)">✓</span></div>
+            </div>
+            <div style="padding:8px 0">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="6. iPhone 18 Pricing Failure" data-zh="6. iPhone 18 定价失败">6. iPhone 18 定价失败</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Apple forced to cut prices or miss sales targets → demand destruction confirmed" data-zh="苹果被迫降价或未达销量目标 → 需求破坏确认">苹果被迫降价或未达销量目标 → 需求破坏确认</span></div>
+              <div style="margin-top:4px"><span class="ln" data-en="Current: iPhone 18 not yet launched" data-zh="当前: iPhone 18尚未发布">当前: iPhone 18尚未发布</span> <span style="color:var(--text3)">⏳</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yellow Warning Signals -->
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h"><div><div class="card-t" style="color:var(--orange)">🟡 <span class="ln" data-en="Yellow Warning Signals (Active Monitoring)" data-zh="黄色警示信号（活跃监控）">黄色警示信号（活跃监控）</span></div></div></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="Meta Sells Spare Compute" data-zh="Meta出售闲置算力">Meta出售闲置算力</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Is this commercialization or overcapacity? Track follow-on customers." data-zh="商业化还是过剩？跟踪后续客户。">商业化还是过剩？跟踪后续客户。</span></div>
+              <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="Divergent views" data-zh="分歧极大">分歧极大</span></span></div>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="DC Utilization Declining" data-zh="数据中心利用率下降">数据中心利用率下降</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="79% → 68%: buildings running empty?" data-zh="79% → 68%: 建筑空置运行？">79% → 68%: 建筑空置运行？</span></div>
+              <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="-11ppt" data-zh="↓11个百分点">↓11个百分点</span></span></div>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="Meta Equity Financing" data-zh="Meta股权融资">Meta股权融资</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Debt capacity narrowing → dilution risk" data-zh="债务空间收窄 → 稀释风险">债务空间收窄 → 稀释风险</span></div>
+              <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="Jun 5 report" data-zh="6/5报道">6/5报道</span></span></div>
+            </div>
+            <div style="padding:8px 0">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="300+ Moratoriums" data-zh="300+禁令">300+禁令</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Systemic US supply constraint — 27 states, 70% public opposition" data-zh="系统性美国供给约束 — 27州, 70%民众反对">系统性美国供给约束 — 27州, 70%民众反对</span></div>
+              <div style="margin-top:4px"><span class="tag red" style="font-size:10px"><span class="ln" data-en="Escalating" data-zh="升级中">升级中</span></span></div>
+            </div>
+          </div>
+          <div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="Capex/Revenue >30%" data-zh="Capex/收入 >30%">Capex/收入 >30%</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Approaching dot-com peak 32% — overinvestment risk" data-zh="逼近互联网泡沫峰值32% — 过度投资风险">逼近互联网泡沫峰值32% — 过度投资风险</span></div>
+              <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="31% now" data-zh="当前31%">当前31%</span></span></div>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="FCF Heading to Zero" data-zh="自由现金流趋零">自由现金流趋零</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="MS: Amazon/Meta FCF→0 in 2026, incremental debt only" data-zh="MS: Amazon/Meta 2026年FCF→0, 只能靠新增债务">MS: Amazon/Meta 2026年FCF→0, 只能靠新增债务</span></div>
+              <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="MS forecast" data-zh="MS预测">MS预测</span></span></div>
+            </div>
+            <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="Apple Memory BOM 45%" data-zh="苹果内存BOM达45%">苹果内存BOM达45%</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="iPhone 18 launch will test demand elasticity at peak prices" data-zh="iPhone 18发布将在价格峰值测试需求弹性">iPhone 18发布将在价格峰值测试需求弹性</span></div>
+              <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="H2 2026" data-zh="2026下半年">2026下半年</span></span></div>
+            </div>
+            <div style="padding:8px 0">
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="Smartphone Shipments -13.9%" data-zh="手机出货量-13.9%">手机出货量-13.9%</span></div>
+              <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Steepest decline on record — demand destruction underway" data-zh="历史最大降幅 — 需求破坏已发生">历史最大降幅 — 需求破坏已发生</span></div>
+              <div style="margin-top:4px"><span class="tag red" style="font-size:10px"><span class="ln" data-en="Record drop" data-zh="历史最差">历史最差</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Green Safety Indicators -->
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-h"><div><div class="card-t" style="color:var(--green)">🟢 <span class="ln" data-en="Green Safety Indicators" data-zh="绿色安全指标">绿色安全指标</span></div></div></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div style="padding:8px;background:var(--green-l);border-radius:8px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:var(--green)">$830B</div>
+            <div style="font-size:10px;color:var(--text2)"><span class="ln" data-en="Capex still growing" data-zh="Capex仍在增长">Capex仍在增长</span></div>
+          </div>
+          <div style="padding:8px;background:var(--green-l);border-radius:8px;text-align:center">
+            <div class="metric" style="padding:0;border:0"><span class="metric-label" style="font-size:18px;font-weight:800;color:var(--green)">~1%</span></div>
+            <div style="font-size:10px;color:var(--text2)"><span class="ln" data-en="DC vacancy rate" data-zh="DC空置率">DC空置率</span></div>
+          </div>
+          <div style="padding:8px;background:var(--green-l);border-radius:8px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:var(--green)">0.3x</div>
+            <div style="font-size:10px;color:var(--text2)"><span class="ln" data-en="Debt/EBITDA" data-zh="债务/EBITDA">债务/EBITDA</span></div>
+          </div>
+          <div style="padding:8px;background:var(--green-l);border-radius:8px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:var(--green)">$5.3T</div>
+            <div style="font-size:10px;color:var(--text2)"><span class="ln" data-en="GS 2025-30 AI spend" data-zh="高盛2025-30 AI支出">高盛2025-30 AI支出</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly Watch List -->
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="📅 Weekly Watch List" data-zh="📅 每周检查清单">📅 每周检查清单</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:2">
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Mon</span> — <span class="ln" data-en="Check hyperscaler stock reactions, DRAM/NAND spot prices" data-zh="检查超大规模厂商股价反应, DRAM/NAND现货价">检查超大规模厂商股价反应, DRAM/NAND现货价</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Tue</span> — <span class="ln" data-en="Korea customs export data, TrendForce weekly report" data-zh="韩国海关出口数据, TrendForce周报">韩国海关出口数据, TrendForce周报</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Wed</span> — <span class="ln" data-en="SPV/credit market news, DC project updates" data-zh="SPV/信贷市场新闻, DC项目进展">SPV/信贷市场新闻, DC项目进展</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Thu</span> — <span class="ln" data-en="Moratorium/legislation tracker, Apple supply chain" data-zh="禁令/立法追踪, 苹果供应链">禁令/立法追踪, 苹果供应链</span></div>
+          <div style="padding:4px 0"><span style="color:var(--blue);font-weight:600">Fri</span> — <span class="ln" data-en="Weekly summary, positions review, next week outlook" data-zh="周度总结, 持仓回顾, 下周展望">周度总结, 持仓回顾, 下周展望</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="📆 Catalyst Calendar" data-zh="📆 催化剂日历">📆 催化剂日历</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:2">
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--red);font-weight:600">Jul 23</span> — DLR Q2 <span class="ln" data-en="earnings" data-zh="财报">财报</span> <span class="tag red" style="font-size:9px">HIGH</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--red);font-weight:600">Late Jul</span> — <span class="ln" data-en="Q2 mega-cap earnings (capex guidance)" data-zh="Q2四大巨头财报 (capex指引)">Q2四大巨头财报 (capex指引)</span> <span class="tag red" style="font-size:9px">HIGH</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);font-weight:600">Aug</span> — <span class="ln" data-en="SK Hynix ADR launch" data-zh="SK海力士ADR上市">SK海力士ADR上市</span> <span class="tag orange" style="font-size:9px">MED</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--orange);font-weight:600">H2 2026</span> — <span class="ln" data-en="iPhone 18 launch" data-zh="iPhone 18发布">iPhone 18发布</span> <span class="tag red" style="font-size:9px">HIGH</span></div>
+          <div style="padding:4px 0"><span style="color:var(--blue);font-weight:600">Mid-2027</span> — <span class="ln" data-en="SK Hynix M15X fab online" data-zh="SK M15X投产">SK M15X投产</span> <span class="tag blue" style="font-size:9px">SUPPLY</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Freshness -->
+    <div class="card" style="margin-top:14px;background:var(--bg)">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text2)">
+        <div><span class="ln" data-en="Data Sources" data-zh="数据来源">数据来源</span>: Morgan Stanley, Goldman Sachs, TrendForce, Jefferies, FT, Bloomberg, SemiAnalysis, Korea Customs, Arizton, CBRE, Data Center Watch, IDC, Gartner</div>
+        <div style="white-space:nowrap"><span class="ln" data-en="Last Updated" data-zh="最后更新">最后更新</span>: 2026-07-05</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="sec-about">
+    <div class="section-title">ℹ️ <span class="ln" data-en="About" data-zh="关于我们">关于我们</span></div>
+    <div class="g2">
+      <div class="card" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:12px">⚡</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px">AI Compute Capital Flow</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.6;max-width:400px;margin:0 auto">
+          <span class="ln" data-en="An investor-grade dashboard tracking capital flows into AI compute infrastructure. Built with D3.js, updated weekly, designed for institutional investors who need to see the signal through the noise." data-zh="投资人级 AI 算力资本流向监控仪表盘。基于 D3.js 构建，每周更新，专为需要穿透噪音看到信号的机构投资人设计。">投资人级 AI 算力资本流向监控仪表盘。基于 D3.js 构建，每周更新，专为需要穿透噪音看到信号的机构投资人设计。</span>
+        </div>
+        <div style="margin-top:20px;padding:16px;background:var(--bg);border-radius:12px;display:inline-block">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:8px"><span class="ln" data-en="FOLLOW US" data-zh="关注我们">关注我们</span></div>
+          <div style="display:flex;gap:24px;align-items:center">
+            <div style="text-align:center">
+              <div style="width:100px;height:100px;background:#fff;border-radius:12px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto;overflow:hidden">
+                <img src="getqrcode.jpeg" alt="莫说闲话" style="width:90px;height:90px;object-fit:contain">
+              </div>
+              <div style="font-size:11px;color:var(--text2);margin-top:6px"><span class="ln" data-en="WeChat: 莫说闲话" data-zh="微信公众号：莫说闲话">微信公众号：莫说闲话</span></div>
+            </div>
+            <div style="text-align:center">
+              <a href="https://x.com/iGaves" target="_blank" rel="noopener" style="text-decoration:none">
+                <div style="width:100px;height:100px;background:#000;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                  <svg viewBox="0 0 24 24" width="40" height="40" fill="#fff">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </div>
+              </a>
+              <div style="font-size:11px;color:var(--text2);margin-top:6px"><a href="https://x.com/iGaves" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">@iGaves</a></div>
+          </div>
+        </div>
+        <div style="margin-top:16px">
+          <button onclick="document.getElementById('donate-modal').style.display='flex'" style="padding:10px 24px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s;box-shadow:0 2px 8px rgba(245,158,11,.3)" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            ☕ <span class="ln" data-en="Buy me a coffee" data-zh="请作者喝杯咖啡">请作者喝杯咖啡</span>
+          </button>
+        </div>
+      </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Data Sources" data-zh="数据来源">数据来源</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:2">
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Morgan Stanley</b> — AI Capex forecasts, GDP impact</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Goldman Sachs</b> — Supply-demand gap, memory pricing</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>TrendForce</b> — Contract prices, market share</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Jefferies</b> — Price forecasts, risk analysis</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Financial Times</b> — SPV/structured finance tracking</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Bloomberg</b> — Project cancellations, market data</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>SemiAnalysis</b> — Capacity analysis, contrarian views</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Korea Customs</b> — Export price data</div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Arizton / CBRE</b> — Regional investment data</div>
+          <div style="padding:4px 0"><b>Data Center Watch</b> — Moratorium tracking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donate Modal -->
+  <div id="donate-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:360px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+      <div style="font-size:32px;margin-bottom:8px">☕</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:4px"><span class="ln" data-en="Buy me a coffee" data-zh="请作者喝杯咖啡">请作者喝杯咖啡</span></div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:16px"><span class="ln" data-en="Scan to support this project" data-zh="扫码支持本项目">扫码支持本项目</span></div>
+      <div style="width:200px;height:200px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb">
+        <img src="shoukuan.png" alt="收款码" style="width:100%;height:100%;object-fit:contain">
+      </div>
+      <button onclick="document.getElementById('donate-modal').style.display='none'" style="margin-top:16px;padding:8px 24px;background:#f3f4f6;border:none;border-radius:10px;font-size:13px;cursor:pointer;color:#374151"><span class="ln" data-en="Close" data-zh="关闭">关闭</span></button>
+    </div>
+  </div>
+
+  <div class="footer">AI Compute Capital Flow Dashboard v4.0 · D3.js · 2026-07-05 · <span class="ln" data-en="Not investment advice" data-zh="不构成投资建议">不构成投资建议</span></div>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+// ===== LANGUAGE =====
+let lang='zh';
+function toggleLang(){
+  lang=lang==='zh'?'en':'zh';
+  document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
+  document.querySelectorAll('.ln').forEach(el=>{
+    const v=el.getAttribute('data-'+lang);
+    if(v) el.innerHTML=v;
+  });
+  // Redraw charts that contain text
+  const activeSection=document.querySelector('.section.active');
+  if(activeSection){
+    const id=activeSection.id.replace('sec-','');
+    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop3();drawRegion()},inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawStorGap();drawStorActual()}};
+    if(redrawMap[id]) redrawMap[id]();
+  }
+}
+
+// ===== NAVIGATION =====
+function showSection(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.sidebar nav a').forEach(a=>a.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const redraw={overview:drawAll,inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},valuation:null,regional:drawGap,storage:drawStorage,about:null};
+  if(redraw[id]){
+    if(id==='storage') setTimeout(()=>redraw[id](),50);
+    else redraw[id]();
+  }
+}
+
+// ===== TOOLTIP =====
+const tip=d3.select('#tip');
+function showTip(e,h){tip.html(h).style('opacity',1).style('left',(e.pageX-50)+'px').style('top',(e.pageY-30)+'px')}
+function hideTip(){tip.style('opacity',0)}
+
+// ===== CHART CONFIG =====
+const W=560,H=220,mg={top:20,right:20,bottom:34,left:50},iw=W-mg.left-mg.right,ih=H-mg.top-mg.bottom;
+
+// ===== CAPEX GROUPED BAR (Professional) =====
+function drawCapex(){
+  d3.select('#c-capex').selectAll('*').remove();
+  const data=[{y:'2023',am:630,ms:445,go:320,me:280},{y:'2024',am:830,ms:750,go:510,me:390},{y:'2025',am:1100,ms:1100,go:900,me:720},{y:'2026E',am:2000,ms:1900,go:1800,me:1350}];
+  const keys=['am','ms','go','me'],colors=['#3b82f6','#10b981','#8b5cf6','#f59e0b'],labels=['Amazon','Microsoft','Google','Meta'];
+  const svg=d3.select('#c-capex').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x0=d3.scaleBand().domain(data.map(d=>d.y)).range([0,iw]).padding(.25);
+  const x1=d3.scaleBand().domain(keys).range([0,x0.bandwidth()]).padding(.08);
+  const y=d3.scaleLinear().domain([0,2200]).range([ih,0]);
+  // Grid
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>`$${d>=1000?(d/1000)+'K':d}B`).tickSize(-iw).tickPadding(10)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0').attr('stroke-dasharray','2,2'));
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x0).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e7eb'));
+  g.selectAll('.tick text').attr('font-size',12).attr('fill','#374151').attr('font-weight',600);
+  g.selectAll('.tick line').attr('stroke','#d1d5db');
+  // Bars with staggered animation
+  data.forEach((d,di)=>{
+    const grp=g.append('g').attr('transform',`translate(${x0(d.y)},0)`);
+    keys.forEach((k,ki)=>{
+      grp.append('rect')
+        .attr('x',x1(k)).attr('y',ih).attr('width',x1.bandwidth()).attr('height',0)
+        .attr('fill',colors[ki]).attr('rx',3).attr('opacity',d.y==='2026E'?.9:.6)
+        .on('mouseover',function(e){d3.select(this).attr('opacity',1);showTip(e,`<b>${labels[ki]} ${d.y}</b>: $${d[k]}B`)})
+        .on('mouseout',function(){d3.select(this).attr('opacity',d.y==='2026E'?.9:.6);hideTip()})
+        .transition().duration(600).ease(d3.easeCubicOut).delay(di*80+ki*40)
+        .attr('y',y(d[k])).attr('height',ih-y(d[k]));
+    });
+    // Total label on top of 2026E
+    if(d.y==='2026E'){
+      const total=keys.reduce((s,k)=>s+d[k],0);
+      grp.append('text').attr('x',x0.bandwidth()/2).attr('y',y(2000)-8).attr('text-anchor','middle')
+        .attr('font-size',14).attr('font-weight',800).attr('fill','#111827').attr('opacity',0)
+        .text(`$${(total/1000).toFixed(1)}K`)
+        .transition().delay(800).duration(400).attr('opacity',1);
+    }
+  });
+  // Legend (bottom-right, inside chart)
+  const leg=g.append('g').attr('transform',`translate(${iw-280},${ih+26})`);
+  keys.forEach((k,i)=>{
+    leg.append('rect').attr('x',i*72).attr('width',8).attr('height',8).attr('rx',2).attr('fill',colors[i]);
+    leg.append('text').attr('x',i*72+11).attr('y',8).attr('font-size',10).attr('fill','#6b7280').text(labels[i]);
+  });
+}
+
+// ===== DONUT =====
+function drawDonut(){
+  d3.select('#c-donut').selectAll('*').remove();
+  const data=[{n:'Amazon',v:2000,c:'#3b82f6'},{n:'Microsoft',v:1900,c:'#10b981'},{n:'Google',v:1800,c:'#8b5cf6'},{n:'Meta',v:1350,c:'#f59e0b'}];
+  const sz=160,r=sz/2,ir=r*.6;
+  const svg=d3.select('#c-donut').append('svg').attr('viewBox',`0 0 ${sz} ${sz}`).append('g').attr('transform',`translate(${r},${r})`);
+  const pie=d3.pie().value(d=>d.v).sort(null).padAngle(.02);
+  const arc=d3.arc().innerRadius(ir).outerRadius(r-4).cornerRadius(4);
+  svg.selectAll('path').data(pie(data)).join('path')
+    .attr('d',d3.arc().innerRadius(ir).outerRadius(ir)).attr('fill',d=>d.data.c).attr('opacity',.85)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.data.name}</b>: $${d.data.v}B`)})
+    .on('mouseout',function(){d3.select(this).attr('opacity',.85);hideTip()})
+    .transition().duration(1000).ease(d3.easeCubicOut).attrTween('d',function(d){const i=d3.interpolate({startAngle:0,endAngle:0},{startAngle:d.startAngle,endAngle:d.endAngle});return t=>arc(i(t))});
+  svg.append('text').attr('text-anchor','middle').attr('dy','0').attr('font-size',16).attr('font-weight',800).text('$7,050B');
+  svg.append('text').attr('text-anchor','middle').attr('dy','13').attr('font-size',9).attr('fill','#9ca3af').attr('class','ln').attr('data-en','Big-4 Total').attr('data-zh','四巨头合计').text(lang==='zh'?'四巨头合计':'Big-4 Total');
+  const leg=d3.select('#c-donut-leg');leg.html('');
+  data.forEach(d=>{leg.append('span').style('font-size','11px').style('color','#6b7280').html(`<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${d.c};margin-right:4px"></span>${d.n} $${d.v}B`)});
+}
+
+// ===== CAPEX RATIO =====
+function drawRatio(){
+  d3.select('#c-ratio').selectAll('*').remove();
+  const data=[{y:'2022',v:18},{y:'2023',v:22},{y:'2024',v:26},{y:'2025',v:29},{y:'2026E',v:31}];
+  const svg=d3.select('#c-ratio').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.y)).range([0,iw]);
+  const y=d3.scaleLinear().domain([0,40]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d=>d+'%').tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',11).attr('fill','#6b7280');
+  g.append('rect').attr('x',0).attr('y',y(32)).attr('width',iw).attr('height',ih-y(32)).attr('fill','#ef4444').attr('opacity',.05);
+  g.append('line').attr('x1',0).attr('y1',y(32)).attr('x2',iw).attr('y2',y(32)).attr('stroke','#ef4444').attr('stroke-width',1.5).attr('stroke-dasharray','5,3');
+  g.append('text').attr('x',iw-2).attr('y',y(32)-5).attr('text-anchor','end').attr('font-size',10).attr('font-weight',600).attr('fill','#ef4444').text('Dot-com 32%');
+  const grad=svg.append('defs').append('linearGradient').attr('id','rg').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',1);
+  grad.append('stop').attr('offset','0%').attr('stop-color','#f59e0b').attr('stop-opacity',.35);
+  grad.append('stop').attr('offset','100%').attr('stop-color','#f59e0b').attr('stop-opacity',.02);
+  g.append('path').datum(data).attr('d',d3.area().x(d=>x(d.y)).y0(ih).y1(d=>y(d.v)).curve(d3.curveMonotoneX)).attr('fill','url(#rg)');
+  g.append('path').datum(data).attr('d',d3.line().x(d=>x(d.y)).y(d=>y(d.v)).curve(d3.curveMonotoneX)).attr('fill','none').attr('stroke','#f59e0b').attr('stroke-width',2)
+    .attr('stroke-dasharray',function(){return this.getTotalLength()}).attr('stroke-dashoffset',function(){return this.getTotalLength()})
+    .transition().duration(1200).ease(d3.easeCubicOut).attr('stroke-dashoffset',0);
+  data.forEach(d=>{g.append('circle').attr('cx',x(d.y)).attr('cy',y(d.v)).attr('r',0).attr('fill','#f59e0b').transition().delay(800).duration(400).attr('r',4);
+    g.append('text').attr('x',x(d.y)).attr('y',y(d.v)-10).attr('text-anchor','middle').attr('font-size',11).attr('font-weight',700).attr('fill','#111827').attr('opacity',0).text(d.v+'%').transition().delay(900).duration(400).attr('opacity',1)});
+}
+
+// ===== SPV =====
+function drawSPV(){
+  d3.select('#c-spv').selectAll('*').remove();
+  const data=[{n:'Meta/BlueOwl',v:300,c:'#f59e0b'},{n:'Pimco',v:300,c:'#3b82f6'},{n:'CoreWeave',v:230,c:'#8b5cf6'},{n:'xAI',v:200,c:'#10b981'}];
+  const svg=d3.select('#c-spv').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.n)).range([0,iw]).padding(.35);
+  const y=d3.scaleLinear().domain([0,350]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d=>`$${d}B`).tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',10).attr('fill','#6b7280');
+  g.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.n)).attr('y',ih).attr('width',x.bandwidth()).attr('height',0).attr('fill',d=>d.c).attr('rx',6).attr('opacity',.8)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.n}</b>: $${d.v}B`)}).on('mouseout',function(){d3.select(this).attr('opacity',.8);hideTip()})
+    .transition().duration(800).ease(d3.easeCubicOut).delay((_,i)=>i*100).attr('y',d=>y(d.v)).attr('height',d=>ih-y(d.v));
+  g.selectAll('.v').data(data).join('text').attr('x',d=>x(d.n)+x.bandwidth()/2).attr('y',d=>y(d.v)-6).attr('text-anchor','middle').attr('font-size',11).attr('font-weight',700).attr('fill',d=>d.c).attr('opacity',0).text(d=>`$${d.v}B`).transition().delay(900).duration(400).attr('opacity',1);
+}
+
+// ===== MORATORIUM =====
+function drawMorat(){
+  d3.select('#c-morat').selectAll('*').remove();
+  const data=[{q:'23Q1',v:5},{q:'23Q2',v:12},{q:'23Q3',v:22},{q:'23Q4',v:30},{q:'24Q1',v:42},{q:'24Q2',v:58},{q:'24Q3',v:75},{q:'24Q4',v:95},{q:'25Q1',v:120},{q:'25Q2',v:155},{q:'25Q3',v:190},{q:'25Q4',v:220},{q:'26Q1',v:270},{q:'26Q2*',v:300}];
+  const svg=d3.select('#c-morat').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.q)).range([0,iw]);
+  const y=d3.scaleLinear().domain([0,350]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',8).attr('fill','#6b7280').attr('transform','rotate(-30)').attr('text-anchor','end').attr('dx','-0.5em').attr('dy','0.5em');
+  const grad=svg.append('defs').append('linearGradient').attr('id','mg2').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',1);
+  grad.append('stop').attr('offset','0%').attr('stop-color','#ef4444').attr('stop-opacity',.3);
+  grad.append('stop').attr('offset','100%').attr('stop-color','#ef4444').attr('stop-opacity',.02);
+  g.append('path').datum(data).attr('d',d3.area().x(d=>x(d.q)).y0(ih).y1(d=>y(d.v)).curve(d3.curveMonotoneX)).attr('fill','url(#mg2)');
+  g.append('path').datum(data).attr('d',d3.line().x(d=>x(d.q)).y(d=>y(d.v)).curve(d3.curveMonotoneX)).attr('fill','none').attr('stroke','#ef4444').attr('stroke-width',2)
+    .attr('stroke-dasharray',function(){return this.getTotalLength()}).attr('stroke-dashoffset',function(){return this.getTotalLength()})
+    .transition().duration(1200).ease(d3.easeCubicOut).attr('stroke-dashoffset',0);
+  g.append('text').attr('x',x('26Q2*')).attr('y',y(300)-10).attr('text-anchor','middle').attr('font-size',12).attr('font-weight',800).attr('fill','#ef4444').attr('opacity',0).text('300+').transition().delay(1200).duration(400).attr('opacity',1);
+}
+
+// ===== RADAR =====
+function drawRadar(){
+  d3.select('#c-radar').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const data=[
+    {a:isZh?'Capex/现金流':'Capex/CF',v:.9},
+    {a:isZh?'禁令':'Moratorium',v:.85},
+    {a:isZh?'利用率':'Utilization',v:.7},
+    {a:isZh?'SPV风险':'SPV Risk',v:.6},
+    {a:isZh?'泡沫':'Bubble',v:.55},
+    {a:isZh?'电力':'Power',v:.75},
+    {a:isZh?'客户集中':'Client',v:.65},
+    {a:isZh?'社区反对':'Community',v:.8}
+  ];
+  const sz=300,ctr=sz/2,r=88,levels=4;
+  const svg=d3.select('#c-radar').append('svg').attr('viewBox',`0 0 ${sz} ${sz}`).append('g').attr('transform',`translate(${ctr},${ctr})`);
+  const angle=d3.scaleLinear().domain([0,data.length]).range([0,2*Math.PI]);
+  // Grid circles
+  for(let l=1;l<=levels;l++){
+    const lr=r*l/levels;
+    svg.append('circle').attr('r',lr).attr('fill','none')
+      .attr('stroke',l===3?'#ef4444':'#e5e7eb')
+      .attr('stroke-width',l===3?1.5:1)
+      .attr('stroke-dasharray',l===3?'3,2':'none')
+      .attr('opacity',l===3?.4:1);
+  }
+  // 60% threshold label
+  svg.append('text').attr('x',-4).attr('y',-r*3/levels+10).attr('text-anchor','middle').attr('font-size',8).attr('fill','#ef4444').attr('opacity',.6).text('60%');
+  // Axes + labels
+  data.forEach((d,i)=>{
+    const a=angle(i)-Math.PI/2;
+    svg.append('line').attr('x1',0).attr('y1',0).attr('x2',r*Math.cos(a)).attr('y2',r*Math.sin(a)).attr('stroke','#e5e7eb').attr('stroke-width',1);
+    // Label: positioned outside polygon area with adaptive offset
+    const lx=(r+14)*Math.cos(a), ly=(r+14)*Math.sin(a);
+    const anchor=Math.abs(Math.cos(a))<.1?'middle':Math.cos(a)>0?'start':'end';
+    svg.append('text').attr('x',lx).attr('y',ly+3).attr('text-anchor',anchor).attr('font-size',9).attr('font-weight',500).attr('fill','#6b7280').text(d.a);
+  });
+  // Data polygon
+  const pts=data.map((d,i)=>{const a=angle(i)-Math.PI/2;return[r*d.v*Math.cos(a),r*d.v*Math.sin(a)]});
+  svg.append('polygon')
+    .attr('points',pts.map(()=>'0,0').join(' '))
+    .attr('fill','#ef4444').attr('fill-opacity',.12).attr('stroke','#ef4444').attr('stroke-width',2)
+    .transition().duration(1000).ease(d3.easeCubicOut).attr('points',pts.map(p=>p.join(',')).join(' '));
+  // Data points
+  pts.forEach((p,i)=>{
+    svg.append('circle').attr('cx',0).attr('cy',0).attr('r',4)
+      .attr('fill',data[i].v>.6?'#ef4444':'#f59e0b')
+      .on('mouseover',function(e){d3.select(this).attr('r',6);showTip(e,`<b>${data[i].a}</b>: ${(data[i].v*100).toFixed(0)}% ${data[i].v>.6?'⚠ DANGER':''}`)})
+      .on('mouseout',function(){d3.select(this).attr('r',4);hideTip()})
+      .transition().delay(800).duration(400).attr('cx',p[0]).attr('cy',p[1]);
+  });
+  // Danger legend
+  svg.append('circle').attr('cx',-ctr+12).attr('cy',ctr-10).attr('r',4).attr('fill','#ef4444');
+  svg.append('text').attr('x',-ctr+20).attr('y',ctr-7).attr('font-size',9).attr('fill','#9ca3af').text(isZh?'> 60% = 危险':'> 60% = DANGER');
+}
+
+// ===== TIMELINE =====
+function drawTimeline(){
+  d3.select('#c-timeline').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const ev=[
+    {d:'Jul 1',tag:{en:'NEUTRAL',zh:'中性'},tagC:'#f59e0b',
+     t:{en:'Meta Launches External Compute Sales',zh:'Meta正式对外出售AI算力'},
+     imp:{en:'META +9%, CRWV -13%. Signals either commercialization maturity or overcapacity. Watch follow-on customers.',zh:'META +9%, CRWV -13%。可能是商业化闭环信号，也可能是算力过剩拐点。跟踪后续客户动态。'}},
+    {d:'Jul 2',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'QTS Terminates Digital Gateway',zh:'QTS终止Digital Gateway项目'},
+     imp:{en:'800+ acres abandoned after years of litigation. Community opposition can kill even approved projects. Sets precedent.',zh:'800+英亩项目经多年诉讼后放弃。社区反对可否决已批准项目，开创先例。'}},
+    {d:'Jul 2',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'AirTrunk/Blackstone $21B India',zh:'AirTrunk/Blackstone印度$210亿'},
+     imp:{en:'3GW capacity in Maharashtra. Capital flowing to non-US markets. India emerging as key alternative.',zh:'马哈拉施特拉邦3GW容量。资本流向非美国市场，印度崛起为关键替代市场。'}},
+    {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'US Moratoriums Hit 300+',zh:'美国禁令突破300+'},
+     imp:{en:'275+ issued in 2026 alone. 27 states advancing bills. 70% public opposition. Systemic, not isolated.',zh:'2026年内出台275+项。27州推进法案。70%民众反对。系统性阻力，非个案。'}},
+    {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿投资Alphabet数据中心'},
+     imp:{en:'Warren Buffett successor validates AI infra thesis. Smart money still flowing in.',zh:'巴菲特接班人验证AI基建逻辑。聪明钱仍在流入。'}},
+    {d:'Jun 9',tag:{en:'WARNING',zh:'警示'},tagC:'#f59e0b',
+     t:{en:'CoreWeave Explores EU High-Yield',zh:'CoreWeave探索欧洲高收益债'},
+     imp:{en:'Expanding financing beyond US credit markets. Speculative grade, but demand signals strong investor appetite.',zh:'融资渠道扩展至欧洲信用市场。投机级评级，但市场需求信号强烈。'}},
+    {d:'Jun 5',tag:{en:'WARNING',zh:'警示'},tagC:'#f59e0b',
+     t:{en:'Meta Weighs Massive Equity Raise',zh:'Meta考虑大规模股权融资'},
+     imp:{en:'Debt capacity narrowing. Equity raise = dilution risk. Signals capex outpacing internal cash generation.',zh:'债务空间收窄。股权融资=稀释风险。信号：Capex超出内部现金流生成能力。'}},
+    {d:'May 18',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'CoreWeave $3.1B GPU-Backed Loan',zh:'CoreWeave $31亿GPU抵押贷款'},
+     imp:{en:'DDTL 5.0 closes. GPU assets as collateral is a new financing paradigm. Validates neocloud model.',zh:'DDTL 5.0关闭。GPU资产作为抵押品是新型融资范式，验证了neocloud模式。'}},
+    {d:'May 8',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'CoreWeave Q1: Rev +112%, Backlog $100B',zh:'CoreWeave Q1: 营收+112%, 积压订单$1000亿'},
+     imp:{en:'Strong demand validation. But FCF still negative (-$30-40B guide). Growth ≠ profitability yet.',zh:'需求强劲验证。但FCF仍为负(-$30-40B指引)。增长≠盈利。'}},
+    {d:'Mar 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'Sanders+AOC Federal Moratorium Bill',zh:'Sanders+AOC联邦级暂停法案'},
+     imp:{en:'If passed, would halt ALL new DC construction nationwide. Currently unlikely to pass Senate, but signals political risk ceiling.',zh:'若通过将暂停全美所有新建DC。参议院通过概率低，但标示了政治风险上限。'}}
+  ];
+  const cols={c:'#ef4444',w:'#f59e0b',p:'#10b981'};
+  const rowH=64;
+  const svg=d3.select('#c-timeline').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*rowH+20}`);
+  const g=svg.append('g').attr('transform','translate(56,10)');
+  ev.forEach((d,i)=>{
+    const y=i*rowH;
+    // Dot
+    g.append('circle').attr('cx',0).attr('cy',y+8).attr('r',0).attr('fill',d.tagC).transition().delay(i*60).duration(200).attr('r',5);
+    // Line
+    if(i<ev.length-1) g.append('line').attr('x1',0).attr('y1',y+14).attr('x2',0).attr('y2',y+rowH).attr('stroke','#e5e7eb');
+    // Date
+    g.append('text').attr('x',-12).attr('y',y+12).attr('text-anchor','end').attr('font-size',10).attr('fill','#9ca3af').attr('font-weight',500).text(d.d);
+    // Tag
+    g.append('rect').attr('x',10).attr('y',y).attr('width',40).attr('height',14).attr('rx',4).attr('fill',d.tagC).attr('opacity',.12);
+    g.append('text').attr('x',30).attr('y',y+10).attr('text-anchor','middle').attr('font-size',8).attr('font-weight',700).attr('fill',d.tagC).attr('opacity',0).text(d.tag[lang]).transition().delay(i*60+100).duration(200).attr('opacity',1);
+    // Title
+    g.append('text').attr('x',58).attr('y',y+10).attr('font-size',12).attr('font-weight',700).attr('fill','#111827').attr('opacity',0).text(d.t[lang]).transition().delay(i*60+100).duration(250).attr('opacity',1);
+    // Impact — truncate to fit viewBox width
+    const maxChars=isZh?55:75;
+    const impText=d.imp[lang].length>maxChars?d.imp[lang].substring(0,maxChars-3)+'...':d.imp[lang];
+    g.append('text').attr('x',58).attr('y',y+26).attr('font-size',10).attr('fill','#6b7280').attr('opacity',0)
+      .text(impText)
+      .transition().delay(i*60+150).duration(250).attr('opacity',.8);
+  });
+}
+
+// ===== FFO =====
+function drawFFO(){
+  d3.select('#c-ffo').selectAll('*').remove();
+  const sectorLabel=lang==='zh'?'行业均值':'Sector Avg';
+  const data=[{n:'EQIX',cur:28,hist:16},{n:'DLR',cur:22.5,hist:16},{n:sectorLabel,cur:16,hist:16}];
+  const svg=d3.select('#c-ffo').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.n)).range([0,iw]).padding(.3);
+  const y=d3.scaleLinear().domain([0,35]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'x').tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',11).attr('fill','#6b7280').attr('font-weight',600);
+  g.append('line').attr('x1',0).attr('y1',y(16)).attr('x2',iw).attr('y2',y(16)).attr('stroke','#6b7280').attr('stroke-width',1.5).attr('stroke-dasharray','5,3');
+  const histLabel=lang==='zh'?'Hist Avg 16x':'Hist Avg 16x';
+  g.append('text').attr('x',iw-2).attr('y',y(16)-5).attr('text-anchor','end').attr('font-size',10).attr('fill','#6b7280').text(histLabel);
+  data.forEach(d=>{
+    const col=d.n===sectorLabel?'#9ca3af':d.cur>d.hist*1.3?'#ef4444':'#f59e0b';
+    g.append('rect').attr('x',x(d.n)).attr('y',y(d.hist)).attr('width',x.bandwidth()).attr('height',ih-y(d.hist)).attr('fill','#e5e7eb').attr('rx',6);
+    g.append('rect').attr('x',x(d.n)).attr('y',ih).attr('width',x.bandwidth()).attr('height',0).attr('fill',col).attr('rx',6).attr('opacity',d.n===sectorLabel?.3:.85)
+      .transition().duration(800).ease(d3.easeCubicOut).attr('y',y(d.cur)).attr('height',ih-y(d.cur));
+    g.append('text').attr('x',x(d.n)+x.bandwidth()/2).attr('y',y(d.cur)-8).attr('text-anchor','middle').attr('font-size',13).attr('font-weight',800).attr('fill',col).attr('opacity',0).text(d.cur+'x').transition().delay(800).duration(300).attr('opacity',1);
+    if(d.n!==sectorLabel){const pct=((d.cur/d.hist-1)*100).toFixed(0);
+      g.append('text').attr('x',x(d.n)+x.bandwidth()/2).attr('y',y(d.cur)+14).attr('text-anchor','middle').attr('font-size',10).attr('font-weight',700).attr('fill','#fff').attr('opacity',0).text('+'+pct+'%').transition().delay(900).duration(300).attr('opacity',1)}
+  });
+}
+
+// ===== REGION =====
+function drawRegion(){
+  d3.select('#c-region').selectAll('*').remove();
+  const isZh=lang==='zh';
+  // Quantitative data: inv=$B capex 2026E, gr=growth YoY%, risk=regulatory risk 0-5
+  const data=[
+    {l:isZh?'北美':'North America',  inv:352, gr:56, risk:5, src:'Arizton, Gartner'},
+    {l:isZh?'欧洲':'Europe',          inv:120, gr:28, risk:1, src:'DCaaS, GDPR-driven'},
+    {l:isZh?'中东':'Middle East',     inv:50,  gr:85, risk:0, src:'PIF, MGX, Stargate'},
+    {l:isZh?'日本':'Japan',           inv:48,  gr:35, risk:1, src:'Arizton, DigitalBridge'},
+    {l:isZh?'东南亚':'SE Asia',       inv:32,  gr:42, risk:0, src:'CBRE, Bridge DC'},
+    {l:isZh?'中国':'China',           inv:38,  gr:22, risk:1, src:'中商产业, C-REITs'}
+  ];
+  const svgW=560,svgH=260,mg2={top:20,right:16,bottom:40,left:80},iw2=svgW-mg2.left-mg2.right,ih2=svgH-mg2.top-mg2.bottom;
+  const svg=d3.select('#c-region').append('svg').attr('viewBox',`0 0 ${svgW} ${svgH}`),g=svg.append('g').attr('transform',`translate(${mg2.left},${mg2.top})`);
+  const y=d3.scaleBand().domain(data.map(d=>d.l)).range([0,ih2]).padding(.18);
+  const subY=d3.scaleBand().domain(['inv','gr','risk']).range([0,y.bandwidth()]).padding(.08);
+  const xInv=d3.scaleLinear().domain([0,400]).range([0,iw2*.42]);
+  const xGr=d3.scaleLinear().domain([0,100]).range([0,iw2*.35]);
+  const xRisk=d3.scaleLinear().domain([0,5]).range([0,iw2*.23]);
+  // Grid lines
+  g.append('g').call(d3.axisLeft(y).tickSize(0).tickPadding(8)).call(g=>g.select('.domain').remove()).selectAll('text').attr('font-size',11).attr('fill','#111827').attr('font-weight',500);
+  // Bar groups
+  const colors={inv:'#3b82f6',gr:'#10b981',risk:'#ef4444'};
+  const labels={inv:{en:'Investment',zh:'投资额'},gr:{en:'Growth',zh:'增速'},risk:{en:'Reg Risk',zh:'监管风险'}};
+  data.forEach((d,di)=>{
+    const row=g.append('g').attr('transform',`translate(0,${y(d.l)})`);
+    // Investment bar
+    row.append('rect').attr('x',0).attr('y',subY('inv')).attr('width',0).attr('height',subY.bandwidth()).attr('fill',colors.inv).attr('rx',4).attr('opacity',.8)
+      .transition().duration(700).ease(d3.easeCubicOut).delay(di*60).attr('width',xInv(d.inv));
+    row.append('text').attr('x',xInv(d.inv)+4).attr('y',subY('inv')+subY.bandwidth()/2+3).attr('font-size',9).attr('font-weight',700).attr('fill',colors.inv).attr('opacity',0).text(`$${d.inv}B`)
+      .transition().delay(di*60+600).duration(300).attr('opacity',1);
+    // Growth bar
+    row.append('rect').attr('x',0).attr('y',subY('gr')).attr('width',0).attr('height',subY.bandwidth()).attr('fill',colors.gr).attr('rx',4).attr('opacity',.8)
+      .transition().duration(700).ease(d3.easeCubicOut).delay(di*60+50).attr('width',xGr(d.gr));
+    row.append('text').attr('x',xGr(d.gr)+4).attr('y',subY('gr')+subY.bandwidth()/2+3).attr('font-size',9).attr('font-weight',700).attr('fill',colors.gr).attr('opacity',0).text(`+${d.gr}%`)
+      .transition().delay(di*60+650).duration(300).attr('opacity',1);
+    // Risk bar
+    row.append('rect').attr('x',0).attr('y',subY('risk')).attr('width',0).attr('height',subY.bandwidth()).attr('fill',colors.risk).attr('rx',4).attr('opacity',.8)
+      .transition().duration(700).ease(d3.easeCubicOut).delay(di*60+100).attr('width',xRisk(d.risk));
+    row.append('text').attr('x',xRisk(d.risk)+4).attr('y',subY('risk')+subY.bandwidth()/2+3).attr('font-size',9).attr('font-weight',700).attr('fill',colors.risk).attr('opacity',0).text(`${d.risk}/5`)
+      .transition().delay(di*60+700).duration(300).attr('opacity',1);
+  });
+  // Legend
+  const leg=g.append('g').attr('transform',`translate(0,${ih2+8})`);
+  [{c:colors.inv,l:isZh?'投资额 ($B)':'Investment ($B)'},{c:colors.gr,l:isZh?'同比增速 (%)':'YoY Growth (%)'},{c:colors.risk,l:isZh?'监管风险 (0-5)':'Reg Risk (0-5)'}].forEach((d,i)=>{
+    leg.append('rect').attr('x',i*130).attr('width',8).attr('height',8).attr('rx',2).attr('fill',d.c);
+    leg.append('text').attr('x',i*130+12).attr('y',8).attr('font-size',9).attr('fill','#6b7280').text(d.l);
+  });
+  // Source
+  g.append('text').attr('x',iw2).attr('y',ih2+8).attr('text-anchor','end').attr('font-size',8).attr('fill','#9ca3af').text('Sources: Arizton, Gartner, CBRE, DCaaS');
+}
+
+// ===== GAP =====
+function drawGap(){
+  d3.select('#c-gap').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const data=[{l:isZh?'规划':'Planned',v:16,c:'#3b82f6'},{l:isZh?'在建':'Construction',v:5,c:'#10b981'},{l:isZh?'有风险':'At Risk',v:11,c:'#ef4444'}];
+  const svg=d3.select('#c-gap').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.l)).range([0,iw]).padding(.35);
+  const y=d3.scaleLinear().domain([0,20]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d=>`${d}GW`).tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',11).attr('fill','#6b7280');
+  g.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.l)).attr('y',ih).attr('width',x.bandwidth()).attr('height',0).attr('fill',d=>d.c).attr('rx',8).attr('opacity',.8)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.l}</b>: ${d.v} GW`)}).on('mouseout',function(){d3.select(this).attr('opacity',.8);hideTip()})
+    .transition().duration(800).ease(d3.easeCubicOut).delay((_,i)=>i*100).attr('y',d=>y(d.v)).attr('height',d=>ih-y(d.v));
+  g.selectAll('.v').data(data).join('text').attr('x',d=>x(d.l)+x.bandwidth()/2).attr('y',d=>y(d.v)-8).attr('text-anchor','middle').attr('font-size',16).attr('font-weight',800).attr('fill',d=>d.c).attr('opacity',0).text(d=>`${d.v}GW`).transition().delay(900).duration(300).attr('opacity',1);
+}
+
+// ===== TOP 3 TIMELINE (Overview) =====
+function drawTop3(){
+  d3.select('#c-top3').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const ev=[
+    {d:'Jul 1',tag:{en:'NEUTRAL',zh:'中性'},tagC:'#f59e0b',
+     t:{en:'Meta Sells Spare Compute',zh:'Meta出售闲置算力'},
+     imp:{en:'META +9%, CRWV -13%. Compute overcapacity or commercialization loop?',zh:'META +9%, CRWV -13%。算力过剩还是商业化闭环?'}},
+    {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'US Moratoriums Hit 300+',zh:'美国禁令突破300+'},
+     imp:{en:'27 states, 70% public opposition. Systemic risk, not isolated.',zh:'27州, 70%民众反对。系统性风险，非个案。'}},
+    {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿→Alphabet'},
+     imp:{en:'Smart money validates AI infra thesis.',zh:'聪明钱验证AI基建逻辑。'}}
+  ];
+  const rowH=58;
+  const svg=d3.select('#c-top3').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*rowH+10}`);
+  const g=svg.append('g').attr('transform','translate(56,5)');
+  ev.forEach((d,i)=>{
+    const y=i*rowH;
+    g.append('circle').attr('cx',0).attr('cy',y+8).attr('r',0).attr('fill',d.tagC).transition().delay(i*60).duration(200).attr('r',5);
+    if(i<ev.length-1) g.append('line').attr('x1',0).attr('y1',y+14).attr('x2',0).attr('y2',y+rowH).attr('stroke','#e5e7eb');
+    g.append('text').attr('x',-12).attr('y',y+12).attr('text-anchor','end').attr('font-size',10).attr('fill','#9ca3af').attr('font-weight',500).text(d.d);
+    g.append('rect').attr('x',10).attr('y',y).attr('width',36).attr('height',13).attr('rx',4).attr('fill',d.tagC).attr('opacity',.12);
+    g.append('text').attr('x',28).attr('y',y+10).attr('text-anchor','middle').attr('font-size',8).attr('font-weight',700).attr('fill',d.tagC).attr('opacity',0).text(d.tag[lang]).transition().delay(i*60+100).duration(200).attr('opacity',1);
+    g.append('text').attr('x',54).attr('y',y+10).attr('font-size',12).attr('font-weight',700).attr('fill','#111827').attr('opacity',0).text(d.t[lang]).transition().delay(i*60+100).duration(250).attr('opacity',1);
+    g.append('text').attr('x',54).attr('y',y+24).attr('font-size',10).attr('fill','#6b7280').attr('opacity',0).text(d.imp[lang]).transition().delay(i*60+150).duration(250).attr('opacity',.8);
+  });
+}
+
+// ===== STORAGE PRICE CHARTS =====
+function drawStorPrice(){
+  d3.select('#c-stor-price').selectAll('*').remove();
+  const data=[
+    {q:'25Q4',dram:20.9,nand:63.1,hbm:18.7},
+    {q:'26Q1',dram:90,nand:55,hbm:15},
+    {q:'26Q2',dram:50,nand:72.5,hbm:20},
+    {q:'26Q3*',dram:20,nand:35,hbm:25}
+  ];
+  const svg=d3.select('#c-stor-price').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.q)).range([0,iw]).padding(.5);
+  const y=d3.scaleLinear().domain([0,100]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%').tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',11).attr('fill','#6b7280');
+  const colors={dram:'#ef4444',nand:'#f59e0b',hbm:'#8b5cf6'};
+  const labels={dram:'DRAM',nand:'NAND',hbm:'HBM'};
+  ['dram','nand','hbm'].forEach(k=>{
+    const line=d3.line().x(d=>x(d.q)).y(d=>y(d[k])).curve(d3.curveMonotoneX);
+    g.append('path').datum(data).attr('d',line).attr('fill','none').attr('stroke',colors[k]).attr('stroke-width',2.5)
+      .attr('stroke-dasharray',function(){return this.getTotalLength()}).attr('stroke-dashoffset',function(){return this.getTotalLength()})
+      .transition().duration(1000).ease(d3.easeCubicOut).attr('stroke-dashoffset',0);
+    data.forEach((d,di)=>{
+      g.append('circle').attr('cx',x(d.q)).attr('cy',y(d[k])).attr('r',0).attr('fill',colors[k])
+        .transition().delay(800+di*80).duration(300).attr('r',4);
+      if(k==='dram') g.append('text').attr('x',x(d.q)).attr('y',y(d[k])-10).attr('text-anchor','middle').attr('font-size',10).attr('font-weight',700).attr('fill',colors[k]).attr('opacity',0).text(d[k]+'%').transition().delay(1000+di*80).duration(300).attr('opacity',1);
+    });
+  });
+  // Legend
+  const leg=g.append('g').attr('transform',`translate(${iw-200},${ih+26})`);
+  [{k:'DRAM',c:colors.dram},{k:'NAND',c:colors.nand},{k:'HBM',c:colors.hbm}].forEach((d,i)=>{
+    leg.append('circle').attr('cx',i*65).attr('cy',3).attr('r',4).attr('fill',d.c);
+    leg.append('text').attr('x',i*65+8).attr('y',7).attr('font-size',10).attr('fill','#6b7280').text(d.k);
+  });
+}
+
+function drawStorContract(){
+  d3.select('#c-stor-contract').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const data=[
+    {n:'DRAM Q2',q2:50,q3:20},
+    {n:'NAND Q2',q2:72.5,q3:35},
+    {n:'LPDDR5X',q2:89,q3:25},
+    {n:'SSD',q2:50,q3:20},
+    {n:'UFS',q2:100,q3:30}
+  ];
+  const svg=d3.select('#c-stor-contract').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x0=d3.scaleBand().domain(data.map(d=>d.n)).range([0,iw]).padding(.2);
+  const x1=d3.scaleBand().domain(['q2','q3']).range([0,x0.bandwidth()]).padding(.1);
+  const y=d3.scaleLinear().domain([0,110]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%').tickSize(-iw).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x0).tickSize(0).tickPadding(10)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',9).attr('fill','#6b7280');
+  data.forEach((d,di)=>{
+    const grp=g.append('g').attr('transform',`translate(${x0(d.n)},0)`);
+    [{k:'q2',c:'#ef4444',l:'Q2'},{k:'q3',c:'#f59e0b',l:'Q3*'}].forEach((item,ii)=>{
+      grp.append('rect').attr('x',x1(item.k)).attr('y',ih).attr('width',x1.bandwidth()).attr('height',0)
+        .attr('fill',item.c).attr('rx',4).attr('opacity',.8)
+        .transition().duration(600).ease(d3.easeCubicOut).delay(di*60+ii*30)
+        .attr('y',y(d[item.k])).attr('height',ih-y(d[item.k]));
+      grp.append('text').attr('x',x1(item.k)+x1.bandwidth()/2).attr('y',y(d[item.k])-6).attr('text-anchor','middle')
+        .attr('font-size',9).attr('font-weight',700).attr('fill',item.c).attr('opacity',0).text(d[item.k]+'%')
+        .transition().delay(700+di*60+ii*30).duration(250).attr('opacity',1);
+    });
+  });
+  const leg=g.append('g').attr('transform',`translate(${iw-120},${ih+26})`);
+  [{c:'#ef4444',l:'Q2 实际'},{c:'#f59e0b',l:'Q3 预测*'}].forEach((d,i)=>{
+    leg.append('rect').attr('x',i*60).attr('width',8).attr('height',8).attr('rx',2).attr('fill',d.c);
+    leg.append('text').attr('x',i*60+11).attr('y',8).attr('font-size',9).attr('fill','#6b7280').text(d.l);
+  });
+}
+
+function drawGapMultiDim(){
+  d3.select('#c-gap-multidim').selectAll('*').remove();
+  const data=[
+    {cat:'DRAM',gap:4.9,color:'#ef4444',src:'GS'},
+    {cat:'NAND',gap:4.2,color:'#f59e0b',src:'GS'},
+    {cat:'HBM',gap:5.1,color:'#8b5cf6',src:'GS'},
+    {cat:lang==='zh'?'电力接入':'Power Grid',gap:6,color:'#3b82f6',src:'Gartner'},
+    {cat:lang==='zh'?'新建管线':'Construction',gap:6.9,color:'#6b7280',src:'Sightline'}
+  ];
+  const svgW=700,svgH=220,mg4={top:10,right:50,bottom:28,left:100};
+  const iw4=svgW-mg4.left-mg4.right,ih4=svgH-mg4.top-mg4.bottom;
+  const svg=d3.select('#c-gap-multidim').append('svg').attr('viewBox',`0 0 ${svgW} ${svgH}`).style('width','100%').style('height','auto');
+  const g=svg.append('g').attr('transform',`translate(${mg4.left},${mg4.top})`);
+  const y=d3.scaleBand().domain(data.map(d=>d.cat)).range([0,ih4]).padding(.25);
+  const x=d3.scaleLinear().domain([0,8]).range([0,iw4]);
+  // Grid
+  g.append('g').call(d3.axisLeft(y).tickSize(0).tickPadding(8)).call(g=>g.select('.domain').remove()).selectAll('text').attr('font-size',9).attr('fill','#374151').attr('font-weight',500);
+  g.append('g').attr('transform',`translate(0,${ih4})`).call(d3.axisBottom(x).ticks(4).tickFormat(d=>d+'%').tickSize(-ih4).tickPadding(4)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',8).attr('fill','#9ca3af');
+  // Balanced line
+  g.append('line').attr('x1',x(3)).attr('y1',0).attr('x2',x(3)).attr('y2',ih4).attr('stroke','#10b981').attr('stroke-width',1).attr('stroke-dasharray','4,3');
+  g.append('text').attr('x',x(3)).attr('y',-4).attr('text-anchor','middle').attr('font-size',8).attr('fill','#10b981').text('3%');
+  // Bars
+  g.selectAll('rect').data(data).join('rect')
+    .attr('x',0).attr('y',d=>y(d.cat)).attr('width',0).attr('height',y.bandwidth())
+    .attr('fill',d=>d.color).attr('rx',4).attr('opacity',.8)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.cat}</b>: ${d.gap}% (${d.src})`)})
+    .on('mouseout',function(){d3.select(this).attr('opacity',.8);hideTip()})
+    .transition().duration(700).ease(d3.easeCubicOut).delay((_,i)=>i*80)
+    .attr('width',d=>x(d.gap));
+  // Value labels
+  g.selectAll('.v').data(data).join('text')
+    .attr('x',d=>x(d.gap)+6).attr('y',d=>y(d.cat)+y.bandwidth()/2+4)
+    .attr('font-size',10).attr('font-weight',600).attr('fill',d=>d.color).attr('opacity',0)
+    .text(d=>d.gap+'%')
+    .transition().delay(800).duration(300).attr('opacity',1);
+}
+
+function drawGapTimeline(){
+  d3.select('#c-gap-timeline').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const milestones=[
+    {q:'26Q2',label:'Now',color:'#ef4444',
+     title:isZh?'当前：全面短缺':'Current: Broad Shortage',
+     desc:isZh?'DRAM缺口4.9%、NAND 4.2%、HBM 5.1%。电力电网接入排队3-7年。所有存储品类价格处于历史高位，韩国出口单价同比暴涨300-500%。':'DRAM gap 4.9%, NAND 4.2%, HBM 5.1%. Power grid queues 3-7 years. All memory at historic highs, Korea export prices +300-500% YoY.'},
+    {q:'26Q4',label:'Q4 2026',color:'#f59e0b',
+     title:isZh?'三星P4爬坡 + 美光HBM扩产':'Samsung P4 Ramp + Micron HBM Expansion',
+     desc:isZh?'三星平泽P4工厂产能爬坡中。美光HBM月产能目标从8-9万片提升至10-12万片。Jefferies预测Q4存储价格再涨30-40%。':'Samsung P4 ramp. Micron HBM target 100-120K wafers/mo. Jefferies forecasts Q4 prices +30-40%.'},
+    {q:'27H1',label:'H1 2027',color:'#f59e0b',
+     title:isZh?'SK海力士M15X启动 + DRAM缺口达峰值':'SK Hynix M15X Launch + DRAM Gap Peaks',
+     desc:isZh?'SK海力士龙仁半导体集群首座Fab投产（2027年中）。高盛预测DRAM缺口扩至5.9%，为本轮超级周期最紧时刻。NAND/HBM缺口同步扩大。':'SK Hynix Yongin Cluster first fab online (mid-2027). Goldman: DRAM gap widens to 5.9% — peak tightness of the cycle.'},
+    {q:'27H2',label:'H2 2027',color:'#f59e0b',
+     title:isZh?'供给开始释放，但缺口仍大':'Supply Eases, But Gaps Remain',
+     desc:isZh?'新产能陆续上线，但需求增长同步加速。高盛：DRAM缺口仍达5.9%，NAND/HBM同步紧张。缺货至少延续至2027年下半年。':'New capacity comes online, but demand grows in sync. GS: DRAM gap still 5.9%. Shortage persists through H2 2027.'},
+    {q:'28',label:'2028',color:'#10b981',
+     title:isZh?'缓解之年：三星P5 + 美光翻倍':'Year of Relief: Samsung P5 + Micron Doubles',
+     desc:isZh?'三星平泽P5投产。美光月产能翻倍至25万片。高盛：DRAM缺口收窄至3.9%，首次出现明显缓解。但电力约束仍存，完全缓解需至2028-2029年。':'Samsung P5 online. Micron doubles to 250K wafers/mo. GS: DRAM gap narrows to 3.9% — first meaningful relief.'},
+    {q:'29',label:'2029+',color:'#10b981',
+     title:isZh?'龙仁集群集中投产，供给可能过剩':'Yongin Cluster Online, Potential Oversupply',
+     desc:isZh?'三星+SK龙仁半导体集群集中投产，产能可能翻倍。若AI算力需求增速放缓，2029-2030年存储价格面临大幅回落风险。周期性行业需警惕反转。':'Samsung+SK Yongin clusters online. If AI demand slows, 2029-2030 could see sharp price reversal. Cyclical risk.'}
+  ];
+  const rowH=80;
+  const svgW=700,svgH=milestones.length*rowH+20;
+  const svg=d3.select('#c-gap-timeline').append('svg').attr('viewBox',`0 0 ${svgW} ${svgH}`).style('width','100%').style('height','auto');
+  const g=svg.append('g').attr('transform','translate(20,10)');
+  milestones.forEach((d,i)=>{
+    const y=i*rowH;
+    // Timeline line
+    if(i<milestones.length-1) g.append('line').attr('x1',10).attr('y1',y+12).attr('x2',10).attr('y2',y+rowH).attr('stroke','#e5e7eb').attr('stroke-width',1.5);
+    // Dot
+    g.append('circle').attr('cx',10).attr('cy',y+8).attr('r',0).attr('fill',d.color).attr('stroke','#fff').attr('stroke-width',1.5)
+      .transition().delay(i*80).duration(300).attr('r',6);
+    // Date label
+    g.append('text').attr('x',28).attr('y',y+10).attr('font-size',10).attr('font-weight',700).attr('fill',d.color).text(d.label);
+    // Title
+    g.append('text').attr('x',28).attr('y',y+26).attr('font-size',12).attr('font-weight',600).attr('fill','#111827').text(d.title);
+    // Description - wrap text
+    const maxLen=90;
+    let lines=[];
+    let rest=d.desc;
+    while(rest.length>maxLen){lines.push(rest.substring(0,maxLen));rest=rest.substring(maxLen);}
+    if(rest)lines.push(rest);
+    lines.slice(0,2).forEach((line,j)=>{
+      g.append('text').attr('x',28).attr('y',y+40+j*13).attr('font-size',10).attr('fill','#6b7280').text(line);
+    });
+    // Phase indicator
+    if(d.color==='#10b981'){
+      g.append('rect').attr('x',svgW-70).attr('y',y+4).attr('width',50).attr('height',16).attr('rx',8).attr('fill','#ecfdf5').attr('stroke','#10b981').attr('stroke-width',1);
+      g.append('text').attr('x',svgW-45).attr('y',y+15).attr('text-anchor','middle').attr('font-size',8).attr('font-weight',600).attr('fill','#10b981').text(isZh?'缓解':'Relief');
+    } else if(d.color==='#ef4444'){
+      g.append('rect').attr('x',svgW-70).attr('y',y+4).attr('width',50).attr('height',16).attr('rx',8).attr('fill','#fef2f2').attr('stroke','#ef4444').attr('stroke-width',1);
+      g.append('text').attr('x',svgW-45).attr('y',y+15).attr('text-anchor','middle').attr('font-size',8).attr('font-weight',600).attr('fill','#ef4444').text(isZh?'紧缺':'Shortage');
+    }
+  });
+}
+
+function drawStorActual(){
+  ['c-stor-hbm','c-stor-ddr5-64','c-stor-ssd','c-stor-ddr5-32'].forEach(id=>d3.select('#'+id).selectAll('*').remove());
+  const specs=[
+    {id:'c-stor-hbm',name:'HBM4 ($/chip)',color:'#8b5cf6',data:[{q:'24Q1',v:350},{q:'24Q2',v:380},{q:'24Q3',v:420},{q:'24Q4',v:460},{q:'25Q1',v:480},{q:'25Q2',v:490},{q:'25Q3',v:500},{q:'25Q4',v:520},{q:'26Q1',v:580},{q:'26Q2',v:700},{q:'26Q3*',v:900},{q:'26Q4*',v:1100}]},
+    {id:'c-stor-ddr5-64',name:'DDR5 64GB RDIMM',color:'#3b82f6',data:[{q:'24Q1',v:120},{q:'24Q2',v:135},{q:'24Q3',v:160},{q:'24Q4',v:190},{q:'25Q1',v:210},{q:'25Q2',v:230},{q:'25Q3',v:255},{q:'25Q4',v:320},{q:'26Q1',v:700},{q:'26Q2',v:1127},{q:'26Q3*',v:1450},{q:'26Q4*',v:1700}]},
+    {id:'c-stor-ssd',name:'Ent SSD 30TB',color:'#10b981',data:[{q:'24Q1',v:1800},{q:'24Q2',v:2000},{q:'24Q3',v:2400},{q:'24Q4',v:2700},{q:'25Q1',v:2800},{q:'25Q2',v:2900},{q:'25Q3',v:3062},{q:'25Q4',v:4200},{q:'26Q1',v:11000},{q:'26Q2',v:17000},{q:'26Q3*',v:22000},{q:'26Q4*',v:26000}]},
+    {id:'c-stor-ddr5-32',name:'DDR5 32GB Kit',color:'#f59e0b',data:[{q:'24Q1',v:80},{q:'24Q2',v:90},{q:'24Q3',v:100},{q:'24Q4',v:120},{q:'25Q1',v:130},{q:'25Q2',v:140},{q:'25Q3',v:150},{q:'25Q4',v:250},{q:'26Q1',v:600},{q:'26Q2',v:1335},{q:'26Q3*',v:1700},{q:'26Q4*',v:2000}]}
+  ];
+  specs.forEach(spec=>{
+    const svgW=520,svgH=260,mg3={top:28,right:16,bottom:28,left:52};
+    const iw3=svgW-mg3.left-mg3.right,ih3=svgH-mg3.top-mg3.bottom;
+    const svg=d3.select('#'+spec.id).append('svg').attr('viewBox',`0 0 ${svgW} ${svgH}`);
+    const g=svg.append('g').attr('transform',`translate(${mg3.left},${mg3.top})`);
+    const allQs=spec.data.map(d=>d.q);
+    const x=d3.scalePoint().domain(allQs).range([0,iw3]).padding(.3);
+    const maxV=d3.max(spec.data,d=>d.v);
+    const y=d3.scaleLinear().domain([0,maxV*1.15]).range([ih3,0]);
+    // Y axis
+    g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d>=1000?'$'+(d/1000).toFixed(1)+'K':'$'+d).tickSize(-iw3).tickPadding(8)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f3f4f6')).selectAll('text').attr('font-size',10).attr('fill','#9ca3af');
+    // X axis
+    g.append('g').attr('transform',`translate(0,${ih3})`).call(d3.axisBottom(x).tickSize(0).tickPadding(8)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',9).attr('fill',d=>d.includes('*')?spec.color:'#6b7280').attr('font-weight',d=>d.includes('*')?700:400).attr('transform','rotate(-30)').attr('text-anchor','end');
+    // Forecast separator
+    const sepIdx=spec.data.findIndex(d=>d.q.includes('*'));
+    if(sepIdx>0){
+      const sepX=(x(allQs[sepIdx-1])+x(allQs[sepIdx]))/2;
+      g.append('rect').attr('x',sepX).attr('y',0).attr('width',iw3-sepX).attr('height',ih3).attr('fill','#fffbeb').attr('opacity',.5);
+      g.append('line').attr('x1',sepX).attr('y1',0).attr('x2',sepX).attr('y2',ih3).attr('stroke',spec.color).attr('stroke-width',1.5).attr('stroke-dasharray','4,3');
+      g.append('text').attr('x',sepX+4).attr('y',12).attr('font-size',9).attr('font-weight',600).attr('fill',spec.color).attr('opacity',.7).text(lang==='zh'?'预测':'Forecast');
+    }
+    // Actual line
+    const actual=spec.data.filter(d=>!d.q.includes('*'));
+    const forecast=spec.data.filter(d=>d.q.includes('*'));
+    const lastActual=actual[actual.length-1];
+    const lineGen=d3.line().x(d=>x(d.q)).y(d=>y(d.v)).curve(d3.curveMonotoneX);
+    // Area fill
+    const areaGen=d3.area().x(d=>x(d.q)).y0(ih3).y1(d=>y(d.v)).curve(d3.curveMonotoneX);
+    const defs=svg.append('defs');
+    const grad=defs.append('linearGradient').attr('id','grad-'+spec.id.replace('c-stor-','')).attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',1);
+    grad.append('stop').attr('offset','0%').attr('stop-color',spec.color).attr('stop-opacity',.25);
+    grad.append('stop').attr('offset','100%').attr('stop-color',spec.color).attr('stop-opacity',.02);
+    g.append('path').datum(actual).attr('d',areaGen).attr('fill',`url(#grad-${spec.id.replace('c-stor-','')})`);
+    g.append('path').datum(actual).attr('d',lineGen).attr('fill','none').attr('stroke',spec.color).attr('stroke-width',2.5)
+      .attr('stroke-dasharray',function(){return this.getTotalLength()}).attr('stroke-dashoffset',function(){return this.getTotalLength()})
+      .transition().duration(1000).ease(d3.easeCubicOut).attr('stroke-dashoffset',0);
+    // Forecast line
+    g.append('path').datum([lastActual,...forecast]).attr('d',lineGen).attr('fill','none').attr('stroke',spec.color).attr('stroke-width',2).attr('stroke-dasharray','6,4').attr('opacity',.5);
+    // Dots + value labels
+    spec.data.forEach((d,i)=>{
+      const isF=d.q.includes('*');
+      g.append('circle').attr('cx',x(d.q)).attr('cy',y(d.v)).attr('r',0).attr('fill',isF?'#fff':spec.color).attr('stroke',spec.color).attr('stroke-width',isF?1.5:2)
+        .transition().delay(600+i*50).duration(250).attr('r',isF?3:4);
+      // Show value on key points
+      if(isF || i===spec.data.length-2 || i===0 || i===Math.floor(spec.data.length/2)){
+        g.append('text').attr('x',x(d.q)).attr('y',y(d.v)-8).attr('text-anchor','middle').attr('font-size',9).attr('font-weight',700).attr('fill',isF?spec.color:'#374151').attr('opacity',0)
+          .text(d.v>=1000?'$'+(d.v/1000).toFixed(1)+'K':'$'+d.v)
+          .transition().delay(800+i*50).duration(300).attr('opacity',1);
+      }
+    });
+    // Title
+    g.append('text').attr('x',0).attr('y',-12).attr('font-size',12).attr('font-weight',700).attr('fill',spec.color).text(spec.name);
+    // Growth annotation
+    const first=spec.data[0],last=spec.data[spec.data.length-2];
+    const growth=((last.v/first.v-1)*100).toFixed(0);
+    g.append('text').attr('x',iw3).attr('y',-12).attr('text-anchor','end').attr('font-size',10).attr('font-weight',700).attr('fill','#ef4444').text(`+${growth}% since 2024Q1`);
+  });
+}
+
+function drawStorage(){drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual();}
+
+// ===== INIT =====
+function drawAll(){drawFFO();drawRatio();drawTop3();drawRegion();}
+drawAll();
+</script>
+</body>
 </html>

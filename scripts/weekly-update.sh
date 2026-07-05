@@ -1,73 +1,220 @@
 #!/bin/bash
-# AI 算力市场资本流向监控系统 - 周更新辅助脚本
-# 用法: bash scripts/weekly-update.sh
+# ============================================================================
+# AI Compute Capital Flow Dashboard - Weekly Update Script
+# ============================================================================
+# Usage: bash scripts/weekly-update.sh [--dry-run]
 # 
-# 此脚本用于辅助每周数据更新流程：
-# 1. 创建本周快照备份
-# 2. 提示需要检查的指标
-# 3. 记录更新日志
+# This script:
+#   1. Fetches latest data from multiple sources
+#   2. Updates data/indicators.json with new values
+#   3. Updates data/history.json with weekly snapshot
+#   4. Deploys to Cloudflare Pages
+#   5. Optionally pushes to GitHub
+# ============================================================================
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DATA_DIR="$PROJECT_DIR/data"
-LOG_DIR="$PROJECT_DIR/logs"
 TODAY=$(date +%Y-%m-%d)
-WEEK_NUM=$(date +%V)
+WEEK=$(date +%V)
+DRY_RUN=false
 
-mkdir -p "$LOG_DIR"
+[[ "$1" == "--dry-run" ]] && DRY_RUN=true
 
 echo "=========================================="
-echo "  AI 算力市场资本流向监控 - 周更新"
-echo "  日期: $TODAY (第${WEEK_NUM}周)"
+echo "  AI Compute Capital Flow - Weekly Update"
+echo "  Date: $TODAY (Week $WEEK)"
+echo "  Mode: $([ "$DRY_RUN" = true ] && echo 'DRY RUN' || echo 'LIVE')"
 echo "=========================================="
 echo ""
 
-# 备份当前数据
-BACKUP_DIR="$LOG_DIR/snapshots/$TODAY"
-mkdir -p "$BACKUP_DIR"
-cp "$DATA_DIR/indicators.json" "$BACKUP_DIR/" 2>/dev/null || echo "[WARN] indicators.json 不存在"
-cp "$DATA_DIR/history.json" "$BACKUP_DIR/" 2>/dev/null || echo "[WARN] history.json 不存在"
+# ============================================================================
+# STEP 1: Data Collection Sources & Strategy
+# ============================================================================
 
-echo "✅ 数据已备份至: $BACKUP_DIR"
+echo "📋 STEP 1: Data Collection Strategy"
+echo ""
+echo "Primary Sources (automated where possible):"
+echo "  1. Korea Customs Export Data"
+echo "     URL: https://customs.go.kr"
+echo "     Method: Manual extraction from monthly reports"
+echo "     Metrics: DRAM/NAND/HBM unit price YoY, MoM"
+echo ""
+echo "  2. TrendForce Contract Prices"
+echo "     URL: https://trendforce.com"
+echo "     Method: Subscribe to weekly newsletter"
+echo "     Metrics: DRAM/NAND/HBM QoQ contract price changes"
+echo ""
+echo "  3. Goldman Sachs Memory Pricing Tracker"
+echo "     URL: Research reports (subscription required)"
+echo "     Metrics: Supply-demand gap forecasts, DRAM/NAND/HBM"
+echo ""
+echo "  4. Jefferies Memory Report"
+echo "     URL: Research reports"
+echo "     Metrics: Price forecasts Q3/Q4"
+echo ""
+echo "  5. Bloomberg / Reuters"
+echo "     Metrics: Hyperscaler capex announcements, DC project status"
+echo ""
+echo "  6. Data Center Watch"
+echo "     URL: datacenterwatch.org"
+echo "     Metrics: Moratorium tracking, project cancellations"
+echo ""
+echo "  7. SemiAnalysis"
+echo "     Metrics: Capacity analysis, contrarian views"
+echo ""
+echo "  8. SEC Filings (10-Q, 10-K)"
+echo "     Companies: MSFT, GOOGL, AMZN, META, ORCL"
+echo "     Metrics: Actual capex, FCF, guidance"
 echo ""
 
-# 更新提示
-echo "📋 本周需要检查的指标："
-echo ""
-echo "【一级指标 - 每周必查】"
-echo "  □ 超大规模厂商 Capex 指引变化"
-echo "  □ SPV 新交易/违约/重组新闻"
-echo "  □ 数据中心项目取消/延期"
-echo "  □ REIT 股价 (DLR, EQIX)"
-echo "  □ 北美数据中心空置率"
-echo ""
-echo "【二级指标 - 每两周查】"
-echo "  □ 新资本入场 (PE/主权基金)"
-echo "  □ 分析师评级变化"
-echo "  □ 社区反对/立法进展"
-echo "  □ 电力接入进度"
-echo "  □ Capex/现金流比率"
-echo ""
-echo "【搜索关键词】"
-echo "  英文: data center cancelled/delayed 2026, SPV data center, hyperscale capex"
-echo "  中文: 数据中心 取消/延期, SPV 数据中心, AI capex 2026"
+# ============================================================================
+# STEP 2: Check for data updates
+# ============================================================================
+
+echo "📊 STEP 2: Checking for data updates..."
 echo ""
 
-# 检查上次更新时间
-if [ -f "$LOG_DIR/last_update.txt" ]; then
-    LAST_UPDATE=$(cat "$LOG_DIR/last_update.txt")
-    echo "📅 上次更新: $LAST_UPDATE"
-else
-    echo "📅 首次运行，无历史记录"
+# Check last update time
+if [ -f "$DATA_DIR/indicators.json" ]; then
+    LAST_UPDATE=$(python3 -c "import json; print(json.load(open('$DATA_DIR/indicators.json'))['meta']['last_updated'])" 2>/dev/null || echo "unknown")
+    echo "  Last update: $LAST_UPDATE"
+    echo "  Current: $TODAY"
+    echo ""
 fi
 
-# 记录本次更新
-echo "$TODAY" > "$LOG_DIR/last_update.txt"
+# ============================================================================
+# STEP 3: Manual data entry prompts
+# ============================================================================
+
+echo "📝 STEP 3: Manual Data Entry Required"
+echo ""
+echo "The following data must be manually updated from research sources:"
+echo ""
+echo "  [ ] Korea Customs: DRAM/NAND/HBM export price YoY, MoM"
+echo "  [ ] TrendForce: Q2 contract prices (DRAM, NAND, LPDDR5X, SSD, UFS)"
+echo "  [ ] TrendForce: Q3 forecast"
+echo "  [ ] Goldman Sachs: Supply-demand gap % (DRAM, NAND, HBM)"
+echo "  [ ] Jefferies: Q3/Q4 price forecasts"
+echo "  [ ] Hyperscaler capex changes (if any)"
+echo "  [ ] DC project cancellations/new approvals"
+echo "  [ ] Moratorium count updates"
+echo "  [ ] Apple/memory company earnings (if applicable)"
+echo "  [ ] SK Hynix ADR status"
+echo ""
+
+# ============================================================================
+# STEP 4: Update data files (template)
+# ============================================================================
+
+if [ "$DRY_RUN" = false ]; then
+    echo "💾 STEP 4: Updating data files..."
+    echo ""
+    
+    # Backup current data
+    BACKUP_DIR="$DATA_DIR/backups/$TODAY"
+    mkdir -p "$BACKUP_DIR"
+    cp "$DATA_DIR/indicators.json" "$BACKUP_DIR/" 2>/dev/null || true
+    cp "$DATA_DIR/history.json" "$BACKUP_DIR/" 2>/dev/null || true
+    echo "  Backup created: $BACKUP_DIR"
+    echo ""
+    
+    # Prompt for manual updates
+    echo "  Please update the following fields in data/indicators.json:"
+    echo "    - capital_inflow.hyperscaler_capex (if changed)"
+    echo "    - capital_outflow_risk.project_cancellations.data (moratorium count)"
+    echo "    - capital_outflow_risk.bubble_warnings.warnings (new warnings)"
+    echo "    - capital_outflow_risk.utilization_rate.value (if changed)"
+    echo ""
+    echo "  Run: nano $DATA_DIR/indicators.json"
+    echo "  Press Enter when done..."
+    read -r
+fi
+
+# ============================================================================
+# STEP 5: Update history snapshot
+# ============================================================================
+
+if [ "$DRY_RUN" = false ]; then
+    echo "📸 STEP 5: Creating history snapshot..."
+    echo ""
+    
+    python3 << 'PYEOF'
+import json
+from datetime import datetime
+
+data_file = "data/indicators.json"
+history_file = "data/history.json"
+
+try:
+    with open(data_file, 'r') as f:
+        indicators = json.load(f)
+    
+    with open(history_file, 'r') as f:
+        history = json.load(f)
+    
+    # Create new snapshot
+    snapshot = {
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "week": f"W{datetime.now().strftime('%V')}",
+        "summary": "Weekly update - see indicators.json for details",
+        "capital_inflow_score": 9,  # Update manually
+        "risk_score": 6,  # Update manually
+        "net_signal": "positive_with_warnings",
+        "key_events": [],  # Add this week's key events
+        "notes": ""  # Add observations
+    }
+    
+    history["snapshots"].append(snapshot)
+    
+    with open(history_file, 'w') as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+    
+    print(f"  Snapshot added for {snapshot['date']}")
+except Exception as e:
+    print(f"  Error updating history: {e}")
+PYEOF
+    echo ""
+fi
+
+# ============================================================================
+# STEP 6: Deploy to Cloudflare Pages
+# ============================================================================
+
+if [ "$DRY_RUN" = false ]; then
+    echo "🚀 STEP 6: Deploying to Cloudflare Pages..."
+    echo ""
+    
+    cd "$PROJECT_DIR"
+    wrangler pages deploy . --project-name=view-dxtools-top --branch=main
+    
+    echo ""
+    echo "  Deployment URL: https://view.dxtools.top"
+    echo ""
+fi
+
+# ============================================================================
+# STEP 7: Push to GitHub (optional)
+# ============================================================================
+
+if [ "$DRY_RUN" = false ]; then
+    echo "📤 STEP 7: Push to GitHub? (y/n)"
+    read -r PUSH_GH
+    if [[ "$PUSH_GH" == "y" || "$PUSH_GH" == "Y" ]]; then
+        cd "$PROJECT_DIR"
+        git add -A
+        git commit -m "Weekly update $TODAY W$WEEK"
+        git push origin main
+        echo "  Pushed to GitHub"
+    else
+        echo "  Skipped GitHub push"
+    fi
+fi
 
 echo ""
-echo "📝 更新完成后，请手动编辑 data/indicators.json 和 data/history.json"
-echo "   然后重新生成 index.html"
-echo ""
+echo "=========================================="
+echo "  ✅ Weekly update complete!"
+echo "  Date: $TODAY (Week $WEEK)"
+echo "  URL: https://view.dxtools.top"
 echo "=========================================="

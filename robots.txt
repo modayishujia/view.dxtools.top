@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://view.dxtools.top/sitemap.xml
