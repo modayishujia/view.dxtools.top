@@ -1,0 +1,266 @@
+{
+  "meta": {
+    "last_updated": "2026-07-05",
+    "version": "1.2",
+    "update_frequency": "weekly",
+    "investment_stance": "Underweight Data Center REITs",
+    "rationale": "Capex仍在流入但落地率仅31%, 估值处历史高位(P/AFFO 25-28x vs 历史均值16x), 风险/回报不对称",
+    "update_log": [
+      { "date": "2026-07-05", "version": "1.0", "note": "初始基线建立" },
+      { "date": "2026-07-05", "version": "1.1", "note": "第一次周更新: Meta算力出售、禁令潮爆发、Capex上调至8300亿、利用率下降" },
+      { "date": "2026-07-05", "version": "1.2", "note": "新增P/FFO估值数据、投资建议、大盘可视化v2.0" }
+    ]
+  },
+  "capital_inflow": {
+    "hyperscaler_capex": {
+      "label": "超大规模厂商 AI Capex (2026 全年指引)",
+      "value": 7250,
+      "unit": "亿美元",
+      "yoy_change": "+77%",
+      "trend": "strong_inflow",
+      "details": {
+        "amazon": { "value": 2000, "note": "~2000亿美元" },
+        "microsoft": { "value": 1900, "note": "~1900亿美元" },
+        "google": { "value": 1800, "note": "1750-1850亿美元" },
+        "meta": { "value": 1350, "note": "上调至1250-1450亿美元 (原1150-1350)" }
+      },
+      "nine_csp_total": { "value": 8300, "unit": "亿美元", "note": "含中系ByteDance/Tencent/Alibaba/Baidu", "source": "TrendForce 2026-05" },
+      "source": "Morgan Stanley / Q1 2026 Earnings / TrendForce",
+      "source_url": "https://alcapitaladvisory.com/research/intelligence/ai-infrastructure.html",
+      "last_verified": "2026-07-05"
+    },
+    "morgan_stanley_forecast": {
+      "label": "摩根士丹利美国超大规模 AI Capex 预测",
+      "current_forecast": 8050,
+      "previous_forecast": 4330,
+      "unit": "亿美元",
+      "revision": "上调近一倍",
+      "trend": "strong_inflow",
+      "source": "Morgan Stanley Mid-Year Outlook 2026",
+      "last_verified": "2026-07-05"
+    },
+    "goldman_sachs_forecast": {
+      "label": "高盛 2025-2030 AI 支出预测",
+      "current_forecast": 53000,
+      "previous_forecast": 45000,
+      "unit": "亿美元",
+      "revision": "上调8000亿",
+      "trend": "strong_inflow",
+      "note": "四大巨头2026年capex约7250亿,高盛认为AI基建仍处大规模建设阶段",
+      "source": "Goldman Sachs 2026-07",
+      "last_verified": "2026-07-05"
+    },
+    "spv_financing": {
+      "label": "SPV 表外融资总规模",
+      "value": 1200,
+      "unit": "亿美元",
+      "trend": "inflow",
+      "key_deals": [
+        { "company": "Meta", "amount": 300, "spv_name": "Beignet Investor", "partner": "Blue Owl Capital" },
+        { "company": "xAI", "amount": 200, "note": "含12.5亿债务" },
+        { "company": "CoreWeave", "amount": 230, "note": "累计融资超200亿 + 2026-05新增31亿贷款" },
+        { "company": "Pimco", "amount": 300, "note": "270亿贷款+30亿股权" }
+      ],
+      "latest_deals": [
+        { "company": "CoreWeave", "deal": "DDTL 5.0 $31亿贷款", "date": "2026-05-18", "note": "GPU抵押融资,支持Meta合作" },
+        { "company": "CoreWeave", "deal": "探索欧洲高收益债券", "date": "2026-06-09", "note": "摩根大通牵头,美元+欧元债券" },
+        { "company": "Meta", "deal": "考虑大规模股权融资", "date": "2026-06-05", "note": "拟发行数百亿美元新股,AI基建资金" }
+      ],
+      "approval_rate": "78%",
+      "source": "Financial Times / CoreWeave IR / LongPort",
+      "last_verified": "2026-07-05"
+    },
+    "new_capital_entry": {
+      "label": "新资本入场",
+      "trend": "strong_inflow",
+      "deals": [
+        { "investor": "伯克希尔哈撒韦", "amount": 100, "unit": "亿美元", "target": "Alphabet AI数据中心", "date": "2026-06" },
+        { "investor": "沙特PIF/HUMAIN", "amount": 9300, "unit": "亿美元(PIF背书)", "target": "Hexagon 480MW数据中心", "date": "2026-03" },
+        { "investor": "UAE MGX", "amount": null, "note": "全球数据中心主要投资者", "date": "2025-2026" },
+        { "investor": "Stargate UAE", "amount": 300, "unit": "亿美元+", "target": "一期建设", "date": "2026-Q3完工" },
+        { "investor": "AirTrunk/Blackstone", "amount": 210, "unit": "亿美元", "target": "印度马哈拉施特拉邦 3GW 数据中心", "date": "2026-07" }
+      ],
+      "last_verified": "2026-07-05"
+    },
+    "datacenter_reit": {
+      "label": "数据中心 REIT 表现",
+      "trend": "positive",
+      "stocks": [
+        { "ticker": "DLR", "name": "Digital Realty", "3m_change": "+11.9%", "zacks_rating": "Hold(3)", "target_price": 232, "analyst": "Bernstein", "q2_earnings_date": "2026-07-23", "p_affo": 22.5, "hist_avg_p_affo": 16, "deviation_pct": "+41%", "ev_ebitda": 27, "ffo_guidance_2026": "$7.90-$8.00" },
+        { "ticker": "EQIX", "name": "Equinix", "market_cap_bn": 97, "price": 1002, "rating": "Buy(2)", "fo_estimate_2026": 42.93, "target_price": 1222, "analyst": "Bernstein", "p_affo": 28, "hist_avg_p_affo": 16, "deviation_pct": "+75%", "ev_ebitda": 26, "citi_p_affo_target": 28, "citi_target_price": 1204 },
+        { "ticker": "CRWV", "name": "CoreWeave", "price": 142, "ev_ebitda": 45, "p_affo": "N/M (negative FCF)", "rating": "Speculative/Avoid" }
+      ],
+      "analyst_actions": [
+        { "firm": "Deutsche Bank", "action": "Buy", "targets": ["DLR", "EQIX"], "date": "2026-01" },
+        { "firm": "Bernstein", "action": "Outperform", "targets": ["DLR", "EQIX"], "date": "2026-05" },
+        { "firm": "Goldman Sachs", "action": "云端与数据中心引领H2投资热潮", "date": "2026-06-09" }
+      ],
+      "key_data": [
+        { "metric": "Digital Core REIT 出租率", "value": "97%", "note": "11座机房全部永久产权", "date": "2026-06" },
+        { "metric": "Digital Core REIT 母公司储备", "value": "150亿美元收购储备", "date": "2026-06" }
+      ],
+      "last_verified": "2026-07-05"
+    },
+    "apac_expansion": {
+      "label": "亚太/中东扩张",
+      "trend": "strong_inflow",
+      "regions": [
+        { "region": "日本", "status": "全球第三大数据中心市场", "key_deals": "DigitalBridge收购NEC资产, Ares 24亿美元基金" },
+        { "region": "东南亚", "status": "快速扩张", "key_deals": "Bridge Data Centres 700MW (马来/泰国)" },
+        { "region": "中东", "status": "主权基金主导", "key_deals": "GCC AI数据中心投资2026年超50亿美元" },
+        { "region": "中国", "status": "REITs规模化", "key_deals": "数据中心REITs潜在千亿级市场" },
+        { "region": "印度", "status": "新增: 巨额入场", "key_deals": "AirTrunk/Blackstone $210亿 3GW (马哈拉施特拉邦)" }
+      ],
+      "last_verified": "2026-07-05"
+    }
+  },
+  "capital_outflow_risk": {
+    "project_cancellations": {
+      "label": "项目取消/延期",
+      "risk_level": "high",
+      "trend": "escalating",
+      "data": {
+        "planned_capacity_gw": 16,
+        "actual_construction_gw": 5,
+        "at_risk_pct": "30-50%",
+        "q1_blocked_value_bn": 1300,
+        "q1_blocked_unit": "亿美元",
+        "moratorium_total": 300,
+        "moratorium_2026_only": 275,
+        "formal_moratorium_counties": 69,
+        "states_advancing_bills": 27,
+        "states_with_moratorium": 12,
+        "cancellations_2025": 25,
+        "cancellations_2025_yoy": "+4x",
+        "public_opposition_pct": 70
+      },
+      "notable_cases": [
+        "QTS Digital Gateway (Virginia, 800+ acres) - 终止 (2026-07-02)",
+        "Maine: 大型数据中心禁令至2027年",
+        "西雅图: 2026-04通过一年全面暂停令,冻结5个拟建项目",
+        "纽约州: 一年期禁令法案等待州长签署",
+        "俄亥俄/伊利诺伊/亚利桑那: 暂停数据中心税收优惠",
+        "Sanders+AOC: 联邦级AI数据中心暂停法案 (2026-03-25)"
+      ],
+      "counterpoint": "SemiAnalysis认为'半数取消'系信息误读,实际调整幅度仅1-5%; 12州管控法案仅针对早期规划项目",
+      "source": "Sightline Climate / Data Center Watch / Bloomberg / Beating / 新浪财经",
+      "last_verified": "2026-07-05"
+    },
+    "utilization_rate": {
+      "label": "超大规模数据中心平均上架率",
+      "value": "68%",
+      "previous_value": "79%",
+      "previous_year": 2024,
+      "trend": "declining",
+      "risk_level": "medium_high",
+      "implication": "部分新建项目'空壳运行',投资回报焦虑加剧",
+      "note": "这是新增指标 — 利用率下降是需求放缓的早期信号",
+      "source": "2026 Q1 行业报告 / 新浪财经",
+      "last_verified": "2026-07-05"
+    },
+    "meta_compute_monetization": {
+      "label": "Meta 出售闲置算力 (本周重大事件)",
+      "risk_level": "medium",
+      "trend": "warning_signal",
+      "event": "2026-07-01 Meta正式落地对外出售富余AI算力、开放自研大模型租赁",
+      "market_reaction": {
+        "meta": "+9%",
+        "coreweave": "-13%",
+        "nebius": "-15%",
+        "interpretation_divergence": [
+          "悲观: 算力过剩, AI泡沫破裂信号",
+          "乐观(SemiAnalysis/天风): 非削减开支,而是商业化闭环, Meta明年capex仍将'高得惊人'"
+        ]
+      },
+      "implication": "市场分歧极大 — 需持续跟踪是否为孤立事件还是趋势起点",
+      "source": "雪球 / SemiAnalysis / 天风证券",
+      "last_verified": "2026-07-05"
+    },
+    "spv_risk": {
+      "label": "SPV 融资结构风险",
+      "risk_level": "medium",
+      "trend": "warning",
+      "concerns": [
+        "1200亿美元表外债务不透明 (Odaily称总敞口1.8万亿美元)",
+        "客户集中度极高 (OpenAI依赖)",
+        "CoreWeave投机级评级, FCF -30~40亿",
+        "CoreWeave继续扩张: 新增31亿贷款 + 欧洲发债",
+        "Meta考虑股权融资 — 意味着债务融资空间收窄",
+        "类比安然表外操作"
+      ],
+      "new_concerns": [
+        "Morgan Stanley预测Amazon和Meta 2026年自由现金流将接近零或转负",
+        "Capex上调幅度远超收入上调幅度 — 利润率压力"
+      ],
+      "source": "FT / Robeco / ZeroHedge / Odaily / LongPort",
+      "last_verified": "2026-07-05"
+    },
+    "bubble_warnings": {
+      "label": "泡沫警告",
+      "risk_level": "medium",
+      "trend": "intensifying",
+      "warnings": [
+        { "source": "Jeremy Grantham", "statement": "AI是历史性泡沫,破裂后果毁灭性", "date": "2026-04/05" },
+        { "source": "BCA Research", "statement": "盈利泡沫,非估值泡沫", "date": "2026" },
+        { "source": "Bank of England", "statement": "AI估值过高,数据中心瓶颈", "date": "2025-10" },
+        { "source": "UBS", "statement": "Capex约占经营性现金流100%", "date": "2026" },
+        { "source": "Odaily", "statement": "1.8万亿美元表外敞口=定时炸弹", "date": "2026-06-15" },
+        { "source": "70%美国成年人", "statement": "反对在当地建设AI数据中心", "date": "2026-06" }
+      ],
+      "last_verified": "2026-07-05"
+    },
+    "capex_cashflow_ratio": {
+      "label": "Capex / 经营性现金流",
+      "value": "~100%",
+      "risk_level": "high",
+      "trend": "warning",
+      "details": {
+        "capex_pct_of_revenue": ">30%",
+        "peak_dotcom": "32%",
+        "difference": "本轮有真金白银收入支撑,净债务/EBITDA仅0.3倍",
+        "free_cash_flow_2026": "合计约793亿美元 (谷歌+微软为主要正贡献, Meta小幅正, 亚马逊负)"
+      },
+      "implication": "接近互联网泡沫峰值,但基本面略好",
+      "source": "UBS / Morgan Stanley / 申万宏源",
+      "last_verified": "2026-07-05"
+    }
+  },
+  "supply_demand": {
+    "vacancy_rate": {
+      "label": "北美数据中心空置率",
+      "value": "~1%",
+      "healthy_range": "5-10%",
+      "trend": "supply_shortage",
+      "implication": "供不应求,几乎所有容量被占用",
+      "source": "Data Center Watch",
+      "last_verified": "2026-07-05"
+    },
+    "power_capacity": {
+      "label": "全球数据中心电力容量",
+      "value_2026": "155GW",
+      "yoy_growth": "+29%",
+      "note": "AI Server总用电量2026年正式超越General Server",
+      "source": "TrendForce 2026-05",
+      "last_verified": "2026-07-05"
+    }
+  },
+  "risk_triggers": {
+    "not_triggered": [
+      "超大规模厂商 Capex 指引下修 (Meta反而上调至1450亿)",
+      "SPV 违约/重组事件 (CoreWeave继续扩张融资)",
+      "核心客户破产 (如OpenAI)",
+      "数据中心 REIT 估值暴跌"
+    ],
+    "new_monitoring": [
+      "Meta出售闲置算力 — 是商业化还是过剩信号? (2026-07-01)",
+      "上架率从79%降至68% — 需求是否跟得上供给?",
+      "300+禁令/275项2026年新规 — 系统性阻力升级",
+      "Meta考虑股权融资 — 债务融资空间收窄?",
+      "Capex占收入>30% — 接近互联网泡沫峰值32%"
+    ],
+    "escalating": [
+      "社区反对: 70%美国成年人反对, 300+禁令, 27州推进法案",
+      "联邦级立法: Sanders+AOC提出全国暂停法案 (2026-03)"
+    ]
+  }
+}

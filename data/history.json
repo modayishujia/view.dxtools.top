@@ -1,0 +1,51 @@
+{
+  "snapshots": [
+    {
+      "date": "2026-07-05",
+      "summary": "初始基线：钱仍在大量流入，但落地率存疑",
+      "capital_inflow_score": 9,
+      "risk_score": 5,
+      "net_signal": "positive_with_warnings",
+      "key_events": [
+        "QTS Digital Gateway项目终止",
+        "伯克希尔100亿美元投资Alphabet",
+        "CoreWeave探索欧洲高收益债券",
+        "SemiAnalysis反驳'半数产能取消'说法"
+      ],
+      "notes": "名义流入创新高，但30-50%规划产能面临延期/取消"
+    },
+    {
+      "date": "2026-07-05",
+      "week": "W27",
+      "summary": "第一次周更新：Meta算力出售引爆分歧，禁令潮全面升级，Capex再上调",
+      "capital_inflow_score": 9,
+      "risk_score": 6,
+      "net_signal": "positive_with_escalating_warnings",
+      "key_events": [
+        "Meta正式出售闲置算力 (7/1) — CoreWeave-13%, Nebius-15%, Meta+9%",
+        "Meta Capex上调至1250-1450亿美元 (原1150-1350)",
+        "TrendForce上调九大CSP Capex至8300亿美元",
+        "高盛上调2025-2030 AI支出至5.3万亿美元 (原4.5万亿)",
+        "全美300+数据中心禁令, 275+项2026年出台, 27州推进法案",
+        "Sanders+AOC联邦级数据中心暂停法案 (3/25)",
+        "超大规模DC上架率从79%降至68%",
+        "CoreWeave新增31亿贷款 + 欧洲发债",
+        "AirTrunk/Blackstone印度210亿美元3GW项目",
+        "Meta考虑大规模股权融资"
+      ],
+      "risk_escalation": [
+        "禁令从12州扩大到27州推进法案, 300+禁令总数",
+        "上架率下降11个百分点 (79%→68%) — 新增指标",
+        "Meta算力出售引发'算力过剩'叙事, 市场分歧极大",
+        "Capex占收入>30%, 接近互联网泡沫峰值32%"
+      ],
+      "countervailing_signals": [
+        "SemiAnalysis/天风: Meta出售算力是商业化闭环非过剩",
+        "Capex继续上调而非下修 — 基本面仍强",
+        "空置率仍~1% — 短期供不应求",
+        "高盛/MS继续看好数据中心引领H2投资"
+      ],
+      "notes": "风险评分从5升至6。核心矛盾: Capex创纪录但落地率存疑, 禁令潮系统性升级, 上架率下降是新信号。Meta算力出售是本周最关键变量 — 若成为趋势而非孤立事件, 风险将显著升级。"
+    }
+  ]
+}

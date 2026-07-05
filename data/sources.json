@@ -1,0 +1,131 @@
+{
+  "primary_sources": [
+    {
+      "name": "Sightline Climate - Data Center Outlook",
+      "url": "https://sightlineclimate.com",
+      "type": "产能规划/延期追踪",
+      "frequency": "季度",
+      "priority": "high"
+    },
+    {
+      "name": "Data Center Watch (10a Labs)",
+      "url": "https://datacenterwatch.org",
+      "type": "项目取消/社区反对追踪",
+      "frequency": "月度",
+      "priority": "high"
+    },
+    {
+      "name": "SemiAnalysis",
+      "url": "https://semianalysis.com",
+      "type": "数据中心产能深度分析",
+      "frequency": "不定期",
+      "priority": "high"
+    },
+    {
+      "name": "Morgan Stanley - AI Capex Forecasts",
+      "url": "https://morganstanley.com",
+      "type": "Capex预测/经济影响",
+      "frequency": "季度",
+      "priority": "high"
+    },
+    {
+      "name": "Goldman Sachs - AI Spending Forecasts",
+      "url": "https://goldmansachs.com",
+      "type": "AI支出预测/投资策略",
+      "frequency": "季度",
+      "priority": "high",
+      "note": "2026-07上调2025-2030 AI支出至5.3万亿美元"
+    },
+    {
+      "name": "TrendForce 集邦咨询",
+      "url": "https://trendforce.com",
+      "type": "九大CSP Capex追踪",
+      "frequency": "季度",
+      "priority": "high",
+      "note": "2026-05上调九大CSP Capex至8300亿美元"
+    },
+    {
+      "name": "超大规模厂商 Earnings Reports",
+      "type": "实际Capex数据",
+      "frequency": "季度",
+      "priority": "critical",
+      "companies": ["MSFT", "GOOGL", "AMZN", "META", "ORCL"],
+      "next_earnings": "2026-07下旬 (Q2财报季)"
+    },
+    {
+      "name": "Financial Times - SPV/Structured Finance",
+      "url": "https://ft.com",
+      "type": "SPV融资追踪",
+      "frequency": "不定期",
+      "priority": "high"
+    },
+    {
+      "name": "Bloomberg - Data Center Coverage",
+      "url": "https://bloomberg.com",
+      "type": "综合数据中心新闻",
+      "frequency": "持续",
+      "priority": "high"
+    },
+    {
+      "name": "Beating - 数据中心禁令追踪",
+      "url": "https://beating.com",
+      "type": "美国数据中心禁令/限制立法",
+      "frequency": "持续",
+      "priority": "high",
+      "note": "追踪300+禁令, 275+项2026年出台"
+    },
+    {
+      "name": "CBRE - Asia Pacific Data Centre",
+      "url": "https://cbre.com",
+      "type": "亚太数据中心投资趋势",
+      "frequency": "年度",
+      "priority": "medium"
+    },
+    {
+      "name": "CoreWeave Investor Relations",
+      "url": "https://investors.coreweave.com",
+      "type": "SPV融资/运营数据",
+      "frequency": "季度",
+      "priority": "high"
+    },
+    {
+      "name": "Equinix / Digital Realty IR",
+      "type": "REIT运营数据",
+      "frequency": "季度",
+      "priority": "medium",
+      "next_event": "DLR Q2财报 2026-07-23"
+    }
+  ],
+  "chinese_sources": [
+    {
+      "name": "界面新闻",
+      "url": "https://jiemian.com",
+      "type": "国内数据中心/AI基建报道"
+    },
+    {
+      "name": "财联社",
+      "url": "https://cls.cn",
+      "type": "SPV融资/科技巨头capex"
+    },
+    {
+      "name": "雪球",
+      "url": "https://xueqiu.com",
+      "type": "投资者讨论/深度分析"
+    },
+    {
+      "name": "新浪财经",
+      "url": "https://finance.sina.com.cn",
+      "type": "美股/数据中心/AI基建综合"
+    },
+    {
+      "name": "Odaily",
+      "url": "https://odaily.news",
+      "type": "加密/AI基建深度分析"
+    },
+    {
+      "name": "LongPort",
+      "url": "https://longportapp.cn",
+      "type": "美股/科技/AI基建"
+    }
+  ]
+}

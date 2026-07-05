@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Compute Capital Flow — Market Dashboard</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --bg:#f5f5f7; --surface:#ffffff; --text:#1d1d1f; --text2:#86868b; --text3:#aeaeb2;
+    --blue:#0071e3; --blue-light:#e8f2ff; --green:#30d158; --green-bg:#e8faf0;
+    --red:#ff3b30; --red-bg:#fff0ef; --orange:#ff9f0a; --orange-bg:#fff5e6;
+    --purple:#af52de; --purple-bg:#f3e8ff; --border:rgba(0,0,0,.06);
+    --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+    --shadow-lg:0 4px 16px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.04);
+    --radius:20px; --radius-sm:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .page{max-width:1440px;margin:0 auto;padding:32px 40px}
+  .header{margin-bottom:24px}
+  .header-row{display:flex;justify-content:space-between;align-items:flex-end}
+  .header h1{font-size:32px;font-weight:800;letter-spacing:-.5px}
+  .header h1 span{color:var(--blue)}
+  .header .meta{color:var(--text2);font-size:13px;margin-top:4px}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:40px;font-size:13px;font-weight:600}
+  .badge.positive{background:var(--green-bg);color:#1a7d36}
+  .badge.warning{background:var(--orange-bg);color:#b36b00}
+  .badge.danger{background:var(--red-bg);color:var(--red)}
+
+  /* Investment Recommendation Card */
+  .rec-card{background:linear-gradient(135deg,#1d1d1f 0%,#2d2d30 100%);border-radius:var(--radius);padding:28px 32px;margin-bottom:24px;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;box-shadow:var(--shadow-lg)}
+  .rec-card .rec-section h3{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.5);margin-bottom:10px}
+  .rec-card .rec-verdict{font-size:28px;font-weight:800;letter-spacing:-.5px}
+  .rec-card .rec-verdict .highlight{color:var(--orange)}
+  .rec-card .rec-sub{font-size:13px;color:rgba(255,255,255,.6);margin-top:4px;line-height:1.6}
+  .rec-card .rec-actions{display:flex;flex-direction:column;gap:8px}
+  .rec-card .rec-action{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.08);border-radius:var(--radius-sm);font-size:13px}
+  .rec-card .rec-action .icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  .rec-card .rec-action .icon.under{background:rgba(255,59,48,.2)}
+  .rec-card .rec-action .icon.watch{background:rgba(255,159,10,.2)}
+  .rec-card .rec-action .icon.over{background:rgba(48,209,88,.2)}
+  .rec-card .rec-catalyst{display:flex;flex-direction:column;gap:6px}
+  .rec-card .catalyst-item{font-size:13px;color:rgba(255,255,255,.7);padding-left:14px;position:relative}
+  .rec-card .catalyst-item::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--orange)}
+
+  /* KPI */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}
+  .kpi{background:var(--surface);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0}
+  .kpi.blue::before{background:var(--blue)}.kpi.green::before{background:var(--green)}.kpi.red::before{background:var(--red)}.kpi.orange::before{background:var(--orange)}.kpi.purple::before{background:var(--purple)}
+  .kpi .label{font-size:12px;color:var(--text2);font-weight:500;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+  .kpi .value{font-size:36px;font-weight:800;letter-spacing:-1px}
+  .kpi .value.blue{color:var(--blue)}.kpi .value.green{color:var(--green)}.kpi .value.red{color:var(--red)}.kpi .value.orange{color:var(--orange)}.kpi .value.purple{color:var(--purple)}
+  .kpi .change{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;margin-top:6px;padding:3px 8px;border-radius:8px}
+  .kpi .change.up{background:var(--green-bg);color:#1a7d36}.kpi .change.down{background:var(--red-bg);color:var(--red)}.kpi .change.flat{background:#f5f5f7;color:var(--text2)}
+
+  /* Grid */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+  .grid-23{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+  .grid-32{display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:16px}
+
+  .card{background:var(--surface);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+  .card-title{font-size:15px;font-weight:700;margin-bottom:4px}
+  .card-subtitle{font-size:12px;color:var(--text2);margin-bottom:20px}
+  .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .chart{width:100%}.chart svg{width:100%;overflow:visible}
+
+  .table{width:100%;border-collapse:collapse}
+  .table th{text-align:left;font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:0 10px 12px;border-bottom:1px solid var(--border)}
+  .table td{padding:13px 10px;border-bottom:1px solid var(--border);font-size:13px}
+  .table tr:last-child td{border-bottom:none}
+  .table .num{font-family:'SF Mono','Fira Code',monospace;font-weight:600;font-size:13px}
+  .table .pos{color:#1a7d36}.table .neg{color:var(--red)}
+  .tag{display:inline-block;padding:3px 10px;border-radius:8px;font-size:11px;font-weight:600}
+  .tag.green{background:var(--green-bg);color:#1a7d36}.tag.red{background:var(--red-bg);color:var(--red)}.tag.orange{background:var(--orange-bg);color:#b36b00}.tag.blue{background:var(--blue-light);color:var(--blue)}.tag.purple{background:var(--purple-bg);color:var(--purple)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+  .legend-dot{width:8px;height:8px;border-radius:50%}
+  .tooltip{position:absolute;background:#1d1d1f;color:#fff;padding:8px 14px;border-radius:10px;font-size:12px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:100;white-space:nowrap}
+  .footer{text-align:center;padding:24px 0;color:var(--text3);font-size:12px}
+  @media(max-width:1024px){.kpi-row{grid-template-columns:repeat(3,1fr)}.grid-2,.grid-3,.grid-23,.grid-32{grid-template-columns:1fr}.rec-card{grid-template-columns:1fr}}
+  @media(max-width:640px){.kpi-row{grid-template-columns:1fr 1fr}.page{padding:16px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-row">
+      <div>
+        <h1>AI Compute <span>Capital Flow</span></h1>
+        <div class="meta">W27 · 2026-07-05 · Data: Morgan Stanley, Goldman Sachs, TrendForce, FT, Bloomberg, SemiAnalysis, Citi, Bernstein</div>
+      </div>
+      <div class="badge warning">⚠ Signal: Positive with Escalating Warnings</div>
+    </div>
+  </div>
+
+  <!-- Investment Recommendation Card -->
+  <div class="rec-card">
+    <div class="rec-section">
+      <h3>Investment Stance</h3>
+      <div class="rec-verdict">Underweight <span class="highlight">Data Center REITs</span></div>
+      <div class="rec-sub">Capex仍在流入但落地率仅31%，估值处历史高位(P/AFFO 25-28x vs 历史均值16x)，风险/回报不对称。等待Q2财报确认capex指引后重新评估。</div>
+    </div>
+    <div class="rec-section">
+      <h3>Positioning Actions</h3>
+      <div class="rec-actions">
+        <div class="rec-action"><div class="icon under">↓</div><div><b>Underweight</b> DLR — P/FFO 22x, 等Q2(7/23)确认指引</div></div>
+        <div class="rec-action"><div class="icon watch">→</div><div><b>Hold</b> EQIX — P/AFFO 28x, 花旗首选但估值偏贵</div></div>
+        <div class="rec-action"><div class="icon under">↓</div><div><b>Avoid</b> CRWV — 投机级, FCF持续为负, 欧洲高收益债</div></div>
+        <div class="rec-action"><div class="icon over">↑</div><div><b>Watch</b> 中东/亚太基建 — AirTrunk, 沙特HUMAIN, 估值更合理</div></div>
+      </div>
+    </div>
+    <div class="rec-section">
+      <h3>Key Catalysts (30天)</h3>
+      <div class="rec-catalyst">
+        <div class="catalyst-item">7/23 DLR Q2财报 — capex/booking趋势</div>
+        <div class="catalyst-item">7月下旬 四巨头Q2财报 — capex指引变化</div>
+        <div class="catalyst-item">Meta算力出售后续 — 是否有更多客户</div>
+        <div class="catalyst-item">纽约州数据中心禁令 — 州长是否签署</div>
+        <div class="catalyst-item">CoreWeave欧洲债券定价 — 市场风险偏好</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi blue"><div class="label">9-CSP Capex 2026</div><div class="value blue">$830B</div><div class="change up">↑ +77% YoY</div></div>
+    <div class="kpi green"><div class="label">Capital Inflow Score</div><div class="value green">9<span style="font-size:18px;color:var(--text3)">/10</span></div><div class="change flat">→ Strong</div></div>
+    <div class="kpi red"><div class="label">Risk Score</div><div class="value red">6<span style="font-size:18px;color:var(--text3)">/10</span></div><div class="change down">↑ from 5</div></div>
+    <div class="kpi orange"><div class="label">DC Utilization</div><div class="value orange">68%</div><div class="change down">↓ from 79%</div></div>
+    <div class="kpi purple"><div class="label">Moratoriums</div><div class="value purple">300+</div><div class="change down">↑ 275 in 2026</div></div>
+  </div>
+
+  <!-- Row 1: Capex Trend + Donut -->
+  <div class="grid-23">
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Hyperscaler AI Capex Trajectory</div><div class="card-subtitle">Annual capex guidance, USD billions · 2023–2026</div></div><div class="tag green">+77% YoY</div></div>
+      <div id="capex-chart" class="chart"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Capex Share 2026</div><div class="card-subtitle">Big-4 hyperscaler allocation</div></div></div>
+      <div id="donut-chart" class="chart" style="display:flex;justify-content:center"></div>
+      <div id="donut-legend" class="legend" style="justify-content:center"></div>
+    </div>
+  </div>
+
+  <!-- Row 2: Capex Efficiency + SPV -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Capex / Revenue Ratio</div><div class="card-subtitle">Capital intensity vs dot-com peak (32%) · approaching danger zone</div></div><div class="tag red">&gt;30%</div></div>
+      <div id="capex-ratio-chart" class="chart"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">SPV / Structured Finance Deals</div><div class="card-subtitle">Key off-balance-sheet transactions, USD billions</div></div><div class="tag orange">$1.8T total</div></div>
+      <div id="spv-chart" class="chart"></div>
+    </div>
+  </div>
+
+  <!-- Row 3: P/FFO Valuation + Risk Radar -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">P/AFFO vs Historical Average</div><div class="card-subtitle">Data center REITs trading at 60-75% premium to sector average</div></div><div class="tag red">Overvalued</div></div>
+      <div id="ffo-chart" class="chart"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Risk Signal Heatmap</div><div class="card-subtitle">8 risk dimensions · red line = danger threshold (60%)</div></div></div>
+      <div id="radar-chart" class="chart" style="display:flex;justify-content:center"></div>
+    </div>
+  </div>
+
+  <!-- Row 4: Moratorium + Supply Gap -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">US Data Center Moratorium Wave</div><div class="card-subtitle">Cumulative restrictions · 2023–2026</div></div><div class="tag red">300+</div></div>
+      <div id="moratorium-chart" class="chart"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Supply-Demand Gap</div><div class="card-subtitle">Planned vs under-construction capacity (GW)</div></div><div class="tag red">69% gap</div></div>
+      <div id="gap-chart" class="chart"></div>
+    </div>
+  </div>
+
+  <!-- Row 5: REIT Table + Regional -->
+  <div class="grid-32">
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Data Center REIT — Valuation Monitor</div><div class="card-subtitle">P/AFFO, EV/EBITDA, and deviation from historical average</div></div></div>
+      <table class="table">
+        <tr><th>Ticker</th><th>Price</th><th>P/AFFO</th><th>Hist Avg</th><th>Deviation</th><th>EV/EBITDA</th><th>Rating</th></tr>
+        <tr>
+          <td><strong>EQIX</strong></td>
+          <td class="num">$1,002</td>
+          <td class="num neg">28.0x</td>
+          <td class="num" style="color:var(--text2)">16.0x</td>
+          <td class="num neg">+75%</td>
+          <td class="num">26.0x</td>
+          <td><span class="tag blue">Hold</span></td>
+        </tr>
+        <tr>
+          <td><strong>DLR</strong></td>
+          <td class="num">$178</td>
+          <td class="num neg">22.5x</td>
+          <td class="num" style="color:var(--text2)">16.0x</td>
+          <td class="num neg">+41%</td>
+          <td class="num">27.0x</td>
+          <td><span class="tag orange">Underweight</span></td>
+        </tr>
+        <tr>
+          <td><strong>CRWV</strong></td>
+          <td class="num">$142</td>
+          <td class="num" style="color:var(--text3)">N/M*</td>
+          <td class="num" style="color:var(--text3)">—</td>
+          <td class="num" style="color:var(--text3)">—</td>
+          <td class="num neg">45.0x</td>
+          <td><span class="tag red">Avoid</span></td>
+        </tr>
+      </table>
+      <div style="margin-top:12px;font-size:11px;color:var(--text3)">*CRWV: Not meaningful — negative FCF. P/AFFO based on 2026E consensus. Hist Avg = US REIT sector long-term average. Source: Citi, Bernstein, Zacks, MarketScreener</div>
+      <div style="margin-top:12px;padding:14px;background:var(--blue-light);border-radius:var(--radius-sm);font-size:12px;color:var(--blue)">
+        <strong>Upcoming Catalysts:</strong> DLR Q2 earnings Jul 23 · Q2 mega-cap earnings late July — capex guidance is the key variable
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><div class="card-title">Regional Capital Dynamics</div><div class="card-subtitle">Resistance vs tailwind by region · 2026</div></div></div>
+      <div id="region-chart" class="chart"></div>
+    </div>
+  </div>
+
+  <!-- Row 6: Timeline -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header"><div><div class="card-title">Key Events Timeline</div><div class="card-subtitle">Critical signals from the past 90 days</div></div></div>
+    <div id="timeline-chart" class="chart"></div>
+  </div>
+
+  <div class="footer">AI Compute Capital Flow Dashboard v2.0 · Built with D3.js · Data as of 2026-07-05 · Not investment advice</div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const W=960,H=300,m={top:20,right:20,bottom:40,left:50},iw=W-m.left-m.right,ih=H-m.top-m.bottom;
+const tip=d3.select('#tooltip');
+function showTip(e,h){tip.html(h).style('opacity',1).style('left',(e.pageX-60)+'px').style('top',(e.pageY-40)+'px')}
+function hideTip(){tip.style('opacity',0)}
+
+// ===== 1. Capex Area =====
+(function(){
+  const data=[{y:'2023',amazon:630,msft:445,google:320,meta:280},{y:'2024',amazon:830,msft:750,google:510,meta:390},{y:'2025',amazon:1100,msft:1100,google:900,meta:720},{y:'2026E',amazon:2000,msft:1900,google:1800,meta:1350}];
+  const keys=['amazon','msft','google','meta'],colors=['#0071e3','#30d158','#af52de','#ff9f0a'],labels=['Amazon','Microsoft','Google','Meta'];
+  const svg=d3.select('#capex-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.y)).range([0,iw]);
+  const y=d3.scaleLinear().domain([0,d3.max(data,d=>keys.reduce((s,k)=>s+d[k],0))*1.1]).range([ih,0]);
+  const stack=d3.stack().keys(keys),series=stack(data);
+  const area=d3.area().x((d,i)=>x(data[i].y)).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveMonotoneX);
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',12).attr('fill','#86868b');
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>`$${d}B`).tickSize(-iw).tickPadding(12)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.selectAll('.layer').data(series).join('path').attr('d',area).attr('fill',(d,i)=>colors[i]).attr('opacity',.7);
+  const last=data[data.length-1];let cy=0;
+  keys.forEach((k,i)=>{const v=last[k];cy+=v;g.append('text').attr('x',x('2026E')+8).attr('y',y(cy-v/2)+4).attr('font-size',11).attr('font-weight',600).attr('fill',colors[i]).text(labels[i])});
+})();
+
+// ===== 2. Donut =====
+(function(){
+  const data=[{name:'Amazon',v:2000,c:'#0071e3'},{name:'Microsoft',v:1900,c:'#30d158'},{name:'Google',v:1800,c:'#af52de'},{name:'Meta',v:1350,c:'#ff9f0a'}];
+  const sz=220,r=sz/2,ir=r*.6;
+  const svg=d3.select('#donut-chart').append('svg').attr('viewBox',`0 0 ${sz} ${sz}`).append('g').attr('transform',`translate(${r},${r})`);
+  const pie=d3.pie().value(d=>d.v).sort(null).padAngle(.02);
+  const arc=d3.arc().innerRadius(ir).outerRadius(r-4).cornerRadius(6);
+  svg.selectAll('path').data(pie(data)).join('path').attr('d',arc).attr('fill',d=>d.data.c).attr('opacity',.85)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1).attr('transform','scale(1.03)');showTip(e,`<b>${d.data.name}</b>: $${d.data.v}B`)})
+    .on('mouseout',function(){d3.select(this).attr('opacity',.85).attr('transform','scale(1)');hideTip()});
+  svg.append('text').attr('text-anchor','middle').attr('dy','-4').attr('font-size',22).attr('font-weight',800).text('$7,050B');
+  svg.append('text').attr('text-anchor','middle').attr('dy','16').attr('font-size',11).attr('fill','#86868b').text('Big-4 Total');
+  const leg=d3.select('#donut-legend');data.forEach(d=>leg.append('div').attr('class','legend-item').html(`<div class="legend-dot" style="background:${d.c}"></div>${d.name} $${d.v}B`));
+})();
+
+// ===== 3. Capex/Revenue Ratio =====
+(function(){
+  const data=[
+    {y:'2022',val:18},{y:'2023',val:22},{y:'2024',val:26},{y:'2025',val:29},{y:'2026E',val:31}
+  ];
+  const svg=d3.select('#capex-ratio-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.y)).range([0,iw]);
+  const y=d3.scaleLinear().domain([0,40]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%').tickSize(-iw).tickPadding(12)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',12).attr('fill','#86868b');
+  // Danger zone
+  g.append('rect').attr('x',0).attr('y',y(32)).attr('width',iw).attr('height',ih-y(32)).attr('fill','#ff3b30').attr('opacity',.06);
+  g.append('line').attr('x1',0).attr('y1',y(32)).attr('x2',iw).attr('y2',y(32)).attr('stroke','#ff3b30').attr('stroke-width',1.5).attr('stroke-dasharray','6,4');
+  g.append('text').attr('x',iw-4).attr('y',y(32)-6).attr('text-anchor','end').attr('font-size',11).attr('font-weight',600).attr('fill','#ff3b30').text('Dot-com peak 32%');
+  // Area
+  const grad=svg.append('defs').append('linearGradient').attr('id','ratio-grad').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',1);
+  grad.append('stop').attr('offset','0%').attr('stop-color','#ff9f0a').attr('stop-opacity',.4);
+  grad.append('stop').attr('offset','100%').attr('stop-color','#ff9f0a').attr('stop-opacity',.02);
+  const area=d3.area().x(d=>x(d.y)).y0(ih).y1(d=>y(d.val)).curve(d3.curveMonotoneX);
+  const line=d3.line().x(d=>x(d.y)).y(d=>y(d.val)).curve(d3.curveMonotoneX);
+  g.append('path').datum(data).attr('d',area).attr('fill','url(#ratio-grad)');
+  g.append('path').datum(data).attr('d',line).attr('fill','none').attr('stroke','#ff9f0a').attr('stroke-width',2.5);
+  data.forEach(d=>{g.append('circle').attr('cx',x(d.y)).attr('cy',y(d.val)).attr('r',4).attr('fill','#ff9f0a');
+    g.append('text').attr('x',x(d.y)).attr('y',y(d.val)-10).attr('text-anchor','middle').attr('font-size',12).attr('font-weight',700).attr('fill','#1d1d1f').text(d.val+'%')});
+})();
+
+// ===== 4. SPV Bar =====
+(function(){
+  const data=[{n:'Meta / Blue Owl',v:300,c:'#ff9f0a'},{n:'Pimco',v:300,c:'#0071e3'},{n:'CoreWeave',v:230,c:'#af52de'},{n:'xAI',v:200,c:'#30d158'}];
+  const svg=d3.select('#spv-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.n)).range([0,iw]).padding(.35);
+  const y=d3.scaleLinear().domain([0,350]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>`$${d}B`).tickSize(-iw).tickPadding(12)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.n)).attr('y',d=>y(d.v)).attr('width',x.bandwidth()).attr('height',d=>ih-y(d.v)).attr('fill',d=>d.c).attr('rx',8).attr('opacity',.8)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.n}</b>: $${d.v}B`)})
+    .on('mouseout',function(){d3.select(this).attr('opacity',.8);hideTip()});
+  g.selectAll('.val').data(data).join('text').attr('x',d=>x(d.n)+x.bandwidth()/2).attr('y',d=>y(d.v)-8).attr('text-anchor','middle').attr('font-size',13).attr('font-weight',700).attr('fill',d=>d.c).text(d=>`$${d.v}B`);
+})();
+
+// ===== 5. P/AFFO vs Historical =====
+(function(){
+  const data=[
+    {name:'EQIX',current:28,hist:16,target:28,citiTarget:1204},
+    {name:'DLR',current:22.5,hist:16,target:27.3,bernsteinTarget:232},
+    {name:'Sector Avg',current:16,hist:16,target:null,citiTarget:null}
+  ];
+  const svg=d3.select('#ffo-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.name)).range([0,iw]).padding(.3);
+  const y=d3.scaleLinear().domain([0,35]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'x').tickSize(-iw).tickPadding(12)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',12).attr('fill','#86868b').attr('font-weight',600);
+  // Historical average line
+  g.append('line').attr('x1',0).attr('y1',y(16)).attr('x2',iw).attr('y2',y(16)).attr('stroke','#86868b').attr('stroke-width',1.5).attr('stroke-dasharray','6,4');
+  g.append('text').attr('x',iw-4).attr('y',y(16)-6).attr('text-anchor','end').attr('font-size',11).attr('fill','#86868b').text('Hist Avg 16x');
+  // Bars — current (red/orange) vs hist (gray)
+  data.forEach(d=>{
+    if(d.name==='Sector Avg'){
+      g.append('rect').attr('x',x(d.name)).attr('y',y(d.current)).attr('width',x.bandwidth()).attr('height',ih-y(d.current)).attr('fill','#86868b').attr('rx',8).attr('opacity',.3);
+      return;
+    }
+    // Historical bar (background)
+    g.append('rect').attr('x',x(d.name)).attr('y',y(d.hist)).attr('width',x.bandwidth()).attr('height',ih-y(d.hist)).attr('fill','#e5e5ea').attr('rx',8);
+    // Current bar
+    const col = d.current > d.hist*1.3 ? '#ff3b30' : '#ff9f0a';
+    g.append('rect').attr('x',x(d.name)).attr('y',y(d.current)).attr('width',x.bandwidth()).attr('height',ih-y(d.current)).attr('fill',col).attr('rx',8).attr('opacity',.85)
+      .on('mouseover',function(e){const pct=((d.current/d.hist-1)*100).toFixed(0);showTip(e,`<b>${d.name}</b>: P/AFFO ${d.current}x (${pct > 0 ? '+' : ''}${pct}% vs hist)`)})
+      .on('mouseout',hideTip);
+    // Labels
+    g.append('text').attr('x',x(d.name)+x.bandwidth()/2).attr('y',y(d.current)-8).attr('text-anchor','middle').attr('font-size',14).attr('font-weight',800).attr('fill',col).text(d.current+'x');
+    const pct=((d.current/d.hist-1)*100).toFixed(0);
+    g.append('text').attr('x',x(d.name)+x.bandwidth()/2).attr('y',y(d.current)+16).attr('text-anchor','middle').attr('font-size',11).attr('font-weight',600).attr('fill','#fff').text('+'+pct+'%');
+  });
+  // Legend
+  const leg=g.append('g').attr('transform',`translate(${iw-200},${ih-20})`);
+  leg.append('rect').attr('width',12).attr('height',12).attr('rx',3).attr('fill','#e5e5ea');
+  leg.append('text').attr('x',16).attr('y',10).attr('font-size',11).attr('fill','#86868b').text('Hist Avg');
+  leg.append('rect').attr('x',80).attr('width',12).attr('height',12).attr('rx',3).attr('fill','#ff3b30').attr('opacity',.85);
+  leg.append('text').attr('x',96).attr('y',10).attr('font-size',11).attr('fill','#86868b').text('Current (premium)');
+})();
+
+// ===== 6. Risk Radar =====
+(function(){
+  const data=[{a:'Capex/CF',v:.9},{a:'Moratorium',v:.85},{a:'Utilization',v:.7},{a:'SPV Risk',v:.6},{a:'Bubble',v:.55},{a:'Power',v:.75},{a:'Client Conc.',v:.65},{a:'Community',v:.8}];
+  const sz=260,r=sz/2-30,levels=4;
+  const svg=d3.select('#radar-chart').append('svg').attr('viewBox',`0 0 ${sz} ${sz}`).append('g').attr('transform',`translate(${sz/2},${sz/2})`);
+  const angle=d3.scaleLinear().domain([0,data.length]).range([0,2*Math.PI]);
+  // Grid + danger threshold
+  for(let l=1;l<=levels;l++){
+    const lr=r*l/levels;
+    svg.append('circle').attr('r',lr).attr('fill','none').attr('stroke',l===3?'#ff3b30':'#e5e5ea').attr('stroke-width',l===3?1.5:1).attr('stroke-dasharray',l===3?'4,3':'none').attr('opacity',l===3?.4:1);
+  }
+  // Danger label
+  svg.append('text').attr('x',r*.75*Math.cos(-Math.PI/2)-20).attr('y',r*.75*Math.sin(-Math.PI/2)-4).attr('font-size',9).attr('fill','#ff3b30').attr('opacity',.6).text('60% threshold');
+  data.forEach((d,i)=>{
+    const a=angle(i)-Math.PI/2;
+    svg.append('line').attr('x1',0).attr('y1',0).attr('x2',r*Math.cos(a)).attr('y2',r*Math.sin(a)).attr('stroke','#e5e5ea').attr('stroke-width',1);
+    svg.append('text').attr('x',(r+18)*Math.cos(a)).attr('y',(r+18)*Math.sin(a)).attr('text-anchor','middle').attr('font-size',10).attr('fill','#86868b').text(d.a);
+  });
+  const pts=data.map((d,i)=>{const a=angle(i)-Math.PI/2;return[r*d.v*Math.cos(a),r*d.v*Math.sin(a)]});
+  svg.append('polygon').attr('points',pts.map(p=>p.join(',')).join(' ')).attr('fill','#ff3b30').attr('fill-opacity',.15).attr('stroke','#ff3b30').attr('stroke-width',2);
+  pts.forEach((p,i)=>{
+    const col=data[i].v>.6?'#ff3b30':'#ff9f0a';
+    svg.append('circle').attr('cx',p[0]).attr('cy',p[1]).attr('r',4).attr('fill',col)
+      .on('mouseover',e=>showTip(e,`<b>${data[i].a}</b>: ${(data[i].v*100).toFixed(0)}% risk ${data[i].v>.6?'⚠ DANGER':''}`))
+      .on('mouseout',hideTip);
+  });
+})();
+
+// ===== 7. Moratorium =====
+(function(){
+  const data=[{q:'23Q1',v:5},{q:'23Q2',v:12},{q:'23Q3',v:22},{q:'23Q4',v:30},{q:'24Q1',v:42},{q:'24Q2',v:58},{q:'24Q3',v:75},{q:'24Q4',v:95},{q:'25Q1',v:120},{q:'25Q2',v:155},{q:'25Q3',v:190},{q:'25Q4',v:220},{q:'26Q1',v:270},{q:'26Q2*',v:300}];
+  const svg=d3.select('#moratorium-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.q)).range([0,iw]);
+  const y=d3.scaleLinear().domain([0,350]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickSize(-iw).tickPadding(12)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',10).attr('fill','#86868b').attr('transform','rotate(-30)').attr('text-anchor','end');
+  const grad=svg.append('defs').append('linearGradient').attr('id','mg').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',1);
+  grad.append('stop').attr('offset','0%').attr('stop-color','#ff3b30').attr('stop-opacity',.3);
+  grad.append('stop').attr('offset','100%').attr('stop-color','#ff3b30').attr('stop-opacity',.02);
+  g.append('path').datum(data).attr('d',d3.area().x(d=>x(d.q)).y0(ih).y1(d=>y(d.v)).curve(d3.curveMonotoneX)).attr('fill','url(#mg)');
+  g.append('path').datum(data).attr('d',d3.line().x(d=>x(d.q)).y(d=>y(d.v)).curve(d3.curveMonotoneX)).attr('fill','none').attr('stroke','#ff3b30').attr('stroke-width',2.5);
+  g.append('text').attr('x',x('26Q2*')).attr('y',y(300)-12).attr('text-anchor','middle').attr('font-size',12).attr('font-weight',700).attr('fill','#ff3b30').text('300+');
+})();
+
+// ===== 8. Supply Gap =====
+(function(){
+  const data=[{l:'Planned',v:16,c:'#0071e3'},{l:'Construction',v:5,c:'#30d158'},{l:'At Risk',v:11,c:'#ff3b30'}];
+  const svg=d3.select('#gap-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.l)).range([0,iw]).padding(.4);
+  const y=d3.scaleLinear().domain([0,20]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d=>`${d}GW`).tickSize(-iw).tickPadding(12)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0')).selectAll('text').attr('font-size',11).attr('fill','#86868b');
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',12).attr('fill','#86868b');
+  g.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.l)).attr('y',d=>y(d.v)).attr('width',x.bandwidth()).attr('height',d=>ih-y(d.v)).attr('fill',d=>d.c).attr('rx',10).attr('opacity',.8)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.l}</b>: ${d.v} GW`)})
+    .on('mouseout',function(){d3.select(this).attr('opacity',.8);hideTip()});
+  g.selectAll('.val').data(data).join('text').attr('x',d=>x(d.l)+x.bandwidth()/2).attr('y',d=>y(d.v)-10).attr('text-anchor','middle').attr('font-size',18).attr('font-weight',800).attr('fill',d=>d.c).text(d=>`${d.v}GW`);
+  g.append('line').attr('x1',x('Construction')+x.bandwidth()+10).attr('y1',y(5)).attr('x2',x('Planned')-10).attr('y2',y(16)).attr('stroke','#ff3b30').attr('stroke-width',2).attr('stroke-dasharray','6,4');
+  g.append('text').attr('x',iw/2).attr('y',ih/2+10).attr('text-anchor','middle').attr('font-size',14).attr('font-weight',700).attr('fill','#ff3b30').text('69% Gap');
+})();
+
+// ===== 9. Regional =====
+(function(){
+  const data=[
+    {l:'US — Policy Resistance',v:-2,c:'#ff3b30',t:'Blocked'},
+    {l:'Middle East — Sovereign Push',v:3,c:'#30d158',t:'Accelerating'},
+    {l:'Japan — #3 Global',v:2,c:'#30d158',t:'Growing'},
+    {l:'Southeast Asia',v:2,c:'#30d158',t:'Expanding'},
+    {l:'India — AirTrunk $21B',v:2,c:'#30d158',t:'New'},
+    {l:'China — REITs',v:1,c:'#0071e3',t:'Stable'}
+  ];
+  const svg=d3.select('#region-chart').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${m.left},${m.top})`);
+  const y=d3.scaleBand().domain(data.map(d=>d.l)).range([0,ih]).padding(.25);
+  const x=d3.scaleLinear().domain([-3,4]).range([0,iw]);
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).ticks(7).tickFormat(d=>{if(d<0)return'← Resistance';if(d>0)return'Tailwind →';return'Neutral'}).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e5ea')).selectAll('text').attr('font-size',10).attr('fill','#86868b');
+  g.append('g').call(d3.axisLeft(y).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').remove()).selectAll('text').attr('font-size',12).attr('fill','#1d1d1f');
+  g.append('line').attr('x1',x(0)).attr('y1',0).attr('x2',x(0)).attr('y2',ih).attr('stroke','#e5e5ea').attr('stroke-width',1.5);
+  g.selectAll('rect').data(data).join('rect').attr('x',d=>d.v<0?x(d.v):x(0)).attr('y',d=>y(d.l)).attr('width',d=>Math.abs(x(d.v)-x(0))).attr('height',y.bandwidth()).attr('fill',d=>d.c).attr('rx',6).attr('opacity',.75);
+  g.selectAll('.t').data(data).join('text').attr('x',d=>d.v<0?x(d.v)-8:x(d.v)+8).attr('y',d=>y(d.l)+y.bandwidth()/2+4).attr('text-anchor',d=>d.v<0?'end':'start').attr('font-size',11).attr('font-weight',600).attr('fill',d=>d.c).text(d=>d.t);
+})();
+
+// ===== 10. Timeline =====
+(function(){
+  const ev=[
+    {d:'Jul 1',t:'Meta sells spare compute',s:'w'},{d:'Jul 2',t:'QTS Digital Gateway terminated',s:'c'},{d:'Jul 2',t:'AirTrunk India $21B 3GW',s:'p'},
+    {d:'Jun 25',t:'300+ US moratoriums reached',s:'c'},{d:'Jun 20',t:'Berkshire $10B into Alphabet DC',s:'p'},{d:'Jun 9',t:'CoreWeave explores EU bonds',s:'w'},
+    {d:'Jun 5',t:'Meta considers equity financing',s:'w'},{d:'May 27',t:'Zuckerberg: Meta may enter cloud',s:'p'},{d:'May 18',t:'CoreWeave $3.1B DDTL 5.0',s:'p'},
+    {d:'May 8',t:'CoreWeave Q1: rev +112%, backlog $100B',s:'p'},{d:'Apr 30',t:'Meta raises capex to $125-145B',s:'p'},{d:'Mar 25',t:'Sanders+AOC federal moratorium bill',s:'c'}
+  ];
+  const cols={c:'#ff3b30',w:'#ff9f0a',p:'#30d158'};
+  const svg=d3.select('#timeline-chart').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*38+40}`);
+  const g=svg.append('g').attr('transform','translate(80,20)');
+  ev.forEach((d,i)=>{
+    const y=i*38;
+    g.append('circle').attr('cx',0).attr('cy',y+8).attr('r',5).attr('fill',cols[d.s]).attr('opacity',.8);
+    if(i<ev.length-1)g.append('line').attr('x1',0).attr('y1',y+14).attr('x2',0).attr('y2',y+38).attr('stroke','#e5e5ea').attr('stroke-width',1.5);
+    g.append('text').attr('x',-12).attr('y',y+12).attr('text-anchor','end').attr('font-size',11).attr('fill','#86868b').text(d.d);
+    g.append('text').attr('x',12).attr('y',y+12).attr('font-size',13).attr('fill','#1d1d1f').text(d.t);
+  });
+})();
+</script>
+</body>
+</html>
