@@ -4,24 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI算力资本流向监控 | AI Compute Capital Flow Dashboard</title>
-<meta name="description" content="投资人级AI算力资本流向监控仪表盘。追踪数据中心投资、存储芯片价格、半导体供应链动态。数据来源：Morgan Stanley, Goldman Sachs, TrendForce, Jefferies。">
-<meta name="keywords" content="AI投资,数据中心,存储芯片,半导体,DRAM,NAND,HBM,资本流向,算力,人工智能投资,D3.js,投资人仪表盘">
+<meta name="description" content="AI Compute Capital Flow Dashboard - Investor-grade monitoring for data center investment, memory chip pricing, and semiconductor supply chain dynamics. Data sources: Morgan Stanley, Goldman Sachs, TrendForce, Jefferies.">
+<meta name="keywords" content="AI investment,data center,storage chip,semiconductor,DRAM,NAND,HBM,capital flow,compute infrastructure,investment dashboard,D3.js,investor tools,AI compute,memory pricing,supply chain">
 <meta name="author" content="iGaves">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://view.dxtools.top/">
+<link rel="alternate" hreflang="zh-CN" href="https://view.dxtools.top/?lang=zh">
+<link rel="alternate" hreflang="en" href="https://view.dxtools.top/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://view.dxtools.top/">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://view.dxtools.top/">
-<meta property="og:title" content="AI算力资本流向监控 | AI Compute Capital Flow Dashboard">
-<meta property="og:description" content="投资人级AI算力资本流向监控仪表盘。追踪数据中心投资、存储芯片价格、半导体供应链动态。数据来源：Morgan Stanley, Goldman Sachs, TrendForce, Jefferies。">
+<meta property="og:title" content="AI Compute Capital Flow Dashboard | AI算力资本流向监控">
+<meta property="og:description" content="Investor-grade dashboard tracking AI compute capital flows, data center investment, memory chip pricing, and semiconductor supply chain. Data: Morgan Stanley, Goldman Sachs, TrendForce, Jefferies.">
 <meta property="og:image" content="https://view.dxtools.top/getqrcode.jpeg">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@iGaves">
-<meta name="twitter:title" content="AI算力资本流向监控 | AI Compute Capital Flow Dashboard">
-<meta name="twitter:description" content="投资人级AI算力资本流向监控仪表盘。追踪数据中心投资、存储芯片价格、半导体供应链动态。">
+<meta name="twitter:title" content="AI Compute Capital Flow Dashboard | AI算力资本流向监控">
+<meta name="twitter:description" content="Investor-grade dashboard tracking AI compute capital flows, data center investment, memory chip pricing, and semiconductor supply chain.">
 <meta name="twitter:image" content="https://view.dxtools.top/getqrcode.jpeg">
 <!-- Structured Data -->
 <script type="application/ld+json">
@@ -766,7 +769,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 
 <script>
 // ===== LANGUAGE =====
-let lang='zh';
+const browserLang=navigator.language||navigator.userLanguage||'zh';
+let lang=browserLang.startsWith('zh')?'zh':'en';
 function toggleLang(){
   lang=lang==='zh'?'en':'zh';
   document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
@@ -778,9 +782,18 @@ function toggleLang(){
   const activeSection=document.querySelector('.section.active');
   if(activeSection){
     const id=activeSection.id.replace('sec-','');
-    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop3();drawRegion()},inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawStorGap();drawStorActual()}};
+    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop3();drawRegion()},inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual()}};
     if(redrawMap[id]) redrawMap[id]();
   }
+}
+// Apply initial language
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
+  document.querySelectorAll('.ln').forEach(el=>{
+    const v=el.getAttribute('data-'+lang);
+    if(v) el.innerHTML=v;
+  });
+});
 }
 
 // ===== NAVIGATION =====
