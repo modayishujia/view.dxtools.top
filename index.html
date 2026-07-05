@@ -116,6 +116,19 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   .footer{text-align:center;padding:20px 0;color:var(--text3);font-size:11px}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 @media(max-width:768px){.rec{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}}
+/* Dark Mode */
+[data-theme="dark"]{--bg:#0f172a;--surface:#1e293b;--text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;--border:#334155;--shadow:0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);--blue-l:rgba(59,130,246,.15);--green-l:rgba(16,185,129,.15);--red-l:rgba(239,68,68,.15);--orange-l:rgba(245,158,11,.15);--purple-l:rgba(139,92,246,.15)}
+[data-theme="dark"] .sidebar{background:#0b1120}
+[data-theme="dark"] .sidebar nav a:hover{background:rgba(255,255,255,.05)}
+[data-theme="dark"] .sidebar nav a.active{background:rgba(59,130,246,.15)}
+[data-theme="dark"] .help-icon{background:#334155;color:#94a3b8}
+[data-theme="dark"] .help-icon:hover{background:#475569}
+[data-theme="dark"] .rec{background:linear-gradient(135deg,#0b1120,#16213e)}
+[data-theme="dark"] .kpi .chg.fl{background:#1e293b}
+[data-theme="dark"] .badge.ok{color:#34d399}[data-theme="dark"] .badge.warn{color:#fbbf24}[data-theme="dark"] .badge.bad{color:#f87171}
+[data-theme="dark"] .tag.g{color:#34d399}[data-theme="dark"] .tag.r{color:#f87171}[data-theme="dark"] .tag.o{color:#fbbf24}[data-theme="dark"] .tag.b{color:#60a5fa}
+[data-theme="dark"] .tbl th{border-bottom-color:var(--border)}
+[data-theme="dark"] .tbl td{border-bottom-color:var(--border)}
 </style>
 </head>
 <body>
@@ -125,6 +138,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <nav>
     <a class="active" onclick="showSection('overview',this)"><span class="icon">📊</span><span class="ln" data-en="Overview" data-zh="总览">总览</span></a>
     <a onclick="showSection('inflow',this)"><span class="icon">💰</span><span class="ln" data-en="Inflow" data-zh="资金流入">资金流入</span></a>
+    <a onclick="showSection('gpu',this)"><span class="icon">🔲</span><span class="ln" data-en="GPU Chips" data-zh="芯片供给">芯片供给</span></a>
     <a onclick="showSection('risk',this)"><span class="icon">⚠️</span><span class="ln" data-en="Risk" data-zh="风险信号">风险信号</span></a>
     <a onclick="showSection('valuation',this)"><span class="icon">📈</span><span class="ln" data-en="Valuation" data-zh="估值">估值</span></a>
     <a onclick="showSection('regional',this)"><span class="icon">🌏</span><span class="ln" data-en="Regional" data-zh="区域">区域</span></a>
@@ -133,6 +147,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <a onclick="showSection('about',this)"><span class="icon">ℹ️</span><span class="ln" data-en="About" data-zh="关于">关于</span></a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN / 中</button>
+  <button class="lang-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
   <div class="update-info"><span class="ln" data-en="Last: 2026-07-05 W27" data-zh="最后: 2026-07-05 第27周">最后: 2026-07-05 第27周</span></div>
 </div>
 
@@ -198,7 +213,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="kpi g"><div class="lbl"><span class="ln" data-en="Inflow Score" data-zh="流入评分">流入评分</span></div><div class="val g">9<span style="font-size:16px;color:var(--text3)">/10</span></div><div class="chg fl"><span class="ln" data-en="→ Strong" data-zh="→ 强劲">→ 强劲</span></div></div>
       <div class="kpi r"><div class="lbl"><span class="ln" data-en="Risk Score" data-zh="风险评分">风险评分</span></div><div class="val r">6<span style="font-size:16px;color:var(--text3)">/10</span></div><div class="chg dn"><span class="ln" data-en="↑ from 5" data-zh="↑ 自5">↑ 自5</span></div></div>
       <div class="kpi o"><div class="lbl"><span class="ln" data-en="DC Utilization" data-zh="DC利用率">DC利用率</span></div><div class="val o">68%</div><div class="chg dn"><span class="ln" data-en="↓ from 79%" data-zh="↓ 自79%">↓ 自79%</span></div></div>
-      <div class="kpi p"><div class="lbl"><span class="ln" data-en="Moratoriums" data-zh="禁令数">禁令数</span></div><div class="val p">300+</div><div class="chg dn"><span class="ln" data-en="↑ 275 in '26" data-zh="↑ 275项在2026">↑ 275项在2026</span></div></div>
+      <div class="kpi p"><div class="lbl"><span class="ln" data-en="Moratoriums" data-zh="禁建令数">禁建令数</span></div><div class="val p">300+</div><div class="chg dn"><span class="ln" data-en="↑ 275 in '26" data-zh="↑ 275项在2026">↑ 275项在2026</span></div></div>
     </div>
 
     <!-- Valuation + Capex/Revenue (decision-critical) -->
@@ -220,7 +235,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         <div id="c-top3" class="chart"></div>
       </div>
       <div class="card">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Regional: Investment vs Risk" data-zh="区域: 投资额 vs 风险">区域: 投资额 vs 风险</span><span class="help-icon">?<span class="help-tip"><b>Regional Capital Flow Analysis</b><br><span class="ln" data-en="Three quantified metrics per region: Blue = 2026E capex ($B), Green = YoY growth rate (%), Red = regulatory risk (0-5 scale based on moratorium count). Key insight: North America has the most capital but highest risk; Middle East has fastest growth with zero regulatory阻力." data-zh="每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。">每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。</span></span></span></div><div class="card-s"><span class="ln" data-en="2026E capex, YoY growth, reg risk" data-zh="2026E Capex、增速、监管风险">2026E Capex、增速、监管风险</span></div></div></div>
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Regional: Investment vs Risk" data-zh="区域: 投资额 vs 风险">区域: 投资额 vs 风险</span><span class="help-icon">?<span class="help-tip"><b>Regional Capital Flow Analysis</b><br><span class="ln" data-en="Three quantified metrics per region: Blue = 2026E capex ($B), Green = YoY growth rate (%), Red = regulatory risk (0-5 scale based on moratorium count). Key insight: North America has the most capital but highest risk; Middle East has fastest growth with zero regulatory阻力." data-zh="每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁建令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。">每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁建令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。</span></span></span></div><div class="card-s"><span class="ln" data-en="2026E capex, YoY growth, reg risk" data-zh="2026E Capex、增速、监管风险">2026E Capex、增速、监管风险</span></div></div></div>
         <div id="c-region" class="chart"></div>
       </div>
     </div>
@@ -273,6 +288,59 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
+  <!-- GPU SUPPLY CHAIN -->
+  <div class="section" id="sec-gpu">
+    <div class="section-title">🔲 <span class="ln" data-en="AI Chip Supply Chain" data-zh="AI 芯片供给链">AI 芯片供给链</span></div>
+    <div class="kpi-row">
+      <div class="kpi b"><div class="lbl"><span class="ln" data-en="NVIDIA DC Revenue Q1'26" data-zh="NVIDIA DC 营收 Q1'26">NVIDIA DC 营收 Q1'26</span></div><div class="val b">$44.2B</div><div class="chg up">+25% QoQ</div></div>
+      <div class="kpi g"><div class="lbl"><span class="ln" data-en="GPU Lead Time" data-zh="GPU 交期">GPU 交期</span></div><div class="val g">~8w</div><div class="chg dn">↓ from 40w</div></div>
+      <div class="kpi o"><div class="lbl"><span class="ln" data-en="NVIDIA HBM Share" data-zh="NVIDIA HBM 份额">NVIDIA HBM 份额</span></div><div class="val o">58%</div><div class="chg fl">of global</div></div>
+      <div class="kpi p"><div class="lbl"><span class="ln" data-en="ASIC Share" data-zh="ASIC 占比">ASIC 占比</span></div><div class="val p">18%</div><div class="chg up">↑ +6pp YoY</div></div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="NVIDIA Data Center Revenue" data-zh="NVIDIA 数据中心营收">NVIDIA 数据中心营收</span><span class="help-icon">?<span class="help-tip"><b>NVIDIA DC Revenue (Quarterly)</b><br><span class="ln" data-en="Quarterly data center revenue in billions USD. The exponential growth from $4.3B (Q1'24) to $44.2B (Q1'26) represents a 10x increase in 2 years. Key risk: any growth deceleration triggers immediate valuation correction given the stock's premium multiple." data-zh="NVIDIA数据中心季度营收(十亿美元)。从Q1'24的$43亿到Q1'26的$442亿，两年间增长10倍。核心风险：任何增速放缓将立即触发估值修正，因为该股享有溢价倍数。">NVIDIA数据中心季度营收(十亿美元)。从Q1'24的$43亿到Q1'26的$442亿，两年间增长10倍。核心风险：任何增速放缓将立即触发估值修正，因为该股享有溢价倍数。</span></span></span></div><div class="card-s">USD Billions · Fiscal Quarters</div></div><div class="tag g">+25% QoQ</div></div>
+        <div id="c-nvda" class="chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="GPU Lead Time Trend" data-zh="GPU 交期趋势">GPU 交期趋势</span><span class="help-icon">?<span class="help-tip"><b>GPU Lead Time (Weeks)</b><br><span class="ln" data-en="Average delivery lead time for H100/B200 GPUs from order to fulfillment. Dropped from 40+ weeks (2023 shortage peak) to ~8 weeks (2026 Q1) as TSMC CoWoS capacity expanded. B200 ramp created temporary spike in Q1'25. Below 8 weeks = supply/demand equilibrium." data-zh="H100/B200 GPU从下单到交付的平均交期(周)。从2023年高峰40+周降至2026 Q1约8周，因台积电CoWoS产能扩张。B200爬坡在Q1'25造成短暂回升。低于8周=供需平衡。">H100/B200 GPU从下单到交付的平均交期(周)。从2023年高峰40+周降至2026 Q1约8周，因台积电CoWoS产能扩张。B200爬坡在Q1'25造成短暂回升。低于8周=供需平衡。</span></span></span></div><div class="card-s"><span class="ln" data-en="Weeks · Source: SemiAnalysis" data-zh="周数 · 来源: SemiAnalysis">周数 · 来源: SemiAnalysis</span></div></div><div class="tag g">↓ Easing</div></div>
+        <div id="c-gpu-lt" class="chart"></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="AI Chip Competitive Landscape" data-zh="AI 芯片竞争格局">AI 芯片竞争格局</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="padding:10px;background:var(--green-l);border-radius:10px">
+              <div style="font-weight:700;color:var(--green);margin-bottom:4px">NVIDIA B200/GB200</div>
+              <div style="font-size:11px"><span class="ln" data-en="Market: ~82% · Lead: dominant · Blackwell ramp Q1'26" data-zh="份额: ~82% · 领先 · Blackwell Q1'26爬坡">份额: ~82% · 领先 · Blackwell Q1'26爬坡</span></div>
+            </div>
+            <div style="padding:10px;background:var(--blue-l);border-radius:10px">
+              <div style="font-weight:700;color:var(--blue);margin-bottom:4px">AMD MI300X/MI400</div>
+              <div style="font-size:11px"><span class="ln" data-en="Share: ~8% · Big 3 increasing adoption · MI400 2027" data-zh="份额: ~8% · 三大云厂采用增长 · MI400 2027">份额: ~8% · 三大云厂采用增长 · MI400 2027</span></div>
+            </div>
+            <div style="padding:10px;background:var(--orange-l);border-radius:10px">
+              <div style="font-weight:700;color:var(--orange);margin-bottom:4px"><span class="ln" data-en="ASIC (TPU/Trainium/Maia)" data-zh="ASIC (TPU/Trainium/Maia)">ASIC (TPU/Trainium/Maia)</span></div>
+              <div style="font-size:11px"><span class="ln" data-en="Share: ~18% · Google TPUv6 in production · Amazon Trainium2 scaling" data-zh="份额: ~18% · Google TPUv6量产 · Amazon Trainium2扩产">份额: ~18% · Google TPUv6量产 · Amazon Trainium2扩产</span></div>
+            </div>
+            <div style="padding:10px;background:var(--red-l);border-radius:10px">
+              <div style="font-weight:700;color:var(--red);margin-bottom:4px"><span class="ln" data-en="China Domestic (Ascend/BR100)" data-zh="中国国产 (昇腾/壁仞)">中国国产 (昇腾/壁仞)</span></div>
+              <div style="font-size:11px"><span class="ln" data-en="Share: <5% global · Huawei Ascend 910C · US export constraints" data-zh="份额: <5%全球 · 华为昇腾910C · 受美国出口管制">份额: <5%全球 · 华为昇腾910C · 受美国出口管制</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="HBM Allocation by Customer" data-zh="HBM 客户分配">HBM 客户分配</span></div></div></div>
+        <div id="c-hbm-share" class="chart" style="display:flex;justify-content:center"></div>
+        <div style="margin-top:8px;padding:8px 10px;background:var(--blue-l);border-radius:8px;font-size:11px;color:var(--text2);line-height:1.6">
+          <span class="ln" data-en="<b>NVIDIA eats 58%</b> of global HBM supply — more than the next 5 customers combined. SK Hynix holds ~55% HBM market share and Samsung ~35%. With HBM4 priced at $700/unit (+30% vs HBM3E) and 2026 capacity sold out, memory makers have unprecedented pricing power. Risk: any NVIDIA demand slowdown cascades directly to HBM suppliers." data-zh="<b>NVIDIA 吃掉全球 58%</b> 的 HBM 供给，超过其后 5 家客户总和。SK 海力士占据 ~55% HBM 市场份额，三星 ~35%。HBM4 单价 $700（较 HBM3E +30%）且 2026 年产能售罄，存储厂掌握前所未有的定价权。风险：NVIDIA 需求一旦放缓，将直接传导至 HBM 供应商。"><b>NVIDIA 吃掉全球 58%</b> 的 HBM 供给，超过其后 5 家客户总和。SK 海力士占据 ~55% HBM 市场份额，三星 ~35%。HBM4 单价 $700（较 HBM3E +30%）且 2026 年产能售罄，存储厂掌握前所未有的定价权。风险：NVIDIA 需求一旦放缓，将直接传导至 HBM 供应商。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- RISK -->
   <div class="section" id="sec-risk">
     <div class="section-title">⚠️ <span class="ln" data-en="Risk & Outflow Signals" data-zh="风险与流出信号">风险与流出信号</span></div>
@@ -289,9 +357,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         </div>
       </div>
       <div class="card">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="US Moratorium Wave" data-zh="美国禁令潮">美国禁令潮</span></div></div><div class="tag r">300+</div></div>
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="US Moratorium Wave" data-zh="美国禁建潮">美国禁建潮</span></div></div><div class="tag r">300+</div></div>
         <div style="font-size:12px;color:var(--text2)">
-          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>300+</b> <span class="ln" data-en="total restrictions since 2023" data-zh="自2023年起禁令总数">自2023年起禁令总数</span></div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>300+</b> <span class="ln" data-en="total restrictions since 2023" data-zh="自2023年起禁建令总数">自2023年起禁建令总数</span></div>
           <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>275+</b> <span class="ln" data-en="issued in 2026 alone" data-zh="2026年内出台">2026年内出台</span></div>
           <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>27</b> <span class="ln" data-en="states advancing bills" data-zh="州推进法案">州推进法案</span></div>
           <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>69</b> <span class="ln" data-en="counties with formal moratoriums" data-zh="正式暂停令郡县">正式暂停令郡县</span></div>
@@ -301,12 +369,55 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
     <div class="g2">
       <div class="card">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Moratorium Growth" data-zh="禁令增长曲线">禁令增长曲线</span><span class="help-icon">?<span class="help-tip"><b>US Data Center Moratorium Wave</b><br><span class="ln" data-en="Cumulative count of local/state restrictions on data center construction since 2023. The exponential curve from 30 (2023) to 300+ (2026) signals systemic political resistance, not isolated NIMBY cases. This is the primary supply-side risk for US data center expansion." data-zh="2023年以来美国数据中心建设限制的累计数量。从30（2023）到300+（2026）的指数增长曲线表明系统性政治阻力，而非个别NIMBY案例。这是美国数据中心扩张的首要供给端风险。">2023年以来美国数据中心建设限制的累计数量。从30（2023）到300+（2026）的指数增长曲线表明系统性政治阻力，而非个别NIMBY案例。这是美国数据中心扩张的首要供给端风险。</span></span></span></div></div></div>
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Moratorium Growth" data-zh="禁建令增长曲线">禁建令增长曲线</span><span class="help-icon">?<span class="help-tip"><b>US Data Center Moratorium Wave</b><br><span class="ln" data-en="Cumulative count of local/state restrictions on data center construction since 2023. The exponential curve from 30 (2023) to 300+ (2026) signals systemic political resistance, not isolated NIMBY cases. This is the primary supply-side risk for US data center expansion." data-zh="2023年以来美国数据中心建设限制的累计数量。从30（2023）到300+（2026）的指数增长曲线表明系统性政治阻力，而非个别NIMBY案例。这是美国数据中心扩张的首要供给端风险。">2023年以来美国数据中心建设限制的累计数量。从30（2023）到300+（2026）的指数增长曲线表明系统性政治阻力，而非个别NIMBY案例。这是美国数据中心扩张的首要供给端风险。</span></span></span></div></div></div>
         <div id="c-morat" class="chart"></div>
       </div>
       <div class="card">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Risk Radar" data-zh="风险雷达">风险雷达</span><span class="help-icon">?<span class="help-tip"><b>8-Dimension Risk Radar</b><br><span class="ln" data-en="Plots 8 risk factors on a 0-100% scale. Red dashed circle = 60% danger threshold. Capex/CF (90%) and Moratorium (85%) are the most critical risks currently. Hover points for details." data-zh="8个风险因子的0-100%量化评分。红色虚线圆=60%危险阈值。Capex/现金流(90%)和禁令(85%)是最关键风险。">8个风险因子的0-100%量化评分。红色虚线圆=60%危险阈值。Capex/现金流(90%)和禁令(85%)是最关键风险。</span></span></span></div></div><div class="card-s"><span class="ln" data-en="Red line = 60% danger" data-zh="红线 = 60%危险阈值">红线 = 60%危险阈值</span></div></div>
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Risk Radar" data-zh="风险雷达">风险雷达</span><span class="help-icon">?<span class="help-tip"><b>8-Dimension Risk Radar</b><br><span class="ln" data-en="Plots 8 risk factors on a 0-100% scale. Red dashed circle = 60% danger threshold. Capex/CF (90%) and Moratorium (85%) are the most critical risks currently. Hover points for details." data-zh="8个风险因子的0-100%量化评分。红色虚线圆=60%危险阈值。Capex/现金流(90%)和禁建令(85%)是最关键风险。">8个风险因子的0-100%量化评分。红色虚线圆=60%危险阈值。Capex/现金流(90%)和禁建令(85%)是最关键风险。</span></span></span></div></div><div class="card-s"><span class="ln" data-en="Red line = 60% danger" data-zh="红线 = 60%危险阈值">红线 = 60%危险阈值</span></div></div>
         <div id="c-radar" class="chart" style="display:flex;justify-content:center"></div>
+      </div>
+    </div>
+    <!-- Power Cost Tracker -->
+    <div class="g2">
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Regional Power Cost ($/MWh)" data-zh="区域电力成本 ($/MWh)">区域电力成本 ($/MWh)</span><span class="help-icon">?<span class="help-tip"><b>Data Center Power Costs</b><br><span class="ln" data-en="Electricity is 30-40% of data center operating costs. Regional power price disparities create a natural arbitrage for DC location. Rising power costs + potential carbon taxes are the single biggest margin risk for DC operators beyond utilization." data-zh="电力占数据中心运营成本的30-40%。区域电价差异为DC选址创造了天然套利机会。电价上涨+潜在碳税是DC运营商除利用率外最大的利润率风险。">电力占数据中心运营成本的30-40%。区域电价差异为DC选址创造了天然套利机会。电价上涨+潜在碳税是DC运营商除利用率外最大的利润率风险。</span></span></span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between">
+            <div><b><span class="ln" data-en="N. Virginia (US)" data-zh="北弗吉尼亚 (美)">北弗吉尼亚 (美)</span></b><br><span style="font-size:10px;color:var(--text3)"><span class="ln" data-en="Largest DC market" data-zh="全球最大DC市场">全球最大DC市场</span></span></div>
+            <div style="text-align:right"><b style="color:var(--green)">$58</b><br><span style="font-size:10px;color:var(--green)">+12% YoY</span></div>
+          </div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between">
+            <div><b><span class="ln" data-en="Silicon Valley (US)" data-zh="硅谷 (美)">硅谷 (美)</span></b></div>
+            <div style="text-align:right"><b style="color:var(--orange)">$112</b><br><span style="font-size:10px;color:var(--orange)">+18% YoY</span></div>
+          </div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between">
+            <div><b><span class="ln" data-en="Frankfurt (EU)" data-zh="法兰克福 (欧)">法兰克福 (欧)</span></b></div>
+            <div style="text-align:right"><b style="color:var(--orange)">$95</b><br><span style="font-size:10px;color:var(--orange)">+22% YoY</span></div>
+          </div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between">
+            <div><b><span class="ln" data-en="Dublin (EU)" data-zh="都柏林 (欧)">都柏林 (欧)</span></b></div>
+            <div style="text-align:right"><b style="color:var(--red)">$138</b><br><span style="font-size:10px;color:var(--red)">+31% YoY</span></div>
+          </div>
+          <div style="padding:8px 0;display:flex;justify-content:space-between">
+            <div><b><span class="ln" data-en="Riyadh (ME)" data-zh="利雅得 (中东)">利雅得 (中东)</span></b></div>
+            <div style="text-align:right"><b style="color:var(--green)">$32</b><br><span style="font-size:10px;color:var(--text3)">flat</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Renewable Energy Mix" data-zh="可再生能源占比">可再生能源占比</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Amazon" data-zh="亚马逊">亚马逊</span></b>: <span style="color:var(--green)">100%</span> <span class="ln" data-en="(matched, 2025 achieved)" data-zh="(已匹配, 2025达成)">(已匹配, 2025达成)</span></div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Microsoft" data-zh="微软">微软</span></b>: <span style="color:var(--green)">100%</span> <span class="ln" data-en="(by 2030, PPA-heavy)" data-zh="(2030目标, 大量PPA)">(2030目标, 大量PPA)</span></div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Google" data-zh="谷歌">谷歌</span></b>: <span style="color:var(--green)">100%</span> <span class="ln" data-en="(24/7 CFE by 2030)" data-zh="(2030 24/7 CFE)">(2030 24/7 CFE)</span></div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Meta" data-zh="Meta">Meta</span></b>: <span style="color:var(--blue)">~80%</span> <span class="ln" data-en="(nuclear + solar PPA)" data-zh="(核能+太阳能PPA)">(核能+太阳能PPA)</span></div>
+          <div style="padding:8px 0">
+            <div style="padding:8px;background:var(--blue-l);border-radius:8px;margin-top:8px">
+              <div style="font-weight:600;color:var(--blue);margin-bottom:4px">⚡ <span class="ln" data-en="Nuclear Renaissance" data-zh="核能复兴">核能复兴</span></div>
+              <div style="font-size:11px"><span class="ln" data-en="Microsoft (Three Mile Island), Amazon (Susquehanna), Google (SMR Kairos). DC operators signing 20+yr nuclear PPAs for 24/7 carbon-free power." data-zh="微软(三里岛)、亚马逊(Susquehanna)、谷歌(SMR Kairos)。DC运营商签署20+年核电PPA，锁定全天候零碳电力。">微软(三里岛)、亚马逊(Susquehanna)、谷歌(SMR Kairos)。DC运营商签署20+年核电PPA，锁定全天候零碳电力。</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -400,10 +511,70 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
           <div style="color:var(--text2);line-height:1.8">
             <div>• <span class="ln" data-en="Capex/revenue 31% (dot-com 32%)" data-zh="Capex/收入 31%（泡沫峰值 32%）">Capex/收入 31%（泡沫峰值 32%）</span></div>
             <div>• <span class="ln" data-en="Utilization 68% (↓11ppt)" data-zh="利用率 68%（↓11个百分点）">利用率 68%（↓11个百分点）</span></div>
-            <div>• <span class="ln" data-en="300+ moratoriums blocking supply" data-zh="300+ 禁令阻碍供给">300+ 禁令阻碍供给</span></div>
+            <div>• <span class="ln" data-en="300+ moratoriums blocking supply" data-zh="300+ 禁建令阻碍供给">300+ 禁建令阻碍供给</span></div>
             <div>• <span class="ln" data-en="Q2 earnings miss = instant selloff" data-zh="Q2 财报不及预期 = 立即抛售">Q2 财报不及预期 = 立即抛售</span></div>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Cycle Comparison -->
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Cycle Comparison: AI Now vs Historical Bubbles" data-zh="周期对比: 当前AI vs 历史泡沫">周期对比: 当前AI vs 历史泡沫</span><span class="help-icon">?<span class="help-tip"><b>Historical Cycle Comparison</b><br><span class="ln" data-en="Compare the current AI infrastructure cycle against the 2000 dot-com bubble and 2017 crypto mania. While no two cycles are identical, the pattern of overinvestment → oversupply → correction is remarkably consistent across technology infrastructure booms." data-zh="对比当前AI基建周期与2000年互联网泡沫和2017年加密货币狂热。虽然每个周期都有不同，但过度投资 → 供给过剩 → 修正的模式在技术基建热潮中惊人地一致。">对比当前AI基建周期与2000年互联网泡沫和2017年加密货币狂热。虽然每个周期都有不同，但过度投资 → 供给过剩 → 修正的模式在技术基建热潮中惊人地一致。</span></span></span></div></div></div>
+      <div style="overflow-x:auto">
+      <table class="tbl">
+        <tr><th><span class="ln" data-en="Metric" data-zh="指标">指标</span></th><th><span class="ln" data-en="AI Now (2026)" data-zh="当前AI (2026)">当前AI (2026)</span></th><th><span class="ln" data-en="Dot-Com (2000)" data-zh="互联网泡沫 (2000)">互联网泡沫 (2000)</span></th><th><span class="ln" data-en="Crypto (2017)" data-zh="加密货币 (2017)">加密货币 (2017)</span></th></tr>
+        <tr>
+          <td><span class="ln" data-en="Capex/Revenue" data-zh="Capex/收入">Capex/收入</span></td>
+          <td class="n neg">31%</td>
+          <td class="n neg">32%</td>
+          <td class="n" style="color:var(--text3)">N/A</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="P/E Expansion" data-zh="PE 扩张">PE 扩张</span></td>
+          <td class="n neg">+60% in 2yr</td>
+          <td class="n neg">+120% in 3yr</td>
+          <td class="n" style="color:var(--text3)">N/A</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="Debt/EBITDA" data-zh="净债务/EBITDA">净债务/EBITDA</span></td>
+          <td class="n pos">0.3x</td>
+          <td class="n neg">2.5x</td>
+          <td class="n" style="color:var(--text3)">N/A</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="FCF Status" data-zh="自由现金流">自由现金流</span></td>
+          <td class="n" style="color:var(--orange)">FCF→0 (2026E)</td>
+          <td class="n neg">Negative</td>
+          <td class="n" style="color:var(--text3)">N/A</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="Utilization" data-zh="利用率">利用率</span></td>
+          <td class="n" style="color:var(--orange)">68% ↓</td>
+          <td class="n neg">40% (post-bust)</td>
+          <td class="n" style="color:var(--text3)">N/A</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="Supply Pipeline" data-zh="供给管道">供给管道</span></td>
+          <td class="n" style="color:var(--orange)">+69% planned vs built</td>
+          <td class="n neg">Fiber 90% overbuilt</td>
+          <td class="n neg">Mining rigs 3x oversupply</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="Narrative" data-zh="叙事">叙事</span></td>
+          <td>"<span class="ln" data-en="AI is the next industrial revolution" data-zh="AI是下一次工业革命">AI是下一次工业革命</span>"</td>
+          <td>"<span class="ln" data-en="Internet changes everything" data-zh="互联网改变一切">互联网改变一切</span>"</td>
+          <td>"<span class="ln" data-en="Blockchain is the new internet" data-zh="区块链是新互联网">区块链是新互联网</span>"</td>
+        </tr>
+        <tr>
+          <td><span class="ln" data-en="Key Difference" data-zh="关键差异">关键差异</span></td>
+          <td style="color:var(--green);font-size:11px"><span class="ln" data-en="Real revenue, real users" data-zh="真实营收, 真实用户">真实营收, 真实用户</span></td>
+          <td style="color:var(--red);font-size:11px"><span class="ln" data-en="No revenue model" data-zh="无收入模型">无收入模型</span></td>
+          <td style="color:var(--red);font-size:11px"><span class="ln" data-en="Speculative only" data-zh="纯投机">纯投机</span></td>
+        </tr>
+      </table>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:var(--orange-l);border-radius:10px;font-size:12px;color:var(--text2)">
+        <span class="ln" data-en="⚠ Bottom line: AI today has significantly stronger fundamentals than dot-com (real cash flows, real customers), but the capex/revenue ratio and FCF trajectory resemble late-1999. The risk is not a dot-com-style collapse, but a multi-year overcapacity hangover where 30-50% of DC capacity sits empty and REIT multiples compress to 12-15x." data-zh="⚠ 结论：当前AI比互联网泡沫有更强的基本面（真实现金流、真实客户），但Capex/收入比率和FCF轨迹与1999年末相似。风险不是互联网泡沫式的崩盘，而是多年的产能过剩后遗症——30-50% DC容量空置，REIT倍数压缩至12-15倍。">⚠ 结论：当前AI比互联网泡沫有更强的基本面（真实现金流、真实客户），但Capex/收入比率和FCF轨迹与1999年末相似。风险不是互联网泡沫式的崩盘，而是多年的产能过剩后遗症——30-50% DC容量空置，REIT倍数压缩至12-15倍。</span>
       </div>
     </div>
   </div>
@@ -414,6 +585,46 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div class="card">
       <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Supply-Demand Gap" data-zh="供需缺口">供需缺口</span><span class="help-icon">?<span class="help-tip"><b>Supply-Demand Gap (GW)</b><br><span class="ln" data-en="Compares planned data center capacity (16GW) vs actual under construction (5GW). The 69% gap means most announced projects won't materialize on time. Key bottleneck: power grid connection queues (5-7+ years in some regions). This is why capex announcements don't equal real capacity." data-zh="对比规划的数据中心容量(16GW)与实际在建容量(5GW)。69%的缺口意味着大部分已宣布的项目无法按时落地。关键瓶颈：电网接入排队（部分地区5-7年以上）。这就是为什么capex宣布不等于真实产能。">对比规划的数据中心容量(16GW)与实际在建容量(5GW)。69%的缺口意味着大部分已宣布的项目无法按时落地。关键瓶颈：电网接入排队（部分地区5-7年以上）。这就是为什么capex宣布不等于真实产能。</span></span></span></div></div><div class="tag r">69%</div></div>
       <div id="c-gap" class="chart"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="China AI Infrastructure Buildout" data-zh="中国 AI 基建布局">中国 AI 基建布局</span><span class="help-icon">?<span class="help-tip"><b>China AI Infrastructure</b><br><span class="ln" data-en="China's domestic AI infrastructure spending and chip progress. Despite US export restrictions on advanced GPUs, China is building an alternative supply chain with domestic chips and national computing networks." data-zh="中国国内AI基建投入和芯片进展。尽管美国对先进GPU出口管制，中国正在构建以国产芯片和全国算力网络为基础的替代供应链。">中国国内AI基建投入和芯片进展。尽管美国对先进GPU出口管制，中国正在构建以国产芯片和全国算力网络为基础的替代供应链。</span></span></span></div></div></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="padding:10px;background:var(--blue-l);border-radius:10px">
+            <div style="font-weight:700;color:var(--blue);margin-bottom:6px"><span class="ln" data-en="Hyperscaler Capex (2026E)" data-zh="中国云厂 Capex (2026E)">中国云厂 Capex (2026E)</span></div>
+            <div style="font-size:11px">
+              <div>▪ 阿里 ¥210B (+62% YoY)</div>
+              <div>▪ 腾讯 ¥150B (+45% YoY)</div>
+              <div>▪ 字节 ¥200B (+89% YoY)</div>
+              <div>▪ <span class="ln" data-en="Total: ¥710B (~$98B)" data-zh="合计: ¥7100亿">合计: ¥7100亿</span></div>
+            </div>
+          </div>
+          <div style="padding:10px;background:var(--orange-l);border-radius:10px">
+            <div style="font-weight:700;color:var(--orange);margin-bottom:6px"><span class="ln" data-en="Domestic GPU Progress" data-zh="国产 GPU 进展">国产 GPU 进展</span></div>
+            <div style="font-size:11px">
+              <div>▪ <span class="ln" data-en="Huawei Ascend 910C: ~80% A100 perf" data-zh="华为昇腾910C: ~80% A100性能">华为昇腾910C: ~80% A100性能</span></div>
+              <div>▪ <span class="ln" data-en="Biren BR100: 7nm, 770 TFLOPS" data-zh="壁仞BR100: 7nm, 770 TFLOPS">壁仞BR100: 7nm, 770 TFLOPS</span></div>
+              <div>▪ <span class="ln" data-en="Cambricon Siyuan 590: in testing" data-zh="寒武纪思元590: 测试中">寒武纪思元590: 测试中</span></div>
+              <div>▪ <span class="ln" data-en="SMIC 7nm capacity: 15K wpm" data-zh="中芯7nm产能: 15K片/月">中芯7nm产能: 15K片/月</span></div>
+            </div>
+          </div>
+          <div style="padding:10px;background:var(--green-l);border-radius:10px">
+            <div style="font-weight:700;color:var(--green);margin-bottom:6px"><span class="ln" data-en="Storage Makers" data-zh="存储厂商">存储厂商</span></div>
+            <div style="font-size:11px">
+              <div>▪ <span class="ln" data-en="YMTC: 232L NAND, ~5% global" data-zh="长江存储: 232层NAND, ~5%全球份额">长江存储: 232层NAND, ~5%全球份额</span></div>
+              <div>▪ <span class="ln" data-en="CXMT: DDR5 sampling, ~3% DRAM" data-zh="长鑫存储: DDR5送样, ~3% DRAM份额">长鑫存储: DDR5送样, ~3% DRAM份额</span></div>
+            </div>
+          </div>
+          <div style="padding:10px;background:var(--red-l);border-radius:10px">
+            <div style="font-weight:700;color:var(--red);margin-bottom:6px"><span class="ln" data-en="Policy: East-West Computing" data-zh="东数西算工程">东数西算工程</span></div>
+            <div style="font-size:11px">
+              <div>▪ <span class="ln" data-en="8 national hubs, 10 clusters" data-zh="8大枢纽, 10大集群">8大枢纽, 10大集群</span></div>
+              <div>▪ <span class="ln" data-en="Target: 300 EFLOPS by 2027" data-zh="目标: 2027年300 EFLOPS">目标: 2027年300 EFLOPS</span></div>
+              <div>▪ <span class="ln" data-en="Guizhou/InnerMongolia: green power" data-zh="贵州/内蒙古: 绿色电力优势">贵州/内蒙古: 绿色电力优势</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -564,7 +775,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
           </div>
           <div>
             <div style="padding:8px 0;border-bottom:1px solid var(--border)">
-              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="4. Federal DC Moratorium" data-zh="4. 联邦级数据中心禁令">4. 联邦级数据中心禁令</span></div>
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="4. Federal DC Moratorium" data-zh="4. 联邦级数据中心禁建令">4. 联邦级数据中心禁建令</span></div>
               <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Sanders+AOC bill passes Senate → halts ALL new US construction" data-zh="Sanders+AOC法案通过参议院 → 暂停全美新建">Sanders+AOC法案通过参议院 → 暂停全美新建</span></div>
               <div style="margin-top:4px"><span class="ln" data-en="Current: Senate unlikely to pass" data-zh="当前: 参议院通过概率低">当前: 参议院通过概率低</span> <span style="color:var(--green)">✓</span></div>
             </div>
@@ -605,7 +816,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
               <div style="margin-top:4px"><span class="tag orange" style="font-size:10px"><span class="ln" data-en="Jun 5 report" data-zh="6/5报道">6/5报道</span></span></div>
             </div>
             <div style="padding:8px 0">
-              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="300+ Moratoriums" data-zh="300+禁令">300+禁令</span></div>
+              <div style="font-weight:600;color:var(--text)"><span class="ln" data-en="300+ Moratoriums" data-zh="300+禁建令">300+禁建令</span></div>
               <div style="color:var(--text3);font-size:11px"><span class="ln" data-en="Systemic US supply constraint — 27 states, 70% public opposition" data-zh="系统性美国供给约束 — 27州, 70%民众反对">系统性美国供给约束 — 27州, 70%民众反对</span></div>
               <div style="margin-top:4px"><span class="tag red" style="font-size:10px"><span class="ln" data-en="Escalating" data-zh="升级中">升级中</span></span></div>
             </div>
@@ -669,7 +880,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
           <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Mon</span> — <span class="ln" data-en="Check hyperscaler stock reactions, DRAM/NAND spot prices" data-zh="检查超大规模厂商股价反应, DRAM/NAND现货价">检查超大规模厂商股价反应, DRAM/NAND现货价</span></div>
           <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Tue</span> — <span class="ln" data-en="Korea customs export data, TrendForce weekly report" data-zh="韩国海关出口数据, TrendForce周报">韩国海关出口数据, TrendForce周报</span></div>
           <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Wed</span> — <span class="ln" data-en="SPV/credit market news, DC project updates" data-zh="SPV/信贷市场新闻, DC项目进展">SPV/信贷市场新闻, DC项目进展</span></div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Thu</span> — <span class="ln" data-en="Moratorium/legislation tracker, Apple supply chain" data-zh="禁令/立法追踪, 苹果供应链">禁令/立法追踪, 苹果供应链</span></div>
+          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--blue);font-weight:600">Thu</span> — <span class="ln" data-en="Moratorium/legislation tracker, Apple supply chain" data-zh="禁建令/立法追踪, 苹果供应链">禁建令/立法追踪, 苹果供应链</span></div>
           <div style="padding:4px 0"><span style="color:var(--blue);font-weight:600">Fri</span> — <span class="ln" data-en="Weekly summary, positions review, next week outlook" data-zh="周度总结, 持仓回顾, 下周展望">周度总结, 持仓回顾, 下周展望</span></div>
         </div>
       </div>
@@ -785,6 +996,21 @@ function toggleLang(){
     if(redrawMap[id]) redrawMap[id]();
   }
 }
+// ===== THEME =====
+let theme=localStorage.getItem('theme')||'light';
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',theme);
+  document.getElementById('themeBtn').textContent=theme==='dark'?'☀️':'🌙';
+}
+applyTheme();
+function toggleTheme(){
+  theme=theme==='dark'?'light':'dark';
+  localStorage.setItem('theme',theme);
+  applyTheme();
+  const as=document.querySelector('.section.active');
+  if(as){const id=as.id.replace('sec-','');const m={overview:drawAll,inflow:()=>{drawCapex();drawDonut();drawSPV()},gpu:()=>{drawNvdaRev();drawGpuLeadTime();drawHbmShare()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:drawStorage};if(m[id])m[id]()}
+}
+
 // Apply initial language
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
@@ -800,7 +1026,7 @@ function showSection(id,el){
   document.getElementById('sec-'+id).classList.add('active');
   document.querySelectorAll('.sidebar nav a').forEach(a=>a.classList.remove('active'));
   if(el) el.classList.add('active');
-  const redraw={overview:drawAll,inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},valuation:null,regional:drawGap,storage:drawStorage,about:null};
+  const redraw={overview:drawAll,inflow:()=>{drawCapex();drawDonut();drawSPV()},gpu:()=>{drawNvdaRev();drawGpuLeadTime();drawHbmShare()},risk:()=>{drawMorat();drawRadar();drawTimeline()},valuation:null,regional:drawGap,storage:drawStorage,about:null};
   if(redraw[id]){
     if(id==='storage') setTimeout(()=>redraw[id](),50);
     else redraw[id]();
@@ -915,6 +1141,52 @@ function drawSPV(){
   g.selectAll('.v').data(data).join('text').attr('x',d=>x(d.n)+x.bandwidth()/2).attr('y',d=>y(d.v)-6).attr('text-anchor','middle').attr('font-size',11).attr('font-weight',700).attr('fill',d=>d.c).attr('opacity',0).text(d=>`$${d.v}B`).transition().delay(900).duration(400).attr('opacity',1);
 }
 
+// ===== NVIDIA DC REVENUE =====
+function drawNvdaRev(){
+  d3.select('#c-nvda').selectAll('*').remove();
+  const data=[{q:'Q1\'24',v:4.3},{q:'Q2\'24',v:10.3},{q:'Q3\'24',v:14.5},{q:'Q4\'24',v:18.4},{q:'Q1\'25',v:22.6},{q:'Q2\'25',v:26.3},{q:'Q3\'25',v:30.8},{q:'Q4\'25',v:35.1},{q:'Q1\'26',v:44.2}],c='#3b82f6';
+  const svg=d3.select('#c-nvda').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scaleBand().domain(data.map(d=>d.q)).range([0,iw]).padding(.3);
+  const y=d3.scaleLinear().domain([0,50]).range([ih,0]);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>'$'+d+'B').tickSize(-iw).tickPadding(10)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0').attr('stroke-dasharray','2,2'));
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',9).attr('fill','#6b7280');
+  g.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.q)).attr('y',ih).attr('width',x.bandwidth()).attr('height',0).attr('fill',c).attr('rx',6).attr('opacity',.85)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.q}</b>: $${d.v}B`)}).on('mouseout',function(){d3.select(this).attr('opacity',.85);hideTip()})
+    .transition().duration(800).ease(d3.easeCubicOut).delay((_,i)=>i*60).attr('y',d=>y(d.v)).attr('height',d=>ih-y(d.v));
+}
+
+// ===== GPU LEAD TIME =====
+function drawGpuLeadTime(){
+  d3.select('#c-gpu-lt').selectAll('*').remove();
+  const data=[{d:'Q1\'23',v:42},{d:'Q3\'23',v:38},{d:'Q1\'24',v:30},{d:'Q3\'24',v:18},{d:'Q1\'25',v:14},{d:'Q3\'25',v:8},{d:'Q1\'26',v:8}];
+  const svg=d3.select('#c-gpu-lt').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
+  const x=d3.scalePoint().domain(data.map(d=>d.d)).range([0,iw]);
+  const y=d3.scaleLinear().domain([0,50]).range([ih,0]);
+  const line=d3.line().x(d=>x(d.d)).y(d=>y(d.v)).curve(d3.curveMonotoneX);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'w').tickSize(-iw).tickPadding(10)).call(g=>g.select('.domain').remove()).call(g=>g.selectAll('.tick line').attr('stroke','#f0f0f0').attr('stroke-dasharray','2,2'));
+  g.append('g').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickSize(0).tickPadding(12)).call(g=>g.select('.domain').attr('stroke','#e5e7eb')).selectAll('text').attr('font-size',9).attr('fill','#6b7280');
+  g.append('path').datum(data).attr('d',line).attr('fill','none').attr('stroke','#ef4444').attr('stroke-width',3).attr('stroke-linecap','round');
+  g.selectAll('circle').data(data).join('circle').attr('cx',d=>x(d.d)).attr('cy',d=>y(d.v)).attr('r',5).attr('fill','#ef4444')
+    .on('mouseover',function(e,d){d3.select(this).attr('r',7);showTip(e,`<b>${d.d}</b>: ${d.v}w`)}).on('mouseout',function(){d3.select(this).attr('r',5);hideTip()});
+  // Threshold line
+  g.append('line').attr('x1',0).attr('x2',iw).attr('y1',y(8)).attr('y2',y(8)).attr('stroke','#10b981').attr('stroke-dasharray','5,5').attr('stroke-width',1.5);
+  g.append('text').attr('x',iw).attr('y',y(8)-6).attr('text-anchor','end').attr('font-size',9).attr('fill','#10b981').text('~8w equilibrium');
+}
+
+// ===== HBM SHARE DONUT =====
+function drawHbmShare(){
+  d3.select('#c-hbm-share').selectAll('*').remove();
+  const data=[{n:'NVIDIA',v:58,c:'#3b82f6'},{n:'AMD',v:12,c:'#10b981'},{n:'Google',v:8,c:'#f59e0b'},{n:'Amazon',v:6,c:'#8b5cf6'},{n:'Microsoft',v:5,c:'#ef4444'},{n:'Others',v:11,c:'#94a3b8'}];
+  const cW=260,cH=260,r=100,ir=55;
+  const svg=d3.select('#c-hbm-share').append('svg').attr('viewBox',`0 0 ${cW} ${cH}`);
+  const g=svg.append('g').attr('transform',`translate(${cW/2},${cH/2})`);
+  const pie=d3.pie().value(d=>d.v).sort(null);
+  const arc=d3.arc().innerRadius(ir).outerRadius(r).cornerRadius(4);
+  g.selectAll('path').data(pie(data)).join('path').attr('d',arc).attr('fill',d=>d.data.c).attr('opacity',.85).attr('stroke','#fff').attr('stroke-width',2)
+    .on('mouseover',function(e,d){d3.select(this).attr('opacity',1);showTip(e,`<b>${d.data.n}</b>: ${d.data.v}%`)}).on('mouseout',function(){d3.select(this).attr('opacity',.85);hideTip()})
+    .transition().duration(800).attrTween('d',d=>{const i=d3.interpolate({startAngle:0,endAngle:0},d);return t=>arc(i(t))});
+}
+
 // ===== MORATORIUM =====
 function drawMorat(){
   d3.select('#c-morat').selectAll('*').remove();
@@ -940,7 +1212,7 @@ function drawRadar(){
   const isZh=lang==='zh';
   const data=[
     {a:isZh?'Capex/现金流':'Capex/CF',v:.9},
-    {a:isZh?'禁令':'Moratorium',v:.85},
+    {a:isZh?'禁建令':'Moratorium',v:.85},
     {a:isZh?'利用率':'Utilization',v:.7},
     {a:isZh?'SPV风险':'SPV Risk',v:.6},
     {a:isZh?'泡沫':'Bubble',v:.55},
@@ -1005,7 +1277,7 @@ function drawTimeline(){
      t:{en:'AirTrunk/Blackstone $21B India',zh:'AirTrunk/Blackstone印度$210亿'},
      imp:{en:'3GW capacity in Maharashtra. Capital flowing to non-US markets. India emerging as key alternative.',zh:'马哈拉施特拉邦3GW容量。资本流向非美国市场，印度崛起为关键替代市场。'}},
     {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
-     t:{en:'US Moratoriums Hit 300+',zh:'美国禁令突破300+'},
+     t:{en:'US Moratoriums Hit 300+',zh:'美国禁建令突破300+'},
      imp:{en:'275+ issued in 2026 alone. 27 states advancing bills. 70% public opposition. Systemic, not isolated.',zh:'2026年内出台275+项。27州推进法案。70%民众反对。系统性阻力，非个案。'}},
     {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
      t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿投资Alphabet数据中心'},
@@ -1154,7 +1426,7 @@ function drawTop3(){
      t:{en:'Meta Sells Spare Compute',zh:'Meta出售闲置算力'},
      imp:{en:'META +9%, CRWV -13%. Compute overcapacity or commercialization loop?',zh:'META +9%, CRWV -13%。算力过剩还是商业化闭环?'}},
     {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
-     t:{en:'US Moratoriums Hit 300+',zh:'美国禁令突破300+'},
+     t:{en:'US Moratoriums Hit 300+',zh:'美国禁建令突破300+'},
      imp:{en:'27 states, 70% public opposition. Systemic risk, not isolated.',zh:'27州, 70%民众反对。系统性风险，非个案。'}},
     {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
      t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿→Alphabet'},
