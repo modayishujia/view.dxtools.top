@@ -98,6 +98,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <a onclick="showSection('regional',this)"><span class="icon">🌏</span><span class="ln" data-en="Regional" data-zh="区域">区域</span></a>
     <a onclick="showSection('storage',this)"><span class="icon">💾</span><span class="ln" data-en="Storage" data-zh="存储价格">存储价格</span></a>
     <a onclick="showSection('detail',this)"><span class="icon">📋</span><span class="ln" data-en="Monitor" data-zh="监控">监控</span></a>
+    <a onclick="showSection('datasource',this)"><span class="icon">🕐</span><span class="ln" data-en="Data Sources" data-zh="数据源">数据源</span></a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN / 中</button>
   <button class="lang-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
@@ -453,6 +454,108 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
+  <!-- DATA SOURCES -->
+  <div class="section" id="sec-datasource">
+    <div class="section-title">🕐 <span class="ln" data-en="Data Update Timeline" data-zh="数据更新时间轴">数据更新时间轴</span></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:16px"><span class="ln" data-en="Latest update times by data source — 2026-07-07" data-zh="各数据源最新更新时间 — 2026-07-07">各数据源最新更新时间 — 2026-07-07</span></div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Core Data Files" data-zh="核心数据文件">核心数据文件</span></div><div class="card-s">indicators.json / history.json / sources.json</div></div></div>
+      <div id="c-datasource" class="chart"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card">
+        <div class="card-t"><span class="ln" data-en="Primary Sources" data-zh="主要数据源">主要数据源</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:12px">
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📊 <span class="ln" data-en="Morgan Stanley" data-zh="摩根士丹利">摩根士丹利</span></span>
+            <span style="color:var(--green);font-weight:600">2026-07-07</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📊 <span class="ln" data-en="Goldman Sachs" data-zh="高盛">高盛</span></span>
+            <span style="color:var(--green);font-weight:600">2026-07-07</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📊 TrendForce</span>
+            <span style="color:var(--text3)">2026-05</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📊 <span class="ln" data-en="Samsung IR" data-zh="三星IR">三星IR</span></span>
+            <span style="color:var(--green);font-weight:600">2026-07-07</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📊 <span class="ln" data-en="CoreWeave IR" data-zh="CoreWeave IR">CoreWeave IR</span></span>
+            <span style="color:var(--text3)">2026-06-12</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0">
+            <span>📊 <span class="ln" data-en="DLR / Equinix IR" data-zh="DLR / Equinix IR">DLR / Equinix IR</span></span>
+            <span style="color:var(--text3)">2026-06</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-t"><span class="ln" data-en="News & Analysis" data-zh="新闻与分析">新闻与分析</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:12px">
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📰 Bloomberg</span>
+            <span style="color:var(--green);font-weight:600">2026-07-07</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📰 <span class="ln" data-en="Financial Times" data-zh="金融时报">金融时报</span></span>
+            <span style="color:var(--green);font-weight:600">2026-07-07</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📰 SemiAnalysis</span>
+            <span style="color:var(--text3)">2026-06-19</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📰 <span class="ln" data-en="Data Center Knowledge" data-zh="Data Center Knowledge">Data Center Knowledge</span></span>
+            <span style="color:var(--green);font-weight:600">2026-07-06</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+            <span>📰 <span class="ln" data-en="Beating (Moratoriums)" data-zh="Beating (禁建令追踪)">Beating (禁建令追踪)</span></span>
+            <span style="color:var(--text3)">2026-06</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0">
+            <span>📰 <span class="ln" data-en="Data Center Watch" data-zh="Data Center Watch">Data Center Watch</span></span>
+            <span style="color:var(--text3)">2026-06</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-t"><span class="ln" data-en="Chinese Sources" data-zh="中文数据源">中文数据源</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:12px;color:var(--text2);margin-top:12px">
+        <div style="padding:10px;background:var(--bg);border-radius:var(--radius-s)">
+          <div style="font-weight:600;margin-bottom:4px"><span class="ln" data-en="Sina Finance" data-zh="新浪财经">新浪财经</span></div>
+          <div style="color:var(--green);font-weight:600">2026-07-07</div>
+        </div>
+        <div style="padding:10px;background:var(--bg);border-radius:var(--radius-s)">
+          <div style="font-weight:600;margin-bottom:4px"><span class="ln" data-en="Xueqiu" data-zh="雪球">雪球</span></div>
+          <div style="color:var(--green);font-weight:600">2026-07-07</div>
+        </div>
+        <div style="padding:10px;background:var(--bg);border-radius:var(--radius-s)">
+          <div style="font-weight:600;margin-bottom:4px"><span class="ln" data-en="Cailian Press" data-zh="财联社">财联社</span></div>
+          <div style="color:var(--green);font-weight:600">2026-07-07</div>
+        </div>
+        <div style="padding:10px;background:var(--bg);border-radius:var(--radius-s)">
+          <div style="font-weight:600;margin-bottom:4px"><span class="ln" data-en="Odaily" data-zh="Odaily">Odaily</span></div>
+          <div style="color:var(--text3)">2026-06-27</div>
+        </div>
+        <div style="padding:10px;background:var(--bg);border-radius:var(--radius-s)">
+          <div style="font-weight:600;margin-bottom:4px"><span class="ln" data-en="LongPort" data-zh="LongPort">LongPort</span></div>
+          <div style="color:var(--text3)">2026-06-30</div>
+        </div>
+        <div style="padding:10px;background:var(--bg);border-radius:var(--radius-s)">
+          <div style="font-weight:600;margin-bottom:4px"><span class="ln" data-en="Jiemian" data-zh="界面新闻">界面新闻</span></div>
+          <div style="color:var(--text3)">2026-06</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">AI Compute Capital Flow Dashboard v3.2 · D3.js · 2026-07-07 · <span class="ln" data-en="Not investment advice" data-zh="不构成投资建议">不构成投资建议</span></div>
 </div>
 
@@ -485,7 +588,7 @@ function toggleLang(){
     if(v) el.innerHTML=v;
   });
   // Redraw charts that contain text
-  drawFFO();drawRatio();drawTop3();drawRegion();drawGap();drawTimeline();drawStorage();
+  drawFFO();drawRatio();drawTop3();drawRegion();drawGap();drawTimeline();drawStorage();drawDataSource();
 }
 // Apply saved language on load
 document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
@@ -1016,6 +1119,31 @@ function drawStorGap(){
 }
 
 function drawStorage(){drawStorPrice();drawStorContract();drawStorGap();}
+
+// ===== DATA SOURCE TIMELINE =====
+function drawDataSource(){
+  d3.select('#c-datasource').selectAll('*').remove();
+  const isZh=lang==='zh';
+  const items=[
+    {name:{en:'indicators.json',zh:'indicators.json'},ver:'v1.5',time:'2026-07-07 08:16',status:'fresh'},
+    {name:{en:'history.json',zh:'history.json'},ver:'W28',time:'2026-07-07 08:16',status:'fresh'},
+    {name:{en:'sources.json',zh:'sources.json'},ver:'',time:'2026-07-07',status:'fresh'},
+    {name:{en:'dashboard.html',zh:'dashboard.html'},ver:'v3.2',time:'2026-07-07 08:20',status:'fresh'},
+    {name:{en:'market.html',zh:'market.html'},ver:'',time:'2026-07-07 08:20',status:'fresh'}
+  ];
+  const W=560,rowH=40;
+  const svg=d3.select('#c-datasource').append('svg').attr('viewBox',`0 0 ${W} ${items.length*rowH+10}`);
+  const g=svg.append('g').attr('transform','translate(10,5)');
+  items.forEach((d,i)=>{
+    const y=i*rowH;
+    g.append('circle').attr('cx',6).attr('cy',y+12).attr('r',5).attr('fill','#10b981').attr('opacity',.8);
+    if(i<items.length-1) g.append('line').attr('x1',6).attr('y1',y+18).attr('x2',6).attr('y2',y+rowH).attr('stroke','#e5e7eb');
+    g.append('text').attr('x',18).attr('y',y+11).attr('font-size',11).attr('font-weight',700).attr('fill','#111827').text(d.name[lang]);
+    if(d.ver) g.append('text').attr('x',18).attr('y',y+25).attr('font-size',10).attr('fill','#6b7280').text(d.ver+' · '+d.time);
+    else g.append('text').attr('x',18).attr('y',y+25).attr('font-size',10).attr('fill','#6b7280').text(d.time);
+    g.append('text').attr('x',W-10).attr('y',y+16).attr('text-anchor','end').attr('font-size',9).attr('font-weight',600).attr('fill','#10b981').text(isZh?'已更新':'UPDATED');
+  });
+}
 
 // ===== INIT =====
 function drawAll(){drawFFO();drawRatio();drawTop3();drawRegion();}
