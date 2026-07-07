@@ -94,6 +94,14 @@
       "frequency": "季度",
       "priority": "medium",
       "next_event": "DLR Q2财报 2026-07-23"
+    },
+    {
+      "name": "Samsung Electronics IR",
+      "url": "https://news.samsung.com/global",
+      "type": "存储/HBM/半导体财报",
+      "frequency": "季度",
+      "priority": "high",
+      "next_event": "三星Q2完整财报 2026-07-30"
     }
   ],
   "chinese_sources": [
