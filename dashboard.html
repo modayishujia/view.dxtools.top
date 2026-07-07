@@ -475,9 +475,10 @@ function toggleTheme(){
 }
 
 // ===== LANGUAGE =====
-let lang='zh';
+let lang=localStorage.getItem('lang')||'zh';
 function toggleLang(){
   lang=lang==='zh'?'en':'zh';
+  localStorage.setItem('lang',lang);
   document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
   document.querySelectorAll('.ln').forEach(el=>{
     const v=el.getAttribute('data-'+lang);
@@ -486,6 +487,12 @@ function toggleLang(){
   // Redraw charts that contain text
   drawFFO();drawRatio();drawTop3();drawRegion();drawGap();drawTimeline();drawStorage();
 }
+// Apply saved language on load
+document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
+document.querySelectorAll('.ln').forEach(el=>{
+  const v=el.getAttribute('data-'+lang);
+  if(v) el.innerHTML=v;
+});
 
 // ===== NAVIGATION =====
 function showSection(id,el){
