@@ -169,29 +169,43 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <!-- Investment Recommendation with embedded data -->
     <div class="rec">
       <div>
-        <h3><span class="ln" data-en="INVESTMENT STANCE" data-zh="投资立场">投资立场</span></h3>
-        <div class="verdict"><span class="ln" data-en='Underweight <span class="hl">Data Center REITs</span>' data-zh='低配 <span class="hl">数据中心REITs</span>'>低配 <span class="hl">数据中心REITs</span></span></div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px">
-          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
-            <div style="font-size:9px;color:rgba(255,255,255,.4)">CAPEX/REV</div>
-            <div style="font-size:16px;font-weight:800;color:var(--orange)">31%</div>
-            <div style="font-size:9px;color:rgba(255,255,255,.35)">peak 32%</div>
+        <h3><span class="ln" data-en="MARKET SENTIMENT" data-zh="市场情绪指数">市场情绪指数</span></h3>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
+          <div style="position:relative;width:80px;height:80px">
+            <svg viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="35" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"/>
+              <circle cx="40" cy="40" r="35" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="176" stroke-dashoffset="53" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <div style="font-size:22px;font-weight:800;color:#f59e0b">70</div>
+              <div style="font-size:8px;color:rgba(255,255,255,.4)">/100</div>
+            </div>
           </div>
-          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
-            <div style="font-size:9px;color:rgba(255,255,255,.4)">P/AFFO</div>
-            <div style="font-size:16px;font-weight:800;color:var(--red)">25-28x</div>
-            <div style="font-size:9px;color:rgba(255,255,255,.35)">avg 16x</div>
+          <div>
+            <div style="font-size:18px;font-weight:800;color:#f59e0b"><span class="ln" data-en="Cautiously Bullish" data-zh="谨慎偏多">谨慎偏多</span></div>
+            <div style="font-size:11px;color:rgba(255,255,255,.5)"><span class="ln" data-en="↑ from 65 (last week)" data-zh="↑ 上周65分">↑ 上周65分</span></div>
           </div>
-          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
-            <div style="font-size:9px;color:rgba(255,255,255,.4)">UTIL</div>
-            <div style="font-size:16px;font-weight:800;color:var(--orange)">68%</div>
-            <div style="font-size:9px;color:rgba(255,255,255,.35)">↓79%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px">
+          <div style="padding:6px 8px;background:rgba(16,185,129,.12);border-radius:6px">
+            <div style="color:rgba(255,255,255,.4);font-size:9px"><span class="ln" data-en="CAPITAL FLOW" data-zh="资金流入">资金流入</span></div>
+            <div style="color:var(--green);font-weight:700"><span class="ln" data-en="Very Strong" data-zh="非常强劲">非常强劲</span> · 9/10</div>
           </div>
-          <div style="padding:6px 8px;background:rgba(255,255,255,.06);border-radius:8px;text-align:center">
-            <div style="font-size:9px;color:rgba(255,255,255,.4)">RISK</div>
-            <div style="font-size:16px;font-weight:800;color:var(--orange)">6/10</div>
-            <div style="font-size:9px;color:rgba(255,255,255,.35)">↑ from 5</div>
+          <div style="padding:6px 8px;background:rgba(239,68,68,.12);border-radius:6px">
+            <div style="color:rgba(255,255,255,.4);font-size:9px"><span class="ln" data-en="RISK SIGNALS" data-zh="风险信号">风险信号</span></div>
+            <div style="color:var(--red);font-weight:700"><span class="ln" data-en="Elevated" data-zh="偏高">偏高</span> · 6/10</div>
           </div>
+          <div style="padding:6px 8px;background:rgba(239,68,68,.12);border-radius:6px">
+            <div style="color:rgba(255,255,255,.4);font-size:9px"><span class="ln" data-en="VALUATION" data-zh="估值">估值</span></div>
+            <div style="color:var(--red);font-weight:700"><span class="ln" data-en="Overvalued" data-zh="高估">高估</span> · P/AFFO 28x</div>
+          </div>
+          <div style="padding:6px 8px;background:rgba(16,185,129,.12);border-radius:6px">
+            <div style="color:rgba(255,255,255,.4);font-size:9px"><span class="ln" data-en="MEMORY CYCLE" data-zh="存储周期">存储周期</span></div>
+            <div style="color:var(--green);font-weight:700"><span class="ln" data-en="Super Cycle" data-zh="超级周期">超级周期</span> · <span class="ln" data-en="Confirmed" data-zh="已确认">已确认</span></div>
+          </div>
+        </div>
+        <div style="margin-top:8px;padding:6px 8px;background:rgba(245,158,10,.1);border-radius:6px;font-size:10px;color:rgba(255,255,255,.5)">
+          <span class="ln" data-en="Key tension: Capex inflow record-high + valuation stretched + Meta overcapacity fear unresolved" data-zh="核心矛盾: Capex流入创新高 + 估值偏贵 + Meta算力过剩恐惧未解">核心矛盾: Capex流入创新高 + 估值偏贵 + Meta算力过剩恐惧未解</span>
         </div>
       </div>
       <div>
