@@ -892,15 +892,15 @@ function drawTop3(){
   d3.select('#c-top3').selectAll('*').remove();
   const isZh=lang==='zh';
   const ev=[
+    {d:'Jul 7',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Samsung Q2 OP ₩89.4T (+1810%)',zh:'三星Q2营业利润89.4万亿(+1810%)'},
+     imp:{en:'Single-quarter > full year 2025. Memory supercycle confirmed. But stocks fell — sell the news.',zh:'单季利润超2025全年。存储超级周期确认。但股价反跌——利好出尽。'}},
+    {d:'Jul 5',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'Blackstone Retreat: QTS $100B+ Gateway Dead',zh:'黑石撤退: QTS千亿Gateway项目终结'},
+     imp:{en:'Sold 3 VA DCs for $3.5B + killed largest DC campus ever. PE giant shrinking AI infra exposure.',zh:'$35亿售出VA三处DC + 终止全球最大DC园区。PE巨头收缩AI基建敞口。'}},
     {d:'Jul 1',tag:{en:'NEUTRAL',zh:'中性'},tagC:'#f59e0b',
-     t:{en:'Meta Sells Spare Compute',zh:'Meta出售闲置算力'},
-     imp:{en:'META +9%, CRWV -13%. Compute overcapacity or commercialization loop?',zh:'META +9%, CRWV -13%。算力过剩还是商业化闭环?'}},
-    {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
-     t:{en:'US Moratoriums Hit 300+',zh:'美国禁建令突破300+'},
-     imp:{en:'27 states, 70% public opposition. Systemic risk, not isolated.',zh:'27州, 70%民众反对。系统性风险，非个案。'}},
-    {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
-     t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿→Alphabet'},
-     imp:{en:'Smart money validates AI infra thesis.',zh:'聪明钱验证AI基建逻辑。'}}
+     t:{en:'Meta Launches Compute Cloud Business',zh:'Meta推出算力出租业务'},
+     imp:{en:'META +9%, CRWV -13%. Compute overcapacity or commercialization loop?',zh:'META +9%, CRWV -13%。算力过剩还是商业化闭环?'}}
   ];
   const rowH=58;
   const svg=d3.select('#c-top3').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*rowH+10}`);
