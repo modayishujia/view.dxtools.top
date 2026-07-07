@@ -46,7 +46,7 @@
     "name": "iGaves",
     "url": "https://x.com/iGaves"
   },
-  "dateModified": "2026-07-06"
+  "dateModified": "2026-07-07"
 }
 </script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -144,11 +144,12 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <a onclick="showSection('regional',this)"><span class="icon">🌏</span><span class="ln" data-en="Regional" data-zh="区域">区域</span></a>
     <a onclick="showSection('storage',this)"><span class="icon">💾</span><span class="ln" data-en="Storage" data-zh="存储价格">存储价格</span></a>
     <a onclick="showSection('detail',this)"><span class="icon">📋</span><span class="ln" data-en="Monitor" data-zh="监控">监控</span></a>
+    <a onclick="showSection('datasource',this)"><span class="icon">🕐</span><span class="ln" data-en="Data Sources" data-zh="数据源">数据源</span></a>
     <a onclick="showSection('about',this)"><span class="icon">ℹ️</span><span class="ln" data-en="About" data-zh="关于">关于</span></a>
   </nav>
   <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN / 中</button>
   <button class="lang-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-  <div class="update-info"><span class="ln" data-en="Last: 2026-07-06 W27" data-zh="最后: 2026-07-06 第27周">最后: 2026-07-06 第27周</span></div>
+  <div class="update-info"><span class="ln" data-en="Last: 2026-07-07 W28" data-zh="最后: 2026-07-07 第28周">最后: 2026-07-07 第28周</span></div>
 </div>
 
 <div class="main">
@@ -157,7 +158,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div style="display:flex;align-items:center;gap:12px">
       <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--green-l);border-radius:20px;font-size:12px;font-weight:500;color:#047857">
         <div style="width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite"></div>
-        <span class="ln" data-en="Data as of Jul 5, 2026" data-zh="数据更新至 2026年7月5日">数据更新至 2026年7月5日</span>
+        <span class="ln" data-en="Data as of Jul 7, 2026" data-zh="数据更新至 2026年7月7日">数据更新至 2026年7月7日</span>
       </div>
       <div class="badge warn"><span class="ln" data-en="⚠ Positive + Escalating Warnings" data-zh="⚠ 正向 + 升级警示">⚠ 正向 + 升级警示</span></div>
     </div>
@@ -203,8 +204,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div>
         <h3><span class="ln" data-en="CATALYSTS 30D" data-zh="30天催化剂">30天催化剂</span></h3>
         <div class="cat">7/23 DLR Q2 — capex/booking</div>
+        <div class="cat">7/23 <span class="ln" data-en="Samsung Q2 full report" data-zh="三星Q2完整财报">三星Q2完整财报</span></div>
         <div class="cat"><span class="ln" data-en="Late Jul Q2 mega-cap — capex guidance" data-zh="7月下旬 四巨头Q2 — capex指引">7月下旬 四巨头Q2 — capex指引</span></div>
-        <div class="cat"><span class="ln" data-en="Meta compute sale follow-up" data-zh="Meta算力出售后续">Meta算力出售后续</span></div>
+        <div class="cat"><span class="ln" data-en="Meta Compute follow-up" data-zh="Meta Compute后续">Meta Compute后续</span></div>
       </div>
     </div>
 
@@ -257,14 +259,15 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
     <div class="g2">
       <div class="card">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="SPV Deals" data-zh="SPV交易">SPV交易</span><span class="help-icon">?<span class="help-tip"><b>SPV (Special Purpose Vehicle) Financing</b><br><span class="ln" data-en="Off-balance-sheet financing structures used by tech companies to fund data centers without recording debt on their books. Total exposure estimated at $1.8T. Key risk: opacity — investors can't see the true leverage. Similar structures preceded the 2008 financial crisis." data-zh="科技公司用于数据中心融资的表外工具，债务不计入资产负债表。总敞口估计$1.8万亿。核心风险：不透明——投资者无法看到真实杠杆率。类似结构曾出现在2008年金融危机前。">科技公司用于数据中心融资的表外工具，债务不计入资产负债表。总敞口估计$1.8万亿。核心风险：不透明——投资者无法看到真实杠杆率。类似结构曾出现在2008年金融危机前。</span></span></span></div><div class="card-s"><span class="ln" data-en="Off-balance-sheet" data-zh="表外融资">表外融资</span></div></div><div class="tag o">$1.8T</div></div>
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="SPV Deals" data-zh="SPV交易">SPV交易</span><span class="help-icon">?<span class="help-tip"><b>SPV (Special Purpose Vehicle) Financing</b><br><span class="ln" data-en="Off-balance-sheet financing structures used by tech companies to fund data centers without recording debt on their books. Total exposure estimated at $1.8T. Key risk: opacity — investors can't see the true leverage. Similar structures preceded the 2008 financial crisis." data-zh="科技公司用于数据中心融资的表外工具，债务不计入资产负债表。总敞口估计$1.8万亿。核心风险：不透明——投资者无法看到真实杠杆率。类似结构曾出现在2008年金融危机前。">科技公司用于数据中心融资的表外工具，债务不计入资产负债表。总敞口估计$1.8万亿。核心风险：不透明——投资者无法看到真实杠杆率。类似结构曾出现在2008年金融危机前。</span></span></span></div><div class="card-s"><span class="ln" data-en="Off-balance-sheet" data-zh="表外融资">表外融资</span></div></div><div class="tag o">$1.9T</div></div>
         <div id="c-spv" class="chart"></div>
       </div>
       <div class="card">
         <div class="card-h"><div><div class="card-t"><span class="ln" data-en="New Capital Entry" data-zh="新资本入场">新资本入场</span></div></div></div>
         <div style="font-size:12px;color:var(--text2)">
-          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>Berkshire → Alphabet</b> $10B · DC · Jun 26</div>
-          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>Saudi PIF/HUMAIN</b> $930B · Hexagon 480MW</div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>SoftBank → France</b> $85B · 5GW AI DC · Jul 7</div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>Alphabet</b> $80B · <span class="ln" data-en="Equity raise" data-zh="股权融资">股权融资</span> · Jul 7</div>
+          <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>Berkshire → Alphabet</b> $10B · DC</div>
           <div style="padding:8px 0;border-bottom:1px solid var(--border)"><b>AirTrunk/Blackstone</b> $21B · India 3GW</div>
           <div style="padding:8px 0"><b>Stargate UAE</b> $30B+ · Phase 1 Q3</div>
         </div>
@@ -346,14 +349,15 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div class="section-title">⚠️ <span class="ln" data-en="Risk & Outflow Signals" data-zh="风险与流出信号">风险与流出信号</span></div>
     <div class="g2">
       <div class="card" style="">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Meta Sells Spare Compute" data-zh="Meta出售闲置算力">Meta出售闲置算力</span></div><div class="card-s">2026-07-01 · <span class="ln" data-en="Extreme Divergence" data-zh="分歧极大">分歧极大</span></div></div><div class="tag r">⚠</div></div>
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Meta Compute Cloud Business" data-zh="Meta Compute 算力出租">Meta Compute 算力出租</span></div><div class="card-s">2026-07-01 · <span class="ln" data-en="Extreme Divergence" data-zh="分歧极大">分歧极大</span></div></div><div class="tag r">⚠</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
           <div style="padding:8px;background:var(--green-l);border-radius:8px;text-align:center"><div style="font-size:10px;color:var(--text2)">META</div><div style="font-size:18px;font-weight:800;color:var(--green)">+9%</div></div>
           <div style="padding:8px;background:var(--red-l);border-radius:8px;text-align:center"><div style="font-size:10px;color:var(--text2)">CRWV</div><div style="font-size:18px;font-weight:800;color:var(--red)">-13%</div></div>
         </div>
         <div style="font-size:12px;color:var(--text2)">
           <div style="margin-bottom:4px"><span style="color:var(--red)">●</span> <b><span class="ln" data-en="Bearish: Compute overcapacity?" data-zh="悲观: 算力过剩?">悲观: 算力过剩?</span></b> <span class="ln" data-en="Largest internal compute user starts selling" data-zh="最大内部算力用户开始出售">最大内部算力用户开始出售</span></div>
-          <div><span style="color:var(--green)">●</span> <b><span class="ln" data-en="Bullish: Commercialization loop" data-zh="乐观: 商业化闭环">乐观: 商业化闭环</span></b> <span class="ln" data-en="SemiAnalysis: capex still staggering" data-zh="SemiAnalysis: capex仍将惊人">SemiAnalysis: capex仍将惊人</span></div>
+          <div style="margin-bottom:4px"><span style="color:var(--green)">●</span> <b><span class="ln" data-en="Bullish: Commercialization loop" data-zh="乐观: 商业化闭环">乐观: 商业化闭环</span></b> <span class="ln" data-en="SemiAnalysis/UBS: not overcapacity, financial optimization" data-zh="SemiAnalysis/瑞银: 非过剩，财务优化">SemiAnalysis/瑞银: 非过剩，财务优化</span></div>
+          <div style="padding:6px 8px;background:var(--orange-l);border-radius:6px;margin-top:6px;font-size:11px"><b><span class="ln" data-en="Key:" data-zh="关键:">关键:</span></b> <span class="ln" data-en="Only H100/H200 externalized, GB200 retained for internal AI" data-zh="仅H100/H200对外出租, GB200自留用于内部AI">仅H100/H200对外出租, GB200自留用于内部AI</span></div>
         </div>
       </div>
       <div class="card">
@@ -363,7 +367,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
           <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>275+</b> <span class="ln" data-en="issued in 2026 alone" data-zh="2026年内出台">2026年内出台</span></div>
           <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>27</b> <span class="ln" data-en="states advancing bills" data-zh="州推进法案">州推进法案</span></div>
           <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>69</b> <span class="ln" data-en="counties with formal moratoriums" data-zh="正式暂停令郡县">正式暂停令郡县</span></div>
-          <div style="padding:6px 0"><b>70%</b> <span class="ln" data-en="US adults oppose local DC" data-zh="美国成年人反对">美国成年人反对</span></div>
+          <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b>70%</b> <span class="ln" data-en="US adults oppose local DC" data-zh="美国成年人反对">美国成年人反对</span></div>
+          <div style="padding:6px 0"><b>🔴</b> <span class="ln" data-en="Monterey Park: 86% voter ban (first in US)" data-zh="蒙特雷帕克市: 86%投票禁止 (美国首个选民禁令)">蒙特雷帕克市: 86%投票禁止 (美国首个选民禁令)</span></div>
         </div>
       </div>
     </div>
@@ -680,6 +685,28 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         </div>
       </div>
     </div>
+
+    <div class="card" style="margin-top:14px;border-left:3px solid var(--orange)">
+      <div class="card-h"><div><div class="card-t"><span class="ln" data-en="📊 Samsung Q2 + Market Paradox" data-zh="📊 三星Q2 + 市场悖论">📊 三星Q2 + 市场悖论</span></div><div class="card-s"><span class="ln" data-en="Record earnings but stocks fell" data-zh="史上最强财报但股价反跌">史上最强财报但股价反跌</span></div></div></div>
+      <div class="g2" style="margin-bottom:0">
+        <div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7">
+            <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Revenue" data-zh="营收">营收</span>:</b> ₩171T (~$111.8B) <span style="color:var(--green)">+133% YoY</span></div>
+            <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Operating Profit" data-zh="营业利润">营业利润</span>:</b> ₩89.4T (~$58.4B) <span style="color:var(--green)">+1810% YoY</span></div>
+            <div style="padding:6px 0;border-bottom:1px solid var(--border)"><b><span class="ln" data-en="Context" data-zh="背景">背景</span>:</b> <span class="ln" data-en="Single-quarter > full year 2025 (₩43.6T)" data-zh="单季利润远超2025全年(43.6万亿)">单季利润远超2025全年(43.6万亿)</span></div>
+            <div style="padding:6px 0"><b><span class="ln" data-en="Full report" data-zh="完整财报">完整财报</span>:</b> 2026-07-30</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7">
+            <div style="margin-bottom:6px"><span style="color:var(--red)">●</span> <b>Sell the News</b> — <span class="ln" data-en="Samsung +165% YTD, SK Hynix +260%. Revenue ₩171T missed estimates." data-zh="三星今年+165%, SK海力士+260%。营收171万亿低于预期。">三星今年+165%, SK海力士+260%。营收171万亿低于预期。</span></div>
+            <div style="margin-bottom:6px"><span style="color:var(--red)">●</span> <b><span class="ln" data-en="Meta Compute fear lingers" data-zh="Meta Compute恐慌未散">Meta Compute恐慌未散</span></b> — <span class="ln" data-en="Jul 1-2 selloff: Samsung -6.5%, SK Hynix -7.7%" data-zh="7/1-2暴跌: 三星-6.5%, SK海力士-7.7%">7/1-2暴跌: 三星-6.5%, SK海力士-7.7%</span></div>
+            <div style="padding:6px 8px;background:var(--blue-l);border-radius:6px;font-size:11px;color:var(--blue)"><b><span class="ln" data-en="Core:" data-zh="核心:">核心:</span></b> <span class="ln" data-en="Price surge priced in, capex-peak fear is not." data-zh="涨价预期已price in，capex见顶恐惧没有。">涨价预期已price in，capex见顶恐惧没有。</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card" style="margin-top:14px">
       <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Actual Price by Spec (USD)" data-zh="各规格实价走势 (USD)">各规格实价走势 (USD)</span><span class="help-icon">?<span class="help-tip"><b>Actual Storage Prices by Specification</b><br><span class="ln" data-en="Real contract/street prices with historical trend and Q3-Q4 forecast. Each chart shows full price history from 2024 to 2026 forecast. Solid = actual, dashed = forecast." data-zh="各规格存储产品的真实合约价，含历史走势和Q3-Q4预测。每个图表展示2024至2026预测的完整价格历史。实线=实际，虚线=预测。">各规格存储产品的真实合约价，含历史走势和Q3-Q4预测。每个图表展示2024至2026预测的完整价格历史。实线=实际，虚线=预测。</span></span></span></div><div class="card-s"><span class="ln" data-en="Solid = actual, Dashed = forecast · Sources: TrendForce, GS, Jefferies" data-zh="实线=实际, 虚线=预测 · 来源: TrendForce, 高盛, 杰富瑞">实线=实际, 虚线=预测 · 来源: TrendForce, 高盛, 杰富瑞</span></div></div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -905,6 +932,39 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
+  <!-- DATA SOURCES -->
+  <div class="section" id="sec-datasource">
+    <div class="section-title">🕐 <span class="ln" data-en="Data Update Timeline" data-zh="数据更新时间轴">数据更新时间轴</span></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:16px"><span class="ln" data-en="Latest update times by data source — 2026-07-07" data-zh="各数据源最新更新时间 — 2026-07-07">各数据源最新更新时间 — 2026-07-07</span></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-t"><span class="ln" data-en="Primary Sources" data-zh="主要数据源">主要数据源</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:12px">
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📊 Morgan Stanley</span><span style="color:var(--green);font-weight:600">2026-07-07</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📊 Goldman Sachs</span><span style="color:var(--green);font-weight:600">2026-07-07</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📊 TrendForce</span><span style="color:var(--text3)">2026-05</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📊 Samsung IR</span><span style="color:var(--green);font-weight:600">2026-07-07</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0"><span>📊 CoreWeave IR</span><span style="color:var(--text3)">2026-06-12</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-t"><span class="ln" data-en="News & Analysis" data-zh="新闻与分析">新闻与分析</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-top:12px">
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📰 Bloomberg</span><span style="color:var(--green);font-weight:600">2026-07-07</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📰 Financial Times</span><span style="color:var(--green);font-weight:600">2026-07-07</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📰 SemiAnalysis</span><span style="color:var(--text3)">2026-06-19</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>📰 DCK</span><span style="color:var(--green);font-weight:600">2026-07-06</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0"><span>📰 Data Center Watch</span><span style="color:var(--text3)">2026-06</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="g3" style="margin-top:14px">
+      <div class="card" style="text-align:center"><div style="font-weight:600;margin-bottom:4px">新浪财经</div><div style="color:var(--green);font-weight:600;font-size:13px">2026-07-07</div></div>
+      <div class="card" style="text-align:center"><div style="font-weight:600;margin-bottom:4px">雪球</div><div style="color:var(--green);font-weight:600;font-size:13px">2026-07-07</div></div>
+      <div class="card" style="text-align:center"><div style="font-weight:600;margin-bottom:4px">财联社</div><div style="color:var(--green);font-weight:600;font-size:13px">2026-07-07</div></div>
+    </div>
+  </div>
+
   <!-- ABOUT -->
   <div class="section" id="sec-about">
     <div class="section-title">ℹ️ <span class="ln" data-en="About" data-zh="关于我们">关于我们</span></div>
@@ -973,7 +1033,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </div>
   </div>
 
-  <div class="footer">AI Compute Capital Flow Dashboard v4.0 · D3.js · 2026-07-06 · <span class="ln" data-en="Not investment advice" data-zh="不构成投资建议">不构成投资建议</span></div>
+  <div class="footer">AI Compute Capital Flow Dashboard v4.0 · D3.js · 2026-07-07 · <span class="ln" data-en="Not investment advice" data-zh="不构成投资建议">不构成投资建议</span></div>
 </div>
 
 <div class="tip" id="tip"></div>
@@ -981,9 +1041,10 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <script>
 // ===== LANGUAGE =====
 const browserLang=navigator.language||navigator.userLanguage||'zh';
-let lang=browserLang.startsWith('zh')?'zh':'en';
+let lang=localStorage.getItem('lang')||browserLang.startsWith('zh')?'zh':'en';
 function toggleLang(){
   lang=lang==='zh'?'en':'zh';
+  localStorage.setItem('lang',lang);
   document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
   document.querySelectorAll('.ln').forEach(el=>{
     const v=el.getAttribute('data-'+lang);
@@ -996,6 +1057,12 @@ function toggleLang(){
     if(redrawMap[id]) redrawMap[id]();
   }
 }
+// Apply saved language on load
+document.getElementById('langBtn').textContent=lang==='zh'?'EN / 中':'中 / EN';
+document.querySelectorAll('.ln').forEach(el=>{
+  const v=el.getAttribute('data-'+lang);
+  if(v) el.innerHTML=v;
+});
 // ===== THEME =====
 let theme=localStorage.getItem('theme')||'light';
 function applyTheme(){
@@ -1129,7 +1196,7 @@ function drawRatio(){
 // ===== SPV =====
 function drawSPV(){
   d3.select('#c-spv').selectAll('*').remove();
-  const data=[{n:'Meta/BlueOwl',v:300,c:'#f59e0b'},{n:'Pimco',v:300,c:'#3b82f6'},{n:'CoreWeave',v:230,c:'#8b5cf6'},{n:'xAI',v:200,c:'#10b981'}];
+  const data=[{n:'Meta/BlueOwl',v:300,c:'#f59e0b'},{n:'Pimco',v:300,c:'#3b82f6'},{n:'CoreWeave',v:250,c:'#8b5cf6'},{n:'xAI',v:200,c:'#10b981'}];
   const svg=d3.select('#c-spv').append('svg').attr('viewBox',`0 0 ${W} ${H}`),g=svg.append('g').attr('transform',`translate(${mg.left},${mg.top})`);
   const x=d3.scaleBand().domain(data.map(d=>d.n)).range([0,iw]).padding(.35);
   const y=d3.scaleLinear().domain([0,350]).range([ih,0]);
@@ -1267,6 +1334,9 @@ function drawTimeline(){
   d3.select('#c-timeline').selectAll('*').remove();
   const isZh=lang==='zh';
   const ev=[
+    {d:'Jul 7',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Samsung Q2 OP ₩89.4T (+1810% YoY)',zh:'三星Q2营业利润89.4万亿韩元 (+1810%)'},
+     imp:{en:'Single-quarter profit exceeds entire 2025 (₩43.6T). Memory supercycle confirmed. HBM orders backlogged to 2027.',zh:'单季利润远超2025全年(43.6万亿)。存储超级周期确认。HBM订单排至2027年。'}},
     {d:'Jul 1',tag:{en:'NEUTRAL',zh:'中性'},tagC:'#f59e0b',
      t:{en:'Meta Launches External Compute Sales',zh:'Meta正式对外出售AI算力'},
      imp:{en:'META +9%, CRWV -13%. Signals either commercialization maturity or overcapacity. Watch follow-on customers.',zh:'META +9%, CRWV -13%。可能是商业化闭环信号，也可能是算力过剩拐点。跟踪后续客户动态。'}},
@@ -1423,15 +1493,15 @@ function drawTop3(){
   d3.select('#c-top3').selectAll('*').remove();
   const isZh=lang==='zh';
   const ev=[
+    {d:'Jul 7',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Samsung Q2 OP ₩89.4T (+1810%)',zh:'三星Q2营业利润89.4万亿(+1810%)'},
+     imp:{en:'Single-quarter > full year 2025. Memory supercycle confirmed. But stocks fell — sell the news.',zh:'单季利润超2025全年。存储超级周期确认。但股价反跌——利好出尽。'}},
+    {d:'Jul 5',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'Blackstone Retreat: QTS $100B+ Gateway Dead',zh:'黑石撤退: QTS千亿Gateway项目终结'},
+     imp:{en:'Sold 3 VA DCs for $3.5B + killed largest DC campus ever. PE giant shrinking AI infra exposure.',zh:'$35亿售出VA三处DC + 终止全球最大DC园区。PE巨头收缩AI基建敞口。'}},
     {d:'Jul 1',tag:{en:'NEUTRAL',zh:'中性'},tagC:'#f59e0b',
-     t:{en:'Meta Sells Spare Compute',zh:'Meta出售闲置算力'},
-     imp:{en:'META +9%, CRWV -13%. Compute overcapacity or commercialization loop?',zh:'META +9%, CRWV -13%。算力过剩还是商业化闭环?'}},
-    {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
-     t:{en:'US Moratoriums Hit 300+',zh:'美国禁建令突破300+'},
-     imp:{en:'27 states, 70% public opposition. Systemic risk, not isolated.',zh:'27州, 70%民众反对。系统性风险，非个案。'}},
-    {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
-     t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿→Alphabet'},
-     imp:{en:'Smart money validates AI infra thesis.',zh:'聪明钱验证AI基建逻辑。'}}
+     t:{en:'Meta Launches Compute Cloud Business',zh:'Meta推出算力出租业务'},
+     imp:{en:'META +9%, CRWV -13%. Compute overcapacity or commercialization loop?',zh:'META +9%, CRWV -13%。算力过剩还是商业化闭环?'}}
   ];
   const rowH=58;
   const svg=d3.select('#c-top3').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*rowH+10}`);
