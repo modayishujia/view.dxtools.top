@@ -985,7 +985,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <!-- Data API for AI Tools -->
     <div style="margin-top:20px">
       <div class="card-t" style="margin-bottom:12px">🤖 <span class="ln" data-en="Data API for AI Tools" data-zh="AI 工具数据接口">AI 工具数据接口</span></div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:14px"><span class="ln" data-en="Structured JSON endpoints for AI agents, coding assistants, and automation tools. Copy a prompt below to use with your local AI tool." data-zh="供 AI Agent、编程助手和自动化工具使用的结构化 JSON 接口。复制下方 prompt 给你的本地 AI 工具使用。">供 AI Agent、编程助手和自动化工具使用的结构化 JSON 接口。复制下方 prompt 给你的本地 AI 工具使用。</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:14px"><span class="ln" data-en="Structured JSON endpoints for any AI tool — Codex, Cursor, Windsurf, Claude Code, MiMoCode, or plain curl. Copy a prompt below to use." data-zh="适用于任何 AI 工具的结构化 JSON 接口 — Codex、Cursor、Windsurf、Claude Code、MiMoCode 或直接 curl。复制下方 prompt 即可使用。">适用于任何 AI 工具的结构化 JSON 接口 — Codex、Cursor、Windsurf、Claude Code、MiMoCode 或直接 curl。复制下方 prompt 即可使用。</span></div>
 
       <div class="g2">
         <div class="card" style="padding:14px">
@@ -1044,20 +1044,15 @@ Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.m
       <div style="margin-top:10px">
         <div class="card" style="padding:14px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <span style="font-weight:700;font-size:13px">🔧 <span class="ln" data-en="Install Local Skill" data-zh="安装本地 Skill">安装本地 Skill</span></span>
-            <button onclick="copyPrompt('skill')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
+            <span style="font-weight:700;font-size:13px">🔧 <span class="ln" data-en="Auto-Install for AI Tools" data-zh="AI 工具自动安装">AI 工具自动安装</span></span>
+            <button onclick="copyPrompt('install')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
           </div>
-          <div id="prompt-skill" style="padding:10px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:11px;color:var(--text3);line-height:1.6;cursor:pointer;white-space:pre-wrap" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'80px':'80px'">Install the dxtools-ai-compute skill:
-
+          <div style="font-size:11px;color:var(--text2);margin-bottom:8px"><span class="ln" data-en="Works with Codex, MiMoCode, Claude Code, Cursor, Windsurf, and any tool that reads project files." data-zh="适用于 Codex、MiMoCode、Claude Code、Cursor、Windsurf 及任何可读取项目文件的 AI 工具。">适用于 Codex、MiMoCode、Claude Code、Cursor、Windsurf 及任何可读取项目文件的 AI 工具。</span></div>
+          <div id="prompt-install" style="padding:10px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:11px;color:var(--text3);line-height:1.6;cursor:pointer;white-space:pre-wrap">One-line install (any tool):
 <span style="color:var(--text)">curl -sSL https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/install-skill.sh | bash</span>
 
-Or manually:
-<span style="color:var(--text)">git clone --depth 1 https://github.com/modayishujia/view.dxtools.top.git /tmp/dxtools && \
-mkdir -p ~/.codex/skills/dxtools-ai-compute && \
-cp -r /tmp/dxtools/.codex-skill/* ~/.codex/skills/dxtools-ai-compute/</span>
-
-After install, ask your AI tool:
-<span style="color:var(--text)">"What's the current AI compute capital flow status?"</span></div>
+Or just paste this prompt directly into your AI tool:
+<span style="color:var(--text)">"Fetch https://view.dxtools.top/data/indicators.json and summarize the current AI compute capital flow status, investment stance, and key risk signals."</span></div>
         </div>
       </div>
     </div>
@@ -1166,7 +1161,7 @@ const prompts={
   summary:'Fetch https://view.dxtools.top/data/indicators.json — summarize: investment stance, capex total, risk score, top 3 risk triggers, and any new events this week.',
   deep:'Fetch https://view.dxtools.top/data/indicators.json and https://view.dxtools.top/data/history.json. Analyze: (1) Capital inflow vs outflow risk balance, (2) Risk trigger escalation trends, (3) Compare current snapshot vs previous — what changed? (4) Investment stance and rationale. Output in Chinese.',
   memory:'Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.memory_company_earnings. Summarize: Samsung Q2 results, HBM status, DRAM ASP trend, and memory supercycle signal strength.',
-  skill:'curl -sSL https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/install-skill.sh | bash'
+  install:'curl -sSL https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/install-skill.sh | bash'
 };
 function copyPrompt(id){
   const text=prompts[id];
