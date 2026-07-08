@@ -92,6 +92,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .card-t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}.card-s{font-size:11px;color:var(--text2);margin-top:2px}
 .help-icon{width:16px;height:16px;border-radius:50%;background:#e5e7eb;color:#6b7280;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;cursor:help;flex-shrink:0;position:relative}
+.prompt-box{padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5}
 .help-icon:hover{background:#d1d5db}
 .help-icon .help-tip{display:none;position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:280px;padding:12px 14px;background:#111827;color:#fff;border-radius:10px;font-size:11px;line-height:1.5;font-weight:400;z-index:200;box-shadow:0 4px 12px rgba(0,0,0,.2);pointer-events:none;white-space:normal}
 .help-icon .help-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#111827}
@@ -238,7 +239,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     <div class="g-overview">
       <div class="card" style="grid-row:span 3">
         <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Top 20 Key Events" data-zh="Top 20 关键事件">Top 20 关键事件</span><span class="help-icon">?<span class="help-tip"><b>Key Events (Top 20)</b><br><span class="ln" data-en="The 20 most impactful events from the past 90 days, selected for investment decision relevance. Color-coded: Green = bullish, Red = bearish, Orange = neutral/warning." data-zh="过去90天中对投资决策影响最大的20个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。">过去90天中对投资决策影响最大的20个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。</span></span></span></div></div></div>
-        <div id="c-top20" class="chart" style="max-height:600px;overflow-y:auto"></div>
+        <div id="c-top20" class="chart"></div>
       </div>
       <div class="card">
         <div class="card-h"><div><div class="card-t"><span class="ln" data-en="P/AFFO vs Historical" data-zh="P/AFFO vs 历史均值">P/AFFO vs 历史均值</span><span class="help-icon">?<span class="help-tip"><b>P/AFFO (Price / Adjusted Funds From Operations)</b><br><span class="ln" data-en="The most important REIT valuation metric. Compares current stock price to cash-generating ability. Historical avg for US REITs is ~16x. When P/AFFO is 25-28x, you're paying 60-75% premium. This is the single best indicator of whether DC REITs are overpriced." data-zh="REIT最核心的估值指标。比较股价与现金生成能力。美国REIT历史均值约16倍。当前25-28倍意味着溢价60-75%。这是判断DC REITs是否高估的最佳单一指标。">REIT最核心的估值指标。比较股价与现金生成能力。美国REIT历史均值约16倍。当前25-28倍意味着溢价60-75%。这是判断DC REITs是否高估的最佳单一指标。</span></span></span></div><div class="card-s"><span class="ln" data-en="60-75% premium to sector" data-zh="溢价60-75%">溢价60-75%</span></div></div><div class="tag r"><span class="ln" data-en="Overvalued" data-zh="高估">高估</span></div></div>
@@ -1015,27 +1016,21 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                 <span style="font-weight:600;color:var(--text)"><span class="ln" data-en="Quick Summary" data-zh="快速摘要">快速摘要</span></span>
                 <button onclick="copyPrompt('summary')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
               </div>
-              <div id="prompt-summary" style="padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5;max-height:60px;overflow:hidden;cursor:pointer" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'60px':'none'">
-Fetch https://view.dxtools.top/data/indicators.json — summarize: investment stance, capex total, risk score, top 3 risk triggers, and any new events this week.
-              </div>
+              <div class="ln prompt-box" data-en="Fetch https://view.dxtools.top/data/indicators.json — summarize: investment stance, capex total, risk score, top 3 risk triggers, and any new events this week." data-zh="获取 https://view.dxtools.top/data/indicators.json — 摘要：投资立场、Capex总额、风险评分、前3个风险触发因素、本周新事件。">获取 https://view.dxtools.top/data/indicators.json — 摘要：投资立场、Capex总额、风险评分、前3个风险触发因素、本周新事件。</div>
             </div>
             <div style="margin-bottom:10px">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
                 <span style="font-weight:600;color:var(--text)"><span class="ln" data-en="Deep Analysis" data-zh="深度分析">深度分析</span></span>
                 <button onclick="copyPrompt('deep')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
               </div>
-              <div id="prompt-deep" style="padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5;max-height:60px;overflow:hidden;cursor:pointer" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'60px':'none'">
-Fetch https://view.dxtools.top/data/indicators.json and https://view.dxtools.top/data/history.json. Analyze: (1) Capital inflow vs outflow risk balance, (2) Risk trigger escalation trends, (3) Compare current snapshot vs previous — what changed? (4) Investment stance and rationale. Output in Chinese.
-              </div>
+              <div class="ln prompt-box" data-en="Fetch https://view.dxtools.top/data/indicators.json and https://view.dxtools.top/data/history.json. Analyze: (1) Capital inflow vs outflow risk balance, (2) Risk trigger escalation trends, (3) Compare current snapshot vs previous — what changed? (4) Investment stance and rationale. Output in Chinese." data-zh="获取 https://view.dxtools.top/data/indicators.json 和 https://view.dxtools.top/data/history.json。分析：(1) 资金流入vs流出风险平衡，(2) 风险触发因素升级趋势，(3) 对比当前快照与上期 — 有什么变化？(4) 投资立场与逻辑。用中文输出。">获取 https://view.dxtools.top/data/indicators.json 和 https://view.dxtools.top/data/history.json。分析：(1) 资金流入vs流出风险平衡，(2) 风险触发因素升级趋势，(3) 对比当前快照与上期 — 有什么变化？(4) 投资立场与逻辑。用中文输出。</div>
             </div>
             <div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
                 <span style="font-weight:600;color:var(--text)"><span class="ln" data-en="Memory Query" data-zh="存储周期查询">存储周期查询</span></span>
                 <button onclick="copyPrompt('memory')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
               </div>
-              <div id="prompt-memory" style="padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5;max-height:60px;overflow:hidden;cursor:pointer" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'60px':'none'">
-Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.memory_company_earnings. Summarize: Samsung Q2 results, HBM status, DRAM ASP trend, and memory supercycle signal strength.
-              </div>
+              <div class="ln prompt-box" data-en="Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.memory_company_earnings. Summarize: Samsung Q2 results, HBM status, DRAM ASP trend, and memory supercycle signal strength." data-zh="获取 https://view.dxtools.top/data/indicators.json — 关注 supply_demand.memory_company_earnings。摘要：三星Q2业绩、HBM状态、DRAM ASP趋势、存储超级周期信号强度。">获取 https://view.dxtools.top/data/indicators.json — 关注 supply_demand.memory_company_earnings。摘要：三星Q2业绩、HBM状态、DRAM ASP趋势、存储超级周期信号强度。</div>
             </div>
           </div>
         </div>
@@ -1048,11 +1043,11 @@ Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.m
             <button onclick="copyPrompt('install')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
           </div>
           <div style="font-size:11px;color:var(--text2);margin-bottom:8px"><span class="ln" data-en="Works with Codex, MiMoCode, Claude Code, Cursor, Windsurf, and any tool that reads project files." data-zh="适用于 Codex、MiMoCode、Claude Code、Cursor、Windsurf 及任何可读取项目文件的 AI 工具。">适用于 Codex、MiMoCode、Claude Code、Cursor、Windsurf 及任何可读取项目文件的 AI 工具。</span></div>
-          <div id="prompt-install" style="padding:10px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:11px;color:var(--text3);line-height:1.6;cursor:pointer;white-space:pre-wrap">One-line install (any tool):
+          <div id="prompt-install" style="padding:10px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:11px;color:var(--text3);line-height:1.6;cursor:pointer;white-space:pre-wrap"><span class="ln" data-en="One-line install (any tool):" data-zh="一键安装（任意工具）：">一键安装（任意工具）：</span>
 <span style="color:var(--text)">curl -sSL https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/install-skill.sh | bash</span>
 
-Or just paste this prompt directly into your AI tool:
-<span style="color:var(--text)">"Fetch https://view.dxtools.top/data/indicators.json and summarize the current AI compute capital flow status, investment stance, and key risk signals."</span></div>
+<span class="ln" data-en="Or just paste this prompt directly into your AI tool:" data-zh="或直接将以下 prompt 粘贴到你的 AI 工具：">或直接将以下 prompt 粘贴到你的 AI 工具：</span>
+<span class="ln" style="color:var(--text)" data-en='&quot;Fetch https://view.dxtools.top/data/indicators.json and summarize the current AI compute capital flow status, investment stance, and key risk signals.&quot;' data-zh='&quot;获取 https://view.dxtools.top/data/indicators.json，摘要当前 AI 算力资本流向状态、投资立场和关键风险信号。&quot;'>"获取 https://view.dxtools.top/data/indicators.json，摘要当前 AI 算力资本流向状态、投资立场和关键风险信号。"</span></div>
         </div>
       </div>
     </div>
@@ -1157,14 +1152,20 @@ document.querySelectorAll('.ln').forEach(el=>{
   if(v) el.innerHTML=v;
 });
 // ===== COPY PROMPT =====
-const prompts={
+const promptsEn={
   summary:'Fetch https://view.dxtools.top/data/indicators.json — summarize: investment stance, capex total, risk score, top 3 risk triggers, and any new events this week.',
   deep:'Fetch https://view.dxtools.top/data/indicators.json and https://view.dxtools.top/data/history.json. Analyze: (1) Capital inflow vs outflow risk balance, (2) Risk trigger escalation trends, (3) Compare current snapshot vs previous — what changed? (4) Investment stance and rationale. Output in Chinese.',
   memory:'Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.memory_company_earnings. Summarize: Samsung Q2 results, HBM status, DRAM ASP trend, and memory supercycle signal strength.',
   install:'curl -sSL https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/install-skill.sh | bash'
 };
+const promptsZh={
+  summary:'获取 https://view.dxtools.top/data/indicators.json — 摘要：投资立场、Capex总额、风险评分、前3个风险触发因素、本周新事件。',
+  deep:'获取 https://view.dxtools.top/data/indicators.json 和 https://view.dxtools.top/data/history.json。分析：(1) 资金流入vs流出风险平衡，(2) 风险触发因素升级趋势，(3) 对比当前快照与上期 — 有什么变化？(4) 投资立场与逻辑。用中文输出。',
+  memory:'获取 https://view.dxtools.top/data/indicators.json — 关注 supply_demand.memory_company_earnings。摘要：三星Q2业绩、HBM状态、DRAM ASP趋势、存储超级周期信号强度。',
+  install:'curl -sSL https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/install-skill.sh | bash'
+};
 function copyPrompt(id){
-  const text=prompts[id];
+  const text=lang==='zh'?promptsZh[id]:promptsEn[id];
   navigator.clipboard.writeText(text).then(()=>{
     const btn=event.target;
     const orig=btn.textContent;
