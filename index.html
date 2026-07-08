@@ -82,10 +82,12 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .kpi .chg{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;margin-top:4px;padding:2px 8px;border-radius:6px}
 .kpi .chg.up{background:var(--green-l);color:#047857}.kpi .chg.dn{background:var(--red-l);color:#dc2626}.kpi .chg.fl{background:#f3f4f6;color:var(--text2)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.g-overview{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.g-overview .card:first-child{grid-row:span 3}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
 .g23{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}
 .g32{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px}
-@media(max-width:1024px){.kpi-row{grid-template-columns:repeat(3,1fr)}.g2,.g3,.g23,.g32{grid-template-columns:1fr}.sidebar{display:none}.main{margin-left:0}}
+@media(max-width:1024px){.kpi-row{grid-template-columns:repeat(3,1fr)}.g2,.g3,.g23,.g32,.g-overview{grid-template-columns:1fr}.g-overview .card:first-child{grid-row:auto}.sidebar{display:none}.main{margin-left:0}}
 .card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);overflow:visible}
 .card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .card-t{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}.card-s{font-size:11px;color:var(--text2);margin-top:2px}
@@ -232,8 +234,12 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="kpi p"><div class="lbl"><span class="ln" data-en="Moratoriums" data-zh="禁建令数">禁建令数</span></div><div class="val p">300+</div><div class="chg dn"><span class="ln" data-en="↑ 275 in '26" data-zh="↑ 275项在2026">↑ 275项在2026</span></div></div>
     </div>
 
-    <!-- Valuation + Capex/Revenue (decision-critical) -->
-    <div class="g2">
+    <!-- Top 20 Events (left) + Charts (right) -->
+    <div class="g-overview">
+      <div class="card" style="grid-row:span 3">
+        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Top 20 Key Events" data-zh="Top 20 关键事件">Top 20 关键事件</span><span class="help-icon">?<span class="help-tip"><b>Key Events (Top 20)</b><br><span class="ln" data-en="The 20 most impactful events from the past 90 days, selected for investment decision relevance. Color-coded: Green = bullish, Red = bearish, Orange = neutral/warning." data-zh="过去90天中对投资决策影响最大的20个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。">过去90天中对投资决策影响最大的20个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。</span></span></span></div></div></div>
+        <div id="c-top20" class="chart" style="max-height:600px;overflow-y:auto"></div>
+      </div>
       <div class="card">
         <div class="card-h"><div><div class="card-t"><span class="ln" data-en="P/AFFO vs Historical" data-zh="P/AFFO vs 历史均值">P/AFFO vs 历史均值</span><span class="help-icon">?<span class="help-tip"><b>P/AFFO (Price / Adjusted Funds From Operations)</b><br><span class="ln" data-en="The most important REIT valuation metric. Compares current stock price to cash-generating ability. Historical avg for US REITs is ~16x. When P/AFFO is 25-28x, you're paying 60-75% premium. This is the single best indicator of whether DC REITs are overpriced." data-zh="REIT最核心的估值指标。比较股价与现金生成能力。美国REIT历史均值约16倍。当前25-28倍意味着溢价60-75%。这是判断DC REITs是否高估的最佳单一指标。">REIT最核心的估值指标。比较股价与现金生成能力。美国REIT历史均值约16倍。当前25-28倍意味着溢价60-75%。这是判断DC REITs是否高估的最佳单一指标。</span></span></span></div><div class="card-s"><span class="ln" data-en="60-75% premium to sector" data-zh="溢价60-75%">溢价60-75%</span></div></div><div class="tag r"><span class="ln" data-en="Overvalued" data-zh="高估">高估</span></div></div>
         <div id="c-ffo" class="chart"></div>
@@ -241,14 +247,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="card">
         <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Capex / Revenue Ratio" data-zh="Capex/收入比率">Capex/收入比率</span><span class="help-icon">?<span class="help-tip"><b>Capex/Revenue Ratio</b><br><span class="ln" data-en="Measures how much of every revenue dollar goes back into capital expenditure. At 31%, Big Tech is spending nearly 1/3 of revenue on AI infrastructure. The dot-com peak was 32%. When this ratio exceeds 30%, it signals potential overinvestment — companies may be building capacity faster than demand justifies." data-zh="衡量每1美元收入中有多少回投到资本开支。31%意味着大四巨头将近1/3收入投入AI基建。互联网泡沫峰值为32%。超过30%意味着可能过度投资——建设速度可能超过需求。">衡量每1美元收入中有多少回投到资本开支。31%意味着大四巨头将近1/3收入投入AI基建。互联网泡沫峰值为32%。超过30%意味着可能过度投资——建设速度可能超过需求。</span></span></span></div><div class="card-s"><span class="ln" data-en="vs dot-com peak 32%" data-zh="vs 互联网泡沫峰值32%">vs 互联网泡沫峰值32%</span></div></div><div class="tag r">&gt;30%</div></div>
         <div id="c-ratio" class="chart"></div>
-      </div>
-    </div>
-
-    <!-- Top 3 Events + Regional Flow -->
-    <div class="g2">
-      <div class="card">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Top 3 Events" data-zh="Top 3 关键事件">Top 3 关键事件</span><span class="help-icon">?<span class="help-tip"><b>Key Events (Top 3)</b><br><span class="ln" data-en="The three most impactful events from the past 90 days, selected for investment decision relevance. Color-coded: Green = bullish, Red = bearish, Orange = neutral/warning. Each includes the market reaction and what it means for the sector." data-zh="过去90天中对投资决策影响最大的3个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。每个事件包含市场反应和对行业的影响。">过去90天中对投资决策影响最大的3个事件。颜色编码：绿色=利好，红色=利空，橙色=中性/警示。每个事件包含市场反应和对行业的影响。</span></span></span></div></div></div>
-        <div id="c-top3" class="chart"></div>
       </div>
       <div class="card">
         <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Regional: Investment vs Risk" data-zh="区域: 投资额 vs 风险">区域: 投资额 vs 风险</span><span class="help-icon">?<span class="help-tip"><b>Regional Capital Flow Analysis</b><br><span class="ln" data-en="Three quantified metrics per region: Blue = 2026E capex ($B), Green = YoY growth rate (%), Red = regulatory risk (0-5 scale based on moratorium count). Key insight: North America has the most capital but highest risk; Middle East has fastest growth with zero regulatory阻力." data-zh="每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁建令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。">每个区域三组量化指标：蓝色=2026E投资额($B)，绿色=同比增速(%)，红色=监管风险(0-5，基于禁建令数量)。关键洞察：北美资金最多但风险最高；中东增速最快且零监管阻力。</span></span></span></div><div class="card-s"><span class="ln" data-en="2026E capex, YoY growth, reg risk" data-zh="2026E Capex、增速、监管风险">2026E Capex、增速、监管风险</span></div></div></div>
@@ -1073,7 +1071,7 @@ function toggleLang(){
   const activeSection=document.querySelector('.section.active');
   if(activeSection){
     const id=activeSection.id.replace('sec-','');
-    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop3();drawRegion()},inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual()}};
+    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop20();drawRegion()},inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual()}};
     if(redrawMap[id]) redrawMap[id]();
   }
 }
@@ -1511,33 +1509,84 @@ function drawGap(){
   g.selectAll('.v').data(data).join('text').attr('x',d=>x(d.l)+x.bandwidth()/2).attr('y',d=>y(d.v)-8).attr('text-anchor','middle').attr('font-size',16).attr('font-weight',800).attr('fill',d=>d.c).attr('opacity',0).text(d=>`${d.v}GW`).transition().delay(900).duration(300).attr('opacity',1);
 }
 
-// ===== TOP 3 TIMELINE (Overview) =====
-function drawTop3(){
-  d3.select('#c-top3').selectAll('*').remove();
+// ===== TOP 20 TIMELINE (Overview) =====
+function drawTop20(){
+  d3.select('#c-top20').selectAll('*').remove();
   const isZh=lang==='zh';
   const ev=[
     {d:'Jul 8',tag:{en:'WARNING',zh:'警示'},tagC:'#f59e0b',
      t:{en:'Amazon $25B Bond Triggers AI Debt Selloff',zh:'亚马逊$250亿发债触发AI债券全线抛售'},
-     imp:{en:'2026 cumulative bonds $89B+. Demand halved vs Mar (62B vs 120B). AI bond market digestion capacity tested.',zh:'2026年累计发债890亿+。认购热度腰斩(620亿 vs 3月1200亿)。AI债券市场消化能力首次承压。'}},
+     imp:{en:'2026 cumulative bonds $89B+. Demand halved vs Mar. AI bond market digestion tested.',zh:'2026年累计发债890亿+。认购热度腰斩。AI债券市场消化能力承压。'}},
     {d:'Jul 7',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
      t:{en:'Samsung Q2 OP ₩89.4T (+1810%)',zh:'三星Q2营业利润89.4万亿(+1810%)'},
-     imp:{en:'Single-quarter > full year 2025. Memory supercycle confirmed. But stocks fell — sell the news.',zh:'单季利润超2025全年。存储超级周期确认。但股价反跌——利好出尽。'}},
+     imp:{en:'Single-quarter > full year 2025. Memory supercycle confirmed. Stocks fell — sell the news.',zh:'单季利润超2025全年。存储超级周期确认。股价反跌——利好出尽。'}},
     {d:'Jul 5',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
      t:{en:'Blackstone Retreat: QTS $100B+ Gateway Dead',zh:'黑石撤退: QTS千亿Gateway项目终结'},
-     imp:{en:'Sold 3 VA DCs for $3.5B + killed largest DC campus ever. PE giant shrinking AI infra exposure.',zh:'$35亿售出VA三处DC + 终止全球最大DC园区。PE巨头收缩AI基建敞口。'}}
+     imp:{en:'Sold 3 VA DCs + killed largest DC campus. PE giant shrinking AI infra.',zh:'售出VA三处DC + 终止全球最大DC园区。PE巨头收缩AI基建敞口。'}},
+    {d:'Jul 2',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'AirTrunk/Blackstone $21B India 3GW',zh:'AirTrunk/Blackstone印度$210亿3GW'},
+     imp:{en:'Maharashtra. Capital flowing to non-US markets. India key alternative.',zh:'马哈拉施特拉邦。资本流向非美国市场，印度崛起为关键替代市场。'}},
+    {d:'Jul 1',tag:{en:'NEUTRAL',zh:'中性'},tagC:'#f59e0b',
+     t:{en:'Meta Launches External Compute Sales',zh:'Meta正式对外出售AI算力'},
+     imp:{en:'META +9%, CRWV -13%. Commercialization or overcapacity?',zh:'META +9%, CRWV -13%。商业化闭环还是算力过剩？'}},
+    {d:'Jun 27',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'GPT-5.6 Released: Sol/Terra/Luna',zh:'GPT-5.6发布: Sol/Terra/Luna三档'},
+     imp:{en:'Sol scores 91.9% TerminalBench, beats Fable 5 by 7.6ppt. Hybrid model era.',zh:'Sol在TerminalBench得91.9%, 超Fable 5 7.6ppt。Hybrid model时代开启。'}},
+    {d:'Jun 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'US Moratoriums Hit 300+',zh:'美国禁建令突破300+'},
+     imp:{en:'275+ in 2026. 27 states. 70% public opposition. Systemic.',zh:'2026年内275+项。27州推进。70%民众反对。系统性阻力。'}},
+    {d:'Jun 20',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Berkshire $10B → Alphabet DC',zh:'伯克希尔$100亿投资Alphabet数据中心'},
+     imp:{en:'Buffett successor validates AI infra. Smart money still flowing.',zh:'巴菲特接班人验证AI基建逻辑。聪明钱仍在流入。'}},
+    {d:'Jun 12',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'CoreWeave EU Bond €2B Success',zh:'CoreWeave欧洲债券20亿欧元成功发行'},
+     imp:{en:'Order book >€7B, 200+ investors. Spec-grade demand strong.',zh:'订单簿超70亿欧元, 200+投资者。投机级需求强劲。'}},
+    {d:'Jun 9',tag:{en:'WARNING',zh:'警示'},tagC:'#f59e0b',
+     t:{en:'Claude Fable 5 Released',zh:'Claude Fable 5发布'},
+     imp:{en:'First public Mythos-class model. $10/$50 per M tokens. SOTA on nearly all benchmarks.',zh:'首个公开Mythos级模型。$10/$50 per M tokens。几乎所有基准SOTA。'}},
+    {d:'Jun 5',tag:{en:'WARNING',zh:'警示'},tagC:'#f59e0b',
+     t:{en:'Meta Weighs Massive Equity Raise',zh:'Meta考虑大规模股权融资'},
+     imp:{en:'Debt capacity narrowing. Equity = dilution risk. Capex outpacing cash gen.',zh:'债务空间收窄。股权融资=稀释风险。Capex超出现金流生成能力。'}},
+    {d:'Jun 1',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'SoftBank France $85B 5GW AI DC',zh:'软银法国$850亿5GW AI数据中心'},
+     imp:{en:'Sovereign capital massive entry. Non-US expansion accelerating.',zh:'主权资本大规模入场。非美国市场扩张加速。'}},
+    {d:'May 18',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'CoreWeave $3.1B GPU-Backed Loan',zh:'CoreWeave $31亿GPU抵押贷款'},
+     imp:{en:'DDTL 5.0. GPU as collateral = new financing paradigm.',zh:'DDTL 5.0。GPU作为抵押品=新型融资范式。'}},
+    {d:'May 8',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'CoreWeave Q1: Rev +112%, Backlog $100B',zh:'CoreWeave Q1: 营收+112%, 积压$1000亿'},
+     imp:{en:'Demand validated. But FCF still negative (-$30-40B).',zh:'需求强劲验证。但FCF仍为负(-$30-40B)。'}},
+    {d:'Apr 15',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'Grantham: AI is Historic Bubble',zh:'Grantham: AI是历史性泡沫'},
+     imp:{en:'Destructive consequences when it bursts. Perma-bear but worth listening.',zh:'破裂后果毁灭性。永久空头但值得倾听。'}},
+    {d:'Apr 1',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Alphabet $80B Equity Capital Raise',zh:'Alphabet $800亿股权融资'},
+     imp:{en:'Berkshire agreed to buy $5B. Massive capex commitment.',zh:'伯克希尔同意购买50亿。大规模资本支出承诺。'}},
+    {d:'Mar 25',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'Sanders+AOC Federal Moratorium Bill',zh:'Sanders+AOC联邦级暂停法案'},
+     imp:{en:'Would halt ALL new DC construction. Unlikely to pass but signals risk ceiling.',zh:'将暂停全美所有新建DC。通过概率低但标示风险上限。'}},
+    {d:'Mar 10',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Amazon $42B Record Bond Sale',zh:'亚马逊$420亿创纪录发债'},
+     imp:{en:'Largest corporate bond ever. $126B demand. AI infra financing scale.',zh:'史上最大企业债。1260亿认购。AI基建融资规模。'}},
+    {d:'Feb 15',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
+     t:{en:'DC Utilization Drops 79%→68%',zh:'数据中心利用率从79%降至68%'},
+     imp:{en:'Buildings running empty. Investment return anxiety rising.',zh:'建筑空置运行。投资回报焦虑加剧。'}},
+    {d:'Jan 15',tag:{en:'BULLISH',zh:'利好'},tagC:'#10b981',
+     t:{en:'Morgan Stanley: US DC Capex Doubles',zh:'摩根士丹利: 美国DC Capex翻倍'},
+     imp:{en:'Forecast raised from $433B to $805B. AI spend acceleration confirmed.',zh:'预测从4330亿上调至8050亿。AI支出加速确认。'}}
   ];
-  const rowH=58;
-  const svg=d3.select('#c-top3').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*rowH+10}`);
+  const rowH=44;
+  const svg=d3.select('#c-top20').append('svg').attr('viewBox',`0 0 ${W} ${ev.length*rowH+10}`);
   const g=svg.append('g').attr('transform','translate(56,5)');
   ev.forEach((d,i)=>{
     const y=i*rowH;
-    g.append('circle').attr('cx',0).attr('cy',y+8).attr('r',0).attr('fill',d.tagC).transition().delay(i*60).duration(200).attr('r',5);
-    if(i<ev.length-1) g.append('line').attr('x1',0).attr('y1',y+14).attr('x2',0).attr('y2',y+rowH).attr('stroke','#e5e7eb');
-    g.append('text').attr('x',-12).attr('y',y+12).attr('text-anchor','end').attr('font-size',10).attr('fill','#9ca3af').attr('font-weight',500).text(d.d);
-    g.append('rect').attr('x',10).attr('y',y).attr('width',36).attr('height',13).attr('rx',4).attr('fill',d.tagC).attr('opacity',.12);
-    g.append('text').attr('x',28).attr('y',y+10).attr('text-anchor','middle').attr('font-size',8).attr('font-weight',700).attr('fill',d.tagC).attr('opacity',0).text(d.tag[lang]).transition().delay(i*60+100).duration(200).attr('opacity',1);
-    g.append('text').attr('x',54).attr('y',y+10).attr('font-size',12).attr('font-weight',700).attr('fill','#111827').attr('opacity',0).text(d.t[lang]).transition().delay(i*60+100).duration(250).attr('opacity',1);
-    g.append('text').attr('x',54).attr('y',y+24).attr('font-size',10).attr('fill','#6b7280').attr('opacity',0).text(d.imp[lang]).transition().delay(i*60+150).duration(250).attr('opacity',.8);
+    g.append('circle').attr('cx',0).attr('cy',y+8).attr('r',0).attr('fill',d.tagC).transition().delay(i*30).duration(150).attr('r',4);
+    if(i<ev.length-1) g.append('line').attr('x1',0).attr('y1',y+12).attr('x2',0).attr('y2',y+rowH).attr('stroke','#e5e7eb');
+    g.append('text').attr('x',-12).attr('y',y+11).attr('text-anchor','end').attr('font-size',9).attr('fill','#9ca3af').attr('font-weight',500).text(d.d);
+    g.append('rect').attr('x',10).attr('y',y).attr('width',36).attr('height',12).attr('rx',3).attr('fill',d.tagC).attr('opacity',.12);
+    g.append('text').attr('x',28).attr('y',y+9).attr('text-anchor','middle').attr('font-size',7).attr('font-weight',700).attr('fill',d.tagC).attr('opacity',0).text(d.tag[lang]).transition().delay(i*30+50).duration(150).attr('opacity',1);
+    g.append('text').attr('x',54).attr('y',y+9).attr('font-size',11).attr('font-weight',700).attr('fill','#111827').attr('opacity',0).text(d.t[lang]).transition().delay(i*30+50).duration(200).attr('opacity',1);
+    g.append('text').attr('x',54).attr('y',y+21).attr('font-size',9).attr('fill','#6b7280').attr('opacity',0).text(d.imp[lang]).transition().delay(i*30+80).duration(200).attr('opacity',.8);
   });
 }
 
@@ -1776,7 +1825,7 @@ function drawStorActual(){
 function drawStorage(){drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual();}
 
 // ===== INIT =====
-function drawAll(){drawFFO();drawRatio();drawTop3();drawRegion();}
+function drawAll(){drawFFO();drawRatio();drawTop20();drawRegion();}
 drawAll();
 </script>
 </body>
