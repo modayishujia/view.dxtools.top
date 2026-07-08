@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Compute Capital Flow"
+  short_description: "Access and analyze AI infrastructure investment data — hyperscaler capex, DC REITs, SPV financing, memory pricing, moratorium trends"
+  default_prompt: "Fetch the latest AI compute capital flow data from view.dxtools.top and summarize the key signals"

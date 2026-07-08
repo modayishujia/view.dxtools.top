@@ -981,6 +981,86 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
       <div class="card" style="text-align:center"><div style="font-weight:600;margin-bottom:4px">雪球</div><div style="color:var(--green);font-weight:600;font-size:13px">2026-07-07</div></div>
       <div class="card" style="text-align:center"><div style="font-weight:600;margin-bottom:4px">中财网</div><div style="color:var(--green);font-weight:600;font-size:13px">2026-07-08</div></div>
     </div>
+
+    <!-- Data API for AI Tools -->
+    <div style="margin-top:20px">
+      <div class="card-t" style="margin-bottom:12px">🤖 <span class="ln" data-en="Data API for AI Tools" data-zh="AI 工具数据接口">AI 工具数据接口</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:14px"><span class="ln" data-en="Structured JSON endpoints for AI agents, coding assistants, and automation tools. Copy a prompt below to use with your local AI tool." data-zh="供 AI Agent、编程助手和自动化工具使用的结构化 JSON 接口。复制下方 prompt 给你的本地 AI 工具使用。">供 AI Agent、编程助手和自动化工具使用的结构化 JSON 接口。复制下方 prompt 给你的本地 AI 工具使用。</span></div>
+
+      <div class="g2">
+        <div class="card" style="padding:14px">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px"><span class="ln" data-en="API Endpoints" data-zh="数据端点">数据端点</span></div>
+          <div style="font-size:12px;font-family:monospace">
+            <div style="padding:6px 8px;background:var(--bg);border-radius:6px;margin-bottom:6px;word-break:break-all">
+              <span style="color:var(--green)">GET</span> <a href="data/indicators.json" target="_blank" style="color:var(--blue);text-decoration:none">/data/indicators.json</a>
+              <span style="color:var(--text3);font-size:10px;margin-left:8px"><span class="ln" data-en="Main dataset" data-zh="主数据集">主数据集</span></span>
+            </div>
+            <div style="padding:6px 8px;background:var(--bg);border-radius:6px;margin-bottom:6px;word-break:break-all">
+              <span style="color:var(--green)">GET</span> <a href="data/history.json" target="_blank" style="color:var(--blue);text-decoration:none">/data/history.json</a>
+              <span style="color:var(--text3);font-size:10px;margin-left:8px"><span class="ln" data-en="Weekly snapshots" data-zh="周度快照">周度快照</span></span>
+            </div>
+            <div style="padding:6px 8px;background:var(--bg);border-radius:6px;word-break:break-all">
+              <span style="color:var(--green)">GET</span> <a href="data/sources.json" target="_blank" style="color:var(--blue);text-decoration:none">/data/sources.json</a>
+              <span style="color:var(--text3);font-size:10px;margin-left:8px"><span class="ln" data-en="Source registry" data-zh="数据源注册表">数据源注册表</span></span>
+            </div>
+          </div>
+          <div style="font-size:10px;color:var(--text3);margin-top:8px"><span class="ln" data-en="GitHub fallback: raw.githubusercontent.com/modayishujia/view.dxtools.top/main/data/" data-zh="GitHub 备用: raw.githubusercontent.com/modayishujia/view.dxtools.top/main/data/">GitHub 备用: raw.githubusercontent.com/modayishujia/view.dxtools.top/main/data/</span></div>
+        </div>
+
+        <div class="card" style="padding:14px">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px"><span class="ln" data-en="Copy Prompt" data-zh="复制 Prompt">复制 Prompt</span></div>
+          <div style="font-size:12px">
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <span style="font-weight:600;color:var(--text)"><span class="ln" data-en="Quick Summary" data-zh="快速摘要">快速摘要</span></span>
+                <button onclick="copyPrompt('summary')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
+              </div>
+              <div id="prompt-summary" style="padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5;max-height:60px;overflow:hidden;cursor:pointer" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'60px':'none'">
+Fetch https://view.dxtools.top/data/indicators.json — summarize: investment stance, capex total, risk score, top 3 risk triggers, and any new events this week.
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <span style="font-weight:600;color:var(--text)"><span class="ln" data-en="Deep Analysis" data-zh="深度分析">深度分析</span></span>
+                <button onclick="copyPrompt('deep')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
+              </div>
+              <div id="prompt-deep" style="padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5;max-height:60px;overflow:hidden;cursor:pointer" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'60px':'none'">
+Fetch https://view.dxtools.top/data/indicators.json and https://view.dxtools.top/data/history.json. Analyze: (1) Capital inflow vs outflow risk balance, (2) Risk trigger escalation trends, (3) Compare current snapshot vs previous — what changed? (4) Investment stance and rationale. Output in Chinese.
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <span style="font-weight:600;color:var(--text)"><span class="ln" data-en="Memory Query" data-zh="存储周期查询">存储周期查询</span></span>
+                <button onclick="copyPrompt('memory')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
+              </div>
+              <div id="prompt-memory" style="padding:8px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:10px;color:var(--text3);line-height:1.5;max-height:60px;overflow:hidden;cursor:pointer" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'60px':'none'">
+Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.memory_company_earnings. Summarize: Samsung Q2 results, HBM status, DRAM ASP trend, and memory supercycle signal strength.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="card" style="padding:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-weight:700;font-size:13px">🔧 <span class="ln" data-en="Install Local Skill" data-zh="安装本地 Skill">安装本地 Skill</span></span>
+            <button onclick="copyPrompt('skill')" style="font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer"><span class="ln" data-en="Copy" data-zh="复制">复制</span></button>
+          </div>
+          <div id="prompt-skill" style="padding:10px;background:var(--bg);border-radius:6px;font-family:monospace;font-size:11px;color:var(--text3);line-height:1.6;cursor:pointer;white-space:pre-wrap" onclick="this.style.maxHeight=this.style.maxHeight==='none'?'80px':'80px'">Install the dxtools-ai-compute skill:
+
+<span style="color:var(--text)">git clone https://github.com/modayishujia/view.dxtools.top.git /tmp/dxtools && \
+mkdir -p ~/.codex/skills/dxtools-ai-compute && \
+cp -r /tmp/dxtools/.codex-skill/* ~/.codex/skills/dxtools-ai-compute/</span>
+
+Or use the skill-installer:
+<span style="color:var(--text)">/install-skill dxtools-ai-compute</span>
+
+After install, ask your AI tool:
+<span style="color:var(--text)">"What's the current AI compute capital flow status?"</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ABOUT -->
@@ -1081,6 +1161,23 @@ document.querySelectorAll('.ln').forEach(el=>{
   const v=el.getAttribute('data-'+lang);
   if(v) el.innerHTML=v;
 });
+// ===== COPY PROMPT =====
+const prompts={
+  summary:'Fetch https://view.dxtools.top/data/indicators.json — summarize: investment stance, capex total, risk score, top 3 risk triggers, and any new events this week.',
+  deep:'Fetch https://view.dxtools.top/data/indicators.json and https://view.dxtools.top/data/history.json. Analyze: (1) Capital inflow vs outflow risk balance, (2) Risk trigger escalation trends, (3) Compare current snapshot vs previous — what changed? (4) Investment stance and rationale. Output in Chinese.',
+  memory:'Fetch https://view.dxtools.top/data/indicators.json — focus on supply_demand.memory_company_earnings. Summarize: Samsung Q2 results, HBM status, DRAM ASP trend, and memory supercycle signal strength.',
+  skill:'Install dxtools-ai-compute skill:\ngit clone https://github.com/modayishujia/view.dxtools.top.git /tmp/dxtools && mkdir -p ~/.codex/skills/dxtools-ai-compute && cp -r /tmp/dxtools/.codex-skill/* ~/.codex/skills/dxtools-ai-compute/'
+};
+function copyPrompt(id){
+  const text=prompts[id];
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=event.target;
+    const orig=btn.textContent;
+    btn.textContent=lang==='zh'?'已复制!':'Copied!';
+    btn.style.color='var(--green)';
+    setTimeout(()=>{btn.textContent=orig;btn.style.color=''},1500);
+  });
+}
 // ===== THEME =====
 let theme=localStorage.getItem('theme')||'light';
 function applyTheme(){
