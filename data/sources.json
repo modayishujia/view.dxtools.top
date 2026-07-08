@@ -102,6 +102,22 @@
       "frequency": "季度",
       "priority": "high",
       "next_event": "三星Q2完整财报 2026-07-30"
+    },
+    {
+      "name": "CNBC - Amazon Bond Coverage",
+      "url": "https://cnbc.com",
+      "type": "AI债券/超大规模厂商融资",
+      "frequency": "持续",
+      "priority": "high",
+      "note": "2026-07-08 亚马逊250亿美元发债报道"
+    },
+    {
+      "name": "中财网 (CFi.CN)",
+      "url": "https://cfi.cn",
+      "type": "AI债券市场/科技巨头融资",
+      "frequency": "持续",
+      "priority": "medium",
+      "note": "2026-07-08 AI债券抛售报道"
     }
   ],
   "chinese_sources": [

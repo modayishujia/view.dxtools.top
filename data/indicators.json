@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_updated": "2026-07-07",
+    "last_updated": "2026-07-08",
     "version": "1.5",
     "update_frequency": "weekly",
     "investment_stance": "Underweight Data Center REITs",
@@ -11,7 +11,8 @@
       { "date": "2026-07-05", "version": "1.2", "note": "新增P/FFO估值数据、投资建议、大盘可视化v2.0" },
       { "date": "2026-07-06", "version": "1.3", "note": "QTS Digital Gateway细节更新: 千亿美元规模, 2100英亩, Compass 5月撤出, 黑石连番撤退引发收缩敞口质疑" },
       { "date": "2026-07-07", "version": "1.4", "note": "Meta Compute正式落地, CoreWeave欧洲债券成功发行, 软银法国850亿美元项目, Alphabet 800亿美元融资" },
-      { "date": "2026-07-07", "version": "1.5", "note": "三星Q2业绩指引: 营业利润89.4万亿韩元(+1810%), 存储超级周期确认, 新增memory_company_earnings追踪" }
+      { "date": "2026-07-07", "version": "1.5", "note": "三星Q2业绩指引: 营业利润89.4万亿韩元(+1810%), 存储超级周期确认, 新增memory_company_earnings追踪" },
+      { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" }
     ]
   },
     "capital_inflow": {
@@ -84,9 +85,29 @@
         { "investor": "Stargate UAE", "amount": 300, "unit": "亿美元+", "target": "一期建设", "date": "2026-Q3完工" },
         { "investor": "AirTrunk/Blackstone", "amount": 210, "unit": "亿美元", "target": "印度马哈拉施特拉邦 3GW 数据中心", "date": "2026-07" },
         { "investor": "软银", "amount": 850, "unit": "亿美元", "target": "法国北部5GW AI数据中心", "date": "2026-07" },
-        { "investor": "Alphabet", "amount": 800, "unit": "亿美元", "target": "AI基础设施股权融资", "date": "2026-07", "note": "伯克希尔同意购买50亿美元股票" }
+        { "investor": "Alphabet", "amount": 800, "unit": "亿美元", "target": "AI基础设施股权融资", "date": "2026-07", "note": "伯克希尔同意购买50亿美元股票" },
+        { "investor": "亚马逊", "amount": 250, "unit": "亿美元", "target": "AI基建债务融资(八档美元债)", "date": "2026-07-08", "note": "2026年累计发债890亿+(3月540亿美欧+6月100亿加元+7月250亿美元), 2026年内不再新增美元债" }
       ],
-      "last_verified": "2026-07-07"
+      "ai_bond_market": {
+        "label": "AI债券市场总规模",
+        "h1_2026_issuance": { "value": 2360, "unit": "亿美元", "yoy": "+357%" },
+        "full_year_2026_forecast": { "value": 5700, "unit": "亿美元", "source": "Morgan Stanley" },
+        "april_2026_peak": { "value": 740, "unit": "亿美元", "note": "单月新高, 项目融资(数据中心建设)占高收益债85%、投资级40%" },
+        "hyperscaler_bond_index_share": "4% (Amazon/Meta/Google/Microsoft/Oracle合计占投资级债券指数)",
+        "latest_event": {
+          "event": "亚马逊250亿美元发债引发AI债券全线抛售",
+          "date": "2026-07-08",
+          "impact": {
+            "amazon_spread_widen": "7-10 bps",
+            "spacex_spread_widen": "9-13 bps",
+            "others_affected": "Alphabet, 英伟达, Meta, 甲骨文债券同步承压",
+            "demand_comparison": "峰值需求620亿美元, 约为3月370亿发债认购需求的一半 — 热度明显降温"
+          }
+        },
+        "source": "CNBC / Bloomberg / 中财网 / 新浪财经 / Odaily",
+        "last_verified": "2026-07-08"
+      },
+      "last_verified": "2026-07-08"
     },
     "datacenter_reit": {
       "label": "数据中心 REIT 表现",
@@ -210,11 +231,14 @@
         "Meta考虑股权融资 — 意味着债务融资空间收窄",
         "类比安然表外操作"
       ],
-      "new_concerns": [
-        "Morgan Stanley预测Amazon和Meta 2026年自由现金流将接近零或转负",
-        "Capex上调幅度远超收入上调幅度 — 利润率压力",
-        "CoreWeave欧洲债券需求强劲 — 市场风险偏好仍高, 可能鼓励更多杠杆"
-      ],
+        "new_concerns": [
+          "Morgan Stanley预测Amazon和Meta 2026年自由现金流将接近零或转负",
+          "Capex上调幅度远超收入上调幅度 — 利润率压力",
+          "CoreWeave欧洲债券需求强劲 — 市场风险偏好仍高, 可能鼓励更多杠杆",
+          "亚马逊2026年累计发债890亿+, AI债券H1总规模2360亿(+357% YoY) — 债务驱动型增长",
+          "亚马逊250亿新债认购热度腰斩(620亿 vs 3月1200亿) — 债券市场边际需求降温",
+          "五大超大规模厂商合计占投资级债券指数4% — 系统性风险敞口上升"
+        ],
       "source": "FT / Robeco / ZeroHedge / Odaily / LongPort / PitchBook",
       "last_verified": "2026-07-07"
     },
@@ -229,7 +253,8 @@
         { "source": "UBS", "statement": "Capex约占经营性现金流100%", "date": "2026" },
         { "source": "Odaily", "statement": "1.8万亿美元表外敞口=定时炸弹", "date": "2026-06-15" },
         { "source": "70%美国成年人", "statement": "反对在当地建设AI数据中心", "date": "2026-06" },
-        { "source": "加州蒙特雷帕克市", "statement": "86%投票支持禁止数据中心", "date": "2026-07" }
+        { "source": "加州蒙特雷帕克市", "statement": "86%投票支持禁止数据中心", "date": "2026-07" },
+        { "source": "AI债券市场", "statement": "H1发债2360亿美元(+357% YoY), 亚马逊250亿发债触发AI债全线抛售, 债券市场消化能力存疑", "date": "2026-07-08" }
       ],
       "last_verified": "2026-07-07"
     },
@@ -316,10 +341,13 @@
       "300+禁令/275项2026年新规 — 系统性阻力升级",
       "Meta考虑股权融资 — 债务融资空间收窄?",
       "Capex占收入>30% — 接近互联网泡沫峰值32%",
-      "CoreWeave欧洲债券成功发行 — 市场风险偏好仍高",
-      "Alphabet 800亿美元股权融资 — 大规模资本继续涌入",
-      "弗吉尼亚电力税生效 — 运营成本可能上升",
-      "存储股财报悖论: 三星Q2利润+1810%但股价跌 — 涨价预期price in, capex见顶恐惧price out"
+        "CoreWeave欧洲债券成功发行 — 市场风险偏好仍高",
+        "Alphabet 800亿美元股权融资 — 大规模资本继续涌入",
+        "弗吉尼亚电力税生效 — 运营成本可能上升",
+        "存储股财报悖论: 三星Q2利润+1810%但股价跌 — 涨价预期price in, capex见顶恐惧price out",
+        "亚马逊250亿发债引发AI债券全线抛售 — 利差骤扩7-13bps, 债券市场对AI债务融资的消化能力存疑",
+        "AI债券H1规模2360亿(+357% YoY), 全年预测5700亿 — 债务驱动型增长的可持续性",
+        "Fable 5 / GPT-5.6发布, hybrid model(分层路由)趋势明确 — 可能降低对单一高端算力的需求强度"
     ],
     "escalating": [
       "社区反对: 70%美国成年人反对, 300+禁令, 27州推进法案",
