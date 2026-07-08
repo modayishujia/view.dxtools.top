@@ -24,8 +24,6 @@ All data is served as static JSON — no API key required, no rate limits:
 | `https://view.dxtools.top/data/history.json` | Weekly snapshots with event timeline |
 | `https://view.dxtools.top/data/sources.json` | Data source registry with update timestamps |
 
-GitHub fallback: `https://raw.githubusercontent.com/modayishujia/view.dxtools.top/main/data/`
-
 ## How to Fetch
 
 Any method works:
@@ -40,11 +38,6 @@ data = json.loads(urllib.request.urlopen("https://view.dxtools.top/data/indicato
 
 # Node.js
 const data = await fetch("https://view.dxtools.top/data/indicators.json").then(r=>r.json())
-```
-
-Or use the bundled script:
-```bash
-python3 scripts/fetch_data.py [--type indicators|history|sources|all] [--output dir] [--github]
 ```
 
 ## Data Structure
