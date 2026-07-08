@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_updated": "2026-07-08",
-    "version": "1.5",
+    "last_updated": "2026-07-09",
+    "version": "1.7",
     "update_frequency": "weekly",
     "investment_stance": "Underweight Data Center REITs",
     "rationale": "Capex仍在流入但落地率仅31%, 估值处历史高位(P/AFFO 25-28x vs 历史均值16x), 风险/回报不对称. 黑石连番撤退(QTS Digital Gateway终止+$35亿出售VA资产)新增警示信号. Meta Compute落地引发算力过剩担忧, 但分层分配策略表明高端算力仍紧缺",
@@ -12,7 +12,8 @@
       { "date": "2026-07-06", "version": "1.3", "note": "QTS Digital Gateway细节更新: 千亿美元规模, 2100英亩, Compass 5月撤出, 黑石连番撤退引发收缩敞口质疑" },
       { "date": "2026-07-07", "version": "1.4", "note": "Meta Compute正式落地, CoreWeave欧洲债券成功发行, 软银法国850亿美元项目, Alphabet 800亿美元融资" },
       { "date": "2026-07-07", "version": "1.5", "note": "三星Q2业绩指引: 营业利润89.4万亿韩元(+1810%), 存储超级周期确认, 新增memory_company_earnings追踪" },
-      { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" }
+      { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" },
+      { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" }
     ]
   },
     "capital_inflow": {
@@ -86,7 +87,11 @@
         { "investor": "AirTrunk/Blackstone", "amount": 210, "unit": "亿美元", "target": "印度马哈拉施特拉邦 3GW 数据中心", "date": "2026-07" },
         { "investor": "软银", "amount": 850, "unit": "亿美元", "target": "法国北部5GW AI数据中心", "date": "2026-07" },
         { "investor": "Alphabet", "amount": 800, "unit": "亿美元", "target": "AI基础设施股权融资", "date": "2026-07", "note": "伯克希尔同意购买50亿美元股票" },
-        { "investor": "亚马逊", "amount": 250, "unit": "亿美元", "target": "AI基建债务融资(八档美元债)", "date": "2026-07-08", "note": "2026年累计发债890亿+(3月540亿美欧+6月100亿加元+7月250亿美元), 2026年内不再新增美元债" }
+        { "investor": "亚马逊", "amount": 250, "unit": "亿美元", "target": "AI基建债务融资(八档美元债)", "date": "2026-07-08", "note": "2026年累计发债890亿+(3月540亿美欧+6月100亿加元+7月250亿美元), 2026年内不再新增美元债" },
+        { "investor": "Anthropic/TeraWulf", "amount": 190, "unit": "亿美元", "target": "肯塔基州Justified Data园区401MW DC", "date": "2026-07-07", "note": "20年租约, 首批产能2027H2投运, 2028年初全面运营" },
+        { "investor": "Anthropic", "amount": 150, "unit": "亿美元", "target": "澳大利亚1.4GW数据中心", "date": "2026-07-05", "note": "机密招标书, 拆分4-5个子合同, 2026年底前启用1GW" },
+        { "investor": "黑石", "amount": 300, "unit": "亿美元", "target": "日本AI数据中心(3-5年)", "date": "2026-06-30", "note": "新增超1GW, 加上已有500MW共1.5GW; 同时放弃美国QTS Digital Gateway" },
+        { "investor": "Nscale", "amount": 9, "unit": "亿美元", "target": "欧美亚太DC扩建循环信贷", "date": "2026-07", "note": "英国AI基建企业" }
       ],
       "ai_bond_market": {
         "label": "AI债券市场总规模",
