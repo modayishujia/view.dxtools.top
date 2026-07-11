@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_updated": "2026-07-09",
-    "version": "1.7",
+    "last_updated": "2026-07-11",
+    "version": "1.8",
     "update_frequency": "weekly",
     "investment_stance": "Underweight Data Center REITs",
     "rationale": "Capex仍在流入但落地率仅31%, 估值处历史高位(P/AFFO 25-28x vs 历史均值16x), 风险/回报不对称. 黑石连番撤退(QTS Digital Gateway终止+$35亿出售VA资产)新增警示信号. Meta Compute落地引发算力过剩担忧, 但分层分配策略表明高端算力仍紧缺",
@@ -13,7 +13,8 @@
       { "date": "2026-07-07", "version": "1.4", "note": "Meta Compute正式落地, CoreWeave欧洲债券成功发行, 软银法国850亿美元项目, Alphabet 800亿美元融资" },
       { "date": "2026-07-07", "version": "1.5", "note": "三星Q2业绩指引: 营业利润89.4万亿韩元(+1810%), 存储超级周期确认, 新增memory_company_earnings追踪" },
       { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" },
-      { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" }
+      { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" },
+      { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$26.5B创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据" }
     ]
   },
     "capital_inflow": {
@@ -300,7 +301,7 @@
     },
     "memory_company_earnings": {
       "label": "存储厂商财报追踪",
-      "last_verified": "2026-07-07",
+      "last_verified": "2026-07-11",
       "companies": {
         "samsung": {
           "ticker": "005930.KS",
@@ -322,14 +323,135 @@
           ],
           "market_reaction": {
             "stock_ytd": "+165%",
-            "sk_hynix_ytd": "+260%",
+            "sk_hynix_ytd": "+640% (首尔), Nasdaq首日+17%",
             "post_meta_compute_selloff": { "samsung": "-6.5%", "sk_hynix": "-7.7%", "kioxia": "-12.6%", "date": "2026-07-02" },
             "paradox": "利润暴增但营收略低于预期, 叠加Meta算力过剩恐慌, 触发sell the news",
             "key_tension": "涨价预期已price in, 但capex见顶恐惧还没有price out"
           },
           "source": "Samsung IR / 花旗",
           "last_verified": "2026-07-07"
+        },
+        "sk_hynix": {
+          "ticker": "SKHY (Nasdaq) / 000660.KS",
+          "nasdaq_listing": {
+            "date": "2026-07-10",
+            "ticker": "SKHY",
+            "ads_price": "$158.14",
+            "total_raise": "$26.5B",
+            "record": "美国史上最大外国公司IPO (超越阿里2014年$21.9B)",
+            "debut_performance": "+17% (首日)",
+            "market_cap": "~$1.15万亿",
+            "ads_ratio": "10 ADS = 1 common share",
+            "underwriters": "BofA, Citigroup, Goldman Sachs, JPMorgan",
+            "use_of_proceeds": "丽水半导体制造综合体新晶圆厂建设"
+          },
+          "q1_2026": {
+            "revenue": { "value": 34.51, "unit": "亿美元", "yoy": "+198%" },
+            "net_profit": { "value": 26.48, "unit": "亿美元", "yoy": "+398%" },
+            "note": "单季利润接近2025全年净利润水平"
+          },
+          "hbm_share": "56.4% (全球第一)",
+          "hbm4_status": "量产中",
+          "hbm_bit_shipments": { "2026e": "184亿Gb (+46% YoY)", "2027e": "247亿Gb (+34% YoY)" },
+          "market_reaction": {
+            "seoul_12m": "+640%",
+            "nasdaq_debut": "+17%",
+            "post_meta_compute_selloff": { "sk_hynix": "-7.7%", "date": "2026-07-02" }
+          },
+          "analyst_actions": [
+            { "firm": "瑞银", "action": "目标价上调至170万韩元 (原155万), 2026E营业利润预测286万亿韩元, 较市场一致预期高57%", "date": "2026-06-26" }
+          ],
+          "leadership_statements": [
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2026-07-11",
+              "event": "Nasdaq上市日纽约采访",
+              "quote": "全球DRAM行业即将面临有史以来最严重的供应短缺, 内存市场供不应求局面可能持续至下一个十年",
+              "details": [
+                "2027年将成为该行业历史上供应最紧张的一年",
+                "客户需求持续增长, 但产能存在限制, 即使到2030年后客户需求仍将超过产能",
+                "美国仍是未来建设晶圆厂的候选地点之一, 尚未做出最终决定",
+                "选址优先考虑: 充足土地、电力、水资源、熟练劳动力、竞争力制造成本"
+              ],
+              "source": "路透社 / 财联社"
+            },
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2026-06-24",
+              "event": "Nasdaq上市前路演",
+              "quote": "存储芯片短缺局面大概率延续至2030年之后, 客户市场反馈印证行业对长期供给不足的普遍预期",
+              "source": "财联社"
+            },
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2026-03-27",
+              "event": "年度股东大会",
+              "quote": "AI数据中心对HBM需求今年有望出现'爆炸性增长', 今年HBM产能已销售一空, 2026年产能也将在今年上半年售罄",
+              "details": [
+                "DeepSeek的流行将对内存芯片需求产生正面影响, 短期内HBM需求不会下滑",
+                "积极开发QLC SSD、LPCAMM2、UFS5.0、CXL和PIM等产品, 目标成为'全堆叠AI内存提供商'"
+              ],
+              "source": "路透社 / 腾讯云"
+            },
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2026-03-08",
+              "event": "摩根大通韩国大会",
+              "quote": "内存上行周期预计将比预期更长",
+              "details": [
+                "HBM业务维持强势领导地位, HBM4量产时间表不变, 盈利目标与去年持平",
+                "HBM比特出货量和定价按年谈判, 目标维持与去年相当的盈利水平",
+                "尽管D5/LPDDR5价格自2025Q4大幅反弹, 2026年合约重谈的可能性几乎为零",
+                "对股东回报展示更积极姿态, 首要目标是实现净现金地位"
+              ],
+              "source": "JP Morgan / LongPort"
+            },
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2026-02",
+              "event": "高盛电话会议",
+              "quote": "存储芯片产业已全面进入卖方主导阶段, 价格上行趋势将持续至2026年全年",
+              "source": "搜狐"
+            },
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2026-01-05",
+              "event": "2026年新年员工致辞",
+              "quote": "AI需求超出预期, 并将成为常态, 竞争日益激烈, SK海力士目标是发展成为真正世界级的公司",
+              "source": "腾讯新闻 / 百家号"
+            },
+            {
+              "speaker": "郭鲁正 (Kwak Noh-Jung) CEO",
+              "date": "2025-11-03",
+              "event": "SK AI Summit 2025",
+              "quote": "宣布转型'全线AI存储创造者' (Full Stack AI Memory Creator) 新愿景",
+              "details": [
+                "发布2026-2031年产品路线图: HBM(Standard+Custom双线)、AI专用存储(AI-D、AI-N系列)",
+                "2026-2028: HBM4 16Hi, HBM4E 8/12/16Hi标准+定制方案",
+                "DRAM路线: LPDDR6标准方案 + AI-DRAM (LPDDR6X SOCAMM2、MRDIMM Gen2、LPDDR5R)",
+                "2028+: 第二代CXL标准的LPDDR6-PIM"
+              ],
+              "source": "SK Hynix IR / 知乎 / 腾讯云"
+            },
+            {
+              "speaker": "崔泰源 (Choi Tae-won) SK集团会长",
+              "date": "2026-06-02",
+              "event": "公开声明",
+              "quote": "SK海力士计划未来五年将晶圆产能扩大一倍, 全球存储芯片供应缺口或持续至2030年",
+              "details": [
+                "目标: 月产DRAM晶圆从约2万片300mm提高到16-19万片",
+                "2026年全球存储产值将突破5500亿美元, 首次超过晶圆代工规模"
+              ],
+              "source": "新浪财经 / 沪深股通"
+            }
+          ],
+          "q2_2026_report_date": "2026-07-29",
+          "source": "SK Hynix IR / CNBC / TechCrunch / 雪球",
+          "last_verified": "2026-07-11"
         }
+      },
+      "market_reaction": {
+        "sk_hynix_nasdaq_debut": { "date": "2026-07-10", "performance": "+17%", "context": "首日表现强劲, 存储超级周期叙事延续" }
       }
     }
   },
@@ -341,7 +463,7 @@
       "数据中心 REIT 估值暴跌"
     ],
     "new_monitoring": [
-      "Meta出售闲置算力 — 是商业化还是过剩信号? (2026-07-01)",
+      "Meta出售闲置算力 — 是商业化还是过剩信号? SemiAnalysis驳斥'算力过剩论': Meta算力采购只会加速不会放缓 (2026-07-03)",
       "上架率从79%降至68% — 需求是否跟得上供给?",
       "300+禁令/275项2026年新规 — 系统性阻力升级",
       "Meta考虑股权融资 — 债务融资空间收窄?",
@@ -359,5 +481,56 @@
       "联邦级立法: Sanders+AOC提出全国暂停法案 (2026-03)",
       "加州蒙特雷帕克市: 86%投票支持禁止数据中心 — 首个选民通过的市级禁令"
     ]
+  },
+  "institution_analysis": {
+    "label": "独立研究机构深度分析",
+    "last_verified": "2026-07-11",
+    "semianalysis": {
+      "report_date": "2026-07-03",
+      "topic": "Meta算力扩张与商业化策略深度分析",
+      "core_conclusion": "Meta出租算力不是因为买多了, 而是因为算力规模足够支撑多条高价值策略并行, 每一个选项都足以覆盖成本。2027年资本开支将'高到令人震惊'",
+      "key_findings": [
+        "2026上半年Meta已签约超5GW算力容量(不含自建项目进度)",
+        "自2024年初至今, Meta已敲定近10GW算力合作协议",
+        "仅两个在建数据中心园区合计容量即达2.5GW, 相当于市场传闻'全美在建仅5GW'的一半",
+        "驳斥'半数数据中心项目延期'叙事: 这些头条完全错误"
+      ],
+      "meta_four_monetization_paths": [
+        {
+          "path": "前沿AI模型 (MSL)",
+          "detail": "Meta超级智能实验室仍为增量算力最大去处, 团队对进展'兴奋', 未放弃前沿大模型训练"
+        },
+        {
+          "path": "广告推荐系统扩容10倍",
+          "detail": "更大更贵的RecSys模型→更精准广告投放→广告主愿付更高价格→用户停留时间增加→扩大可变现广告库存, 同时需要训练和推理算力"
+        },
+        {
+          "path": "Bedrock模式API服务",
+          "detail": "据传Meta与Anthropic进入最终谈判, 将专属部署Claude私有实例, 模式对标Amazon Bedrock; 拟签~$100亿算力大单, 90天双向解约条款"
+        },
+        {
+          "path": "SpaceX模式高端短期租赁",
+          "detail": "SpaceX-Google/Anthropic算力合约定价为行业同类4倍, 90天可取消; Meta可复制此模式, 200MW对外即可年创收$100亿+; 传统Neocloud无法复制(需多年合同覆盖融资成本)"
+        }
+      ],
+      "meta_advantage": "CFO的梦: 高期权性让Meta越买越自信 — MSL成功则全部内用(ROI最高), MSL遇挫则SpaceX模式/Bedrock模式立即产生高毛利收入, RecSys不达预期也有其他出口消化",
+      "neocloud_impact": "Meta不会成为仅30%毛利率的裸金属IaaS供应商, 所有变现选项均为高价值。Meta更可能是CoreWeave/Nebius等RPO增长的核心来源, 而非竞争对手",
+      "oracle_comparison": "甲骨文手握数GW存量算力却未能抓住SpaceX式大单变现机遇, 过去一年股价累计下跌~38% — 这是SemiAnalysis眼中的反面案例",
+      "construction_strategy": "Meta采用'帐篷式模块化数据中心'极速建造方案, 一年前首次被观测, 如今已在美国各地大规模铺开; 高度适配SpaceX模式的快速启动/快速变现逻辑",
+      "biggest_uncertainty": "MSL能否真正追上Anthropic和OpenAI仍是最大不确定变量",
+      "next_catalyst": "2026-07-29 Meta Q2财报: 市场一致预期EPS $7.17, 营收$601.9B; 重点关注资本开支更新及云业务/Anthropic合作进展披露",
+      "source": "SemiAnalysis / TechFlow / 华尔街见闻 / IT之家"
+    },
+    "morgan_stanley": {
+      "report_date": "2026-07-02",
+      "topic": "AI算力过剩时间表",
+      "core_conclusion": "2026Q4美国超大规模厂商累计GPU装机容量将超出国内训练+推理总需求28%",
+      "details": [
+        "Meta富余算力出租将加速中低端H100/H200算力价格压缩",
+        "仅最新一代GB200训练集群仍处于供给紧张状态",
+        "对Meta维持增持, 目标价$775"
+      ],
+      "source": "Morgan Stanley / AlphaWise"
+    }
   }
 }
