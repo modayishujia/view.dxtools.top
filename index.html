@@ -119,7 +119,6 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .intel-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .intel-filter button{padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
 .intel-filter button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
-.about-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:14px;margin-bottom:14px}
 .rec{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:var(--radius);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:20px;margin-bottom:20px}
 .rec h3{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
 .rec .verdict{font-size:24px;font-weight:800}.rec .verdict .hl{color:var(--orange)}
@@ -1073,56 +1072,61 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   <!-- ABOUT -->
   <div class="section" id="sec-about">
     <div class="section-title">ℹ️ <span class="ln" data-en="About" data-zh="关于我们">关于我们</span></div>
-    <div style="display:flex;gap:14px;margin-bottom:14px">
-      <div class="card" style="text-align:center;flex:1;min-width:0">
-        <div style="font-size:48px;margin-bottom:12px">⚡</div>
-        <div style="font-size:18px;font-weight:700;margin-bottom:8px">AI Compute Capital Flow</div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.6;max-width:400px;margin:0 auto">
-          <span class="ln" data-en="An investor-grade dashboard tracking capital flows into AI compute infrastructure. Built with D3.js, updated weekly, designed for institutional investors who need to see the signal through the noise." data-zh="投资人级 AI 算力资本流向监控仪表盘。基于 D3.js 构建，每周更新，专为需要穿透噪音看到信号的机构投资人设计。">投资人级 AI 算力资本流向监控仪表盘。基于 D3.js 构建，每周更新，专为需要穿透噪音看到信号的机构投资人设计。</span>
-        </div>
-        <div style="margin-top:20px;padding:16px;background:var(--bg);border-radius:12px;display:inline-block">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:8px"><span class="ln" data-en="FOLLOW US" data-zh="关注我们">关注我们</span></div>
-          <div style="display:flex;gap:24px;align-items:center">
-            <div style="text-align:center">
-              <div style="width:100px;height:100px;background:#fff;border-radius:12px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto;overflow:hidden">
-                <img src="getqrcode.jpeg" alt="莫说闲话" style="width:90px;height:90px;object-fit:contain">
-              </div>
-              <div style="font-size:11px;color:var(--text2);margin-top:6px"><span class="ln" data-en="WeChat: 莫说闲话" data-zh="微信公众号：莫说闲话">微信公众号：莫说闲话</span></div>
-            </div>
-            <div style="text-align:center">
-              <a href="https://x.com/iGaves" target="_blank" rel="noopener" style="text-decoration:none">
-                <div style="width:100px;height:100px;background:#000;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                  <svg viewBox="0 0 24 24" width="40" height="40" fill="#fff">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
+    <table style="width:100%;border-collapse:separate;border-spacing:14px;margin:-14px;margin-bottom:0"><tr>
+      <td style="width:50%;vertical-align:top;padding:0">
+        <div class="card" style="text-align:center">
+          <div style="font-size:48px;margin-bottom:12px">⚡</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:8px">AI Compute Capital Flow</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6;max-width:400px;margin:0 auto">
+            <span class="ln" data-en="An investor-grade dashboard tracking capital flows into AI compute infrastructure. Built with D3.js, updated weekly, designed for institutional investors who need to see the signal through the noise." data-zh="投资人级 AI 算力资本流向监控仪表盘。基于 D3.js 构建，每周更新，专为需要穿透噪音看到信号的机构投资人设计。">投资人级 AI 算力资本流向监控仪表盘。基于 D3.js 构建，每周更新，专为需要穿透噪音看到信号的机构投资人设计。</span>
+          </div>
+          <div style="margin-top:20px;padding:16px;background:var(--bg);border-radius:12px;display:inline-block">
+            <div style="font-size:11px;color:var(--text3);margin-bottom:8px"><span class="ln" data-en="FOLLOW US" data-zh="关注我们">关注我们</span></div>
+            <div style="display:flex;gap:24px;align-items:center">
+              <div style="text-align:center">
+                <div style="width:100px;height:100px;background:#fff;border-radius:12px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto;overflow:hidden">
+                  <img src="getqrcode.jpeg" alt="莫说闲话" style="width:90px;height:90px;object-fit:contain">
                 </div>
-              </a>
-              <div style="font-size:11px;color:var(--text2);margin-top:6px"><a href="https://x.com/iGaves" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">@iGaves</a></div>
+                <div style="font-size:11px;color:var(--text2);margin-top:6px"><span class="ln" data-en="WeChat: 莫说闲话" data-zh="微信公众号：莫说闲话">微信公众号：莫说闲话</span></div>
+              </div>
+              <div style="text-align:center">
+                <a href="https://x.com/iGaves" target="_blank" rel="noopener" style="text-decoration:none">
+                  <div style="width:100px;height:100px;background:#000;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="#fff">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </div>
+                </a>
+                <div style="font-size:11px;color:var(--text2);margin-top:6px"><a href="https://x.com/iGaves" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">@iGaves</a></div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button onclick="document.getElementById('donate-modal').style.display='flex'" style="padding:10px 24px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s;box-shadow:0 2px 8px rgba(245,158,11,.3)" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              ☕ <span class="ln" data-en="Buy me a coffee" data-zh="请作者喝杯咖啡">请作者喝杯咖啡</span>
+            </button>
           </div>
         </div>
-        <div style="margin-top:16px">
-          <button onclick="document.getElementById('donate-modal').style.display='flex'" style="padding:10px 24px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s;box-shadow:0 2px 8px rgba(245,158,11,.3)" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-            ☕ <span class="ln" data-en="Buy me a coffee" data-zh="请作者喝杯咖啡">请作者喝杯咖啡</span>
-          </button>
+      </td>
+      <td style="width:50%;vertical-align:top;padding:0">
+        <div class="card">
+          <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Data Sources" data-zh="数据来源">数据来源</span></div></div></div>
+          <div style="font-size:12px;color:var(--text2);line-height:2">
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Morgan Stanley</b> — AI Capex forecasts, GDP impact</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Goldman Sachs</b> — Supply-demand gap, memory pricing</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>TrendForce</b> — Contract prices, market share</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Jefferies</b> — Price forecasts, risk analysis</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Financial Times</b> — SPV/structured finance tracking</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Bloomberg</b> — Project cancellations, market data</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>SemiAnalysis</b> — Capacity analysis, contrarian views</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>SK Hynix IR</b> — Earnings, HBM roadmap, Nasdaq listing</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Korea Customs</b> — Export price data</div>
+            <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Arizton / CBRE</b> — Regional investment data</div>
+            <div style="padding:4px 0"><b>Data Center Watch</b> — Moratorium tracking</div>
+          </div>
         </div>
-      </div>
-      <div class="card" style="flex:1;min-width:0">
-        <div class="card-h"><div><div class="card-t"><span class="ln" data-en="Data Sources" data-zh="数据来源">数据来源</span></div></div></div>
-        <div style="font-size:12px;color:var(--text2);line-height:2">
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Morgan Stanley</b> — AI Capex forecasts, GDP impact</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Goldman Sachs</b> — Supply-demand gap, memory pricing</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>TrendForce</b> — Contract prices, market share</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Jefferies</b> — Price forecasts, risk analysis</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Financial Times</b> — SPV/structured finance tracking</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Bloomberg</b> — Project cancellations, market data</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>SemiAnalysis</b> — Capacity analysis, contrarian views</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>SK Hynix IR</b> — Earnings, HBM roadmap, Nasdaq listing</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Korea Customs</b> — Export price data</div>
-          <div style="padding:4px 0;border-bottom:1px solid var(--border)"><b>Arizton / CBRE</b> — Regional investment data</div>
-          <div style="padding:4px 0"><b>Data Center Watch</b> — Moratorium tracking</div>
-        </div>
-      </div>
-    </div>
+      </td>
+    </tr></table>
   </div>
 
   </div>
