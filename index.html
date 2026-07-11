@@ -106,6 +106,19 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .tbl tr:last-child td{border-bottom:none}
 .tbl .n{font-family:'SF Mono','Fira Code',monospace;font-weight:700;font-size:12px}
 .tbl .pos{color:#047857}.tbl .neg{color:#dc2626}
+.intel-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);transition:background .15s}
+.intel-item:hover{background:var(--bg);border-radius:8px;margin:0 -8px;padding:16px 8px}
+.intel-date{flex-shrink:0;width:56px;font-size:11px;color:var(--text3);font-weight:600;padding-top:2px}
+.intel-body{flex:1;min-width:0}
+.intel-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.intel-title a{color:var(--blue);text-decoration:none;font-size:11px;font-weight:500;opacity:.7;transition:opacity .15s}
+.intel-title a:hover{opacity:1;text-decoration:underline}
+.intel-summary{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:6px}
+.intel-analysis{font-size:11px;color:var(--text3);line-height:1.5;padding:6px 10px;background:var(--bg);border-radius:6px;border-left:3px solid var(--blue)}
+.intel-tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.intel-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.intel-filter button{padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+.intel-filter button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .rec{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:var(--radius);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:20px;margin-bottom:20px}
 .rec h3{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
 .rec .verdict{font-size:24px;font-weight:800}.rec .verdict .hl{color:var(--orange)}
@@ -139,7 +152,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <div class="sidebar">
   <div class="logo">⚡ AI <span>Capital</span></div>
   <nav>
-    <a class="active" onclick="showSection('overview',this)"><span class="icon">📊</span><span class="ln" data-en="Overview" data-zh="总览">总览</span></a>
+    <a class="active" onclick="showSection('overview',this)"><span class="icon">📊</span><span class="ln" data-en="Dashboard" data-zh="看板">看板</span></a>
+    <a onclick="showSection('intel',this)"><span class="icon">📰</span><span class="ln" data-en="Intel" data-zh="情报">情报</span></a>
     <a onclick="showSection('inflow',this)"><span class="icon">💰</span><span class="ln" data-en="Inflow" data-zh="资金流入">资金流入</span></a>
     <a onclick="showSection('gpu',this)"><span class="icon">🔲</span><span class="ln" data-en="GPU Chips" data-zh="芯片供给">芯片供给</span></a>
     <a onclick="showSection('risk',this)"><span class="icon">⚠️</span><span class="ln" data-en="Risk" data-zh="风险信号">风险信号</span></a>
@@ -164,6 +178,15 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         <span class="ln" data-en="Data as of Jul 11, 2026" data-zh="数据更新至 2026年7月11日">数据更新至 2026年7月11日</span>
       </div>
       <div class="badge warn"><span class="ln" data-en="⚠ Positive + Escalating Warnings" data-zh="⚠ 正向 + 升级警示">⚠ 正向 + 升级警示</span></div>
+    </div>
+  </div>
+
+  <!-- INTEL FEED -->
+  <div class="section" id="sec-intel">
+    <div class="section-title">📰 <span class="ln" data-en="Intelligence Feed" data-zh="情报源">情报源</span></div>
+    <div class="intel-filter" id="intel-filter"></div>
+    <div class="card">
+      <div id="intel-list"></div>
     </div>
   </div>
 
@@ -1197,7 +1220,7 @@ function showSection(id,el){
   document.getElementById('sec-'+id).classList.add('active');
   document.querySelectorAll('.sidebar nav a').forEach(a=>a.classList.remove('active'));
   if(el) el.classList.add('active');
-  const redraw={overview:drawAll,inflow:()=>{drawCapex();drawDonut();drawSPV()},gpu:()=>{drawNvdaRev();drawGpuLeadTime();drawHbmShare()},risk:()=>{drawMorat();drawRadar();drawTimeline()},valuation:null,regional:drawGap,storage:drawStorage,about:null};
+  const redraw={overview:drawAll,intel:drawIntel,inflow:()=>{drawCapex();drawDonut();drawSPV()},gpu:()=>{drawNvdaRev();drawGpuLeadTime();drawHbmShare()},risk:()=>{drawMorat();drawRadar();drawTimeline()},valuation:null,regional:drawGap,storage:drawStorage,about:null};
   if(redraw[id]){
     if(id==='storage') setTimeout(()=>redraw[id](),50);
     else redraw[id]();
@@ -1937,6 +1960,115 @@ function drawStorActual(){
 function drawStorage(){drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual();}
 
 // ===== INIT =====
+// ===== INTEL FEED =====
+function drawIntel(){
+  const isZh=lang==='zh';
+  const intel=[
+    {d:'Jul 11',cat:'earnings',
+     src:'路透社',srcUrl:'https://www.reuters.com',
+     t:{en:'SK Hynix CEO: Worst DRAM Shortage Ever in 2027, Persisting Beyond 2030',zh:'SK海力士CEO：2027年将迎史上最严重DRAM短缺，供不应求持续至2030年后'},
+     s:{en:'SK Hynix CEO Kwak Noh-Jung stated on Nasdaq listing day that the global DRAM industry faces its worst supply shortage in history, with demand exceeding capacity even beyond 2030. US remains a candidate for future fabs.',zh:'SK海力士CEO郭鲁正在纳斯达克上市日表示，全球DRAM行业即将面临有史以来最严重的供应短缺，即使到2030年后客户需求仍将超过产能。美国仍是未来建厂候选地。'},
+     a:{en:'Bullish for memory cycle duration. Reinforces "supercycle through 2027" thesis. Key risk: if AI capex slows, overcapacity could emerge 2028-2029.',zh:'对存储周期持续时间利好。强化"超级周期延续至2027"逻辑。核心风险：若AI capex放缓，2028-2029年可能出现过剩。'},
+     mood:'bullish'},
+    {d:'Jul 10',cat:'ipo',
+     src:'TechCrunch',srcUrl:'https://techcrunch.com/2026/07/10/sk-hynix-raises-26-5b-in-the-biggest-foreign-ipo-in-us-history/',
+     t:{en:'SK Hynix Raises $26.5B in Largest Foreign IPO in US History',zh:'SK海力士募资$265亿，创美国史上最大外国公司IPO纪录'},
+     s:{en:'SK Hynix listed on Nasdaq as SKHY, raising $26.5B via ADR at $158.14/share. Shares surged 17% on debut. Market cap ~$1.15T. Proceeds for new Yeoju fab construction.',zh:'SK海力士以SKHY代码在纳斯达克上市，ADR发行价$158.14，募资$265亿。首日大涨17%，市值约$1.15万亿。募资用于丽水新晶圆厂建设。'},
+     a:{en:'Record-breaking IPO signals extreme investor appetite for AI memory exposure. Validates memory supercycle narrative. Watch for lock-up expiry pressure.',zh:'破纪录IPO显示投资者对AI存储标的的极端追捧。验证存储超级周期叙事。关注锁定期到期后的抛压。'},
+     mood:'bullish'},
+    {d:'Jul 3',cat:'analysis',
+     src:'SemiAnalysis',srcUrl:'https://semianalysis.com/',
+     t:{en:'SemiAnalysis: Meta Compute Expansion Accelerating, 2027 Capex "Astonishingly High"',zh:'SemiAnalysis：Meta算力扩张加速，2027年capex"高到令人震惊"'},
+     s:{en:'SemiAnalysis rebutted market oversupply fears. Meta contracted 5GW+ in H1 2026 alone, nearly 10GW total since 2024. Four monetization paths: MSL frontier models, RecSys 10x expansion, Bedrock-style Claude API, and SpaceX-model premium short-term leasing.',zh:'SemiAnalysis反驳市场过剩恐慌。Meta仅2026上半年就签约5GW+，自2024年至今累计近10GW。四条变现路径：MSL前沿模型、RecSys扩容10x、Bedrock模式Claude API、SpaceX模式高端短期租赁。'},
+     a:{en:'Key contrarian signal. Meta is not dumping capacity — it\'s creating optionality. "CFO\'s dream": every GW has multiple high-value outlets. Neocloud impact: Meta is RPO growth source, not competitor.',zh:'关键逆向信号。Meta不是在抛售产能——而是在创造期权性。"CFO的梦"：每GW都有多个高价值出口。Neocloud影响：Meta是RPO增长来源，非竞争对手。'},
+     mood:'bullish'},
+    {d:'Jul 7',cat:'earnings',
+     src:'Samsung IR',srcUrl:'https://www.samsung.com/semiconductor/',
+     t:{en:'Samsung Q2 Operating Profit ₩89.4T (+1810% YoY) — Memory Supercycle Confirmed',zh:'三星Q2营业利润89.4万亿韩元(+1810%) — 存储超级周期确认'},
+     s:{en:'Samsung Q2 preliminary results: revenue ₩171T (+133% YoY), operating profit ₩89.4T (+1810%). Single-quarter profit exceeds entire 2025 (₩43.6T). Stocks fell on the news — classic "sell the news" pattern.',zh:'三星Q2初步业绩：营收171万亿韩元(+133%)，营业利润89.4万亿韩元(+1810%)。单季利润超过2025全年(43.6万亿)。股价反跌——典型"利好出尽"。'},
+     a:{en:'Earnings confirm memory supercycle. But stock reaction shows price surge already priced in. Key tension: capex-peak fear not yet priced out. Full report July 30.',zh:'业绩确认存储超级周期。但股价反应表明涨价预期已price in。核心矛盾：capex见顶恐惧尚未price out。完整财报7月30日。'},
+     mood:'neutral'},
+    {d:'Jul 8',cat:'macro',
+     src:'Bloomberg',srcUrl:'https://www.bloomberg.com/',
+     t:{en:'Amazon $25B Bond Triggers AI Debt Market Selloff',zh:'亚马逊$250亿发债触发AI债券市场全线抛售'},
+     s:{en:'Amazon issued $25B in bonds, the largest corporate debt sale of 2026. AI bond spreads widened 7-13bps across the board. 2026 cumulative AI bond issuance now $89B+. H1 total: $2,360B (+357% YoY).',zh:'亚马逊发行$250亿债券，2026年最大企业债。AI债券利差全线扩大7-13bps。2026年累计AI债券发行$890亿+。H1总计$2360亿(+357% YoY)。'},
+     a:{en:'Bond market digesting AI debt at scale is the new risk frontier. If demand continues to halve vs March levels, refinancing costs rise and capex sustainability questioned.',zh:'债券市场大规模消化AI债务是新的风险前沿。若认购热度持续腰斩，再融资成本上升，capex可持续性将受质疑。'},
+     mood:'bearish'},
+    {d:'Jul 1',cat:'analysis',
+     src:'Bloomberg',srcUrl:'https://www.bloomberg.com/',
+     t:{en:'Meta Launches "Meta Compute" — Sells Excess AI Compute to External Customers',zh:'Meta推出"Meta Compute"——对外出售富余AI算力'},
+     s:{en:'Meta announced plans to rent out excess AI compute capacity. META stock +9%, CoreWeave -13%, Nebius -15%. Market interpreted as either commercialization maturity or oversupply signal.',zh:'Meta宣布计划出租富余AI算力。META股价+9%，CoreWeave -13%，Nebius -15%。市场解读为商业化成熟或过剩信号。'},
+     a:{en:'SemiAnalysis says NOT overcapacity — Meta has 4 high-value monetization paths. Key: GB200 retained for internal MSL, only H100/H200 externalized. SpaceX-model pricing = 4x industry standard.',zh:'SemiAnalysis称非过剩——Meta有4条高价值变现路径。关键：GB200自留用于内部MSL，仅H100/H200对外。SpaceX模式定价=行业标准4倍。'},
+     mood:'neutral'},
+    {d:'Jul 5',cat:'dc_deal',
+     src:'Financial Times',srcUrl:'https://www.ft.com/',
+     t:{en:'Blackstone Retreat: QTS $100B+ Digital Gateway Project Terminated',zh:'黑石撤退：QTS千亿美元Digital Gateway项目终结'},
+     s:{en:'Blackstone killed its largest-ever DC campus project (2,100 acres, $100B+ planned). Sold 3 Virginia DCs for $3.5B two days earlier. PE giant shrinking AI infrastructure exposure.',zh:'黑石终止了其有史以来最大的DC园区项目(2100英亩，千亿美元规划)。两天前$35亿售出弗吉尼亚3处DC。PE巨头收缩AI基建敞口。'},
+     a:{en:'Bearish signal for US DC expansion. Contrasts with Asian/Japan expansion. Suggests institutional investors see US regulatory/moratorium risk as structural, not temporary.',zh:'对美国DC扩张利空。与亚洲/日本扩张形成对比。表明机构投资者认为美国监管/禁建风险是结构性的，非暂时性。'},
+     mood:'bearish'},
+    {d:'Jul 5',cat:'dc_deal',
+     src:'Anthropic',srcUrl:'https://www.anthropic.com/',
+     t:{en:'Anthropic Plans $15B 1.4GW Data Center in Australia',zh:'Anthropic计划在澳洲建设$150亿1.4GW数据中心'},
+     s:{en:'Largest AI infrastructure investment in the Southern Hemisphere. 1GW expected online by end 2026. Follows $19B Kentucky + $15B Australia DC announcements earlier.',zh:'南半球最大AI基建投资。2026年底前启用1GW。继此前$190亿肯塔基+$150亿澳洲DC公告之后。'},
+     a:{en:'AI companies bypassing traditional REITs and building directly. Signals: (1) demand is real, (2) existing DC supply insufficient, (3) Anthropic has cash/compute confidence.',zh:'AI公司绕过传统REIT直接建设。信号：(1)需求真实，(2)现有DC供给不足，(3)Anthropic对现金/算力有信心。'},
+     mood:'bullish'},
+    {d:'Jun 25',cat:'regulation',
+     src:'Data Center Watch',srcUrl:'https://www.datacenterwatch.org/',
+     t:{en:'US Data Center Moratoriums Exceed 300 — Systemic Political Resistance',zh:'美国数据中心禁建令突破300——系统性政治阻力'},
+     s:{en:'275+ moratoriums issued in 2026 alone. 27 states advancing bills. 70% of US adults oppose local DC construction. Monterey Park: 86% voter-approved ban (first in US).',zh:'2026年内出台275+项禁建令。27州推进法案。70%美国成年人反对本地DC建设。蒙特雷帕克市：86%投票通过禁令(美国首个)。'},
+     a:{en:'This is the single biggest supply-side risk for US DC expansion. Exponential growth from 30 (2023) to 300+ (2026). Not NIMBY — systemic. Capital is already flowing to APAC/Middle East as alternative.',zh:'这是美国DC扩张最大的供给端风险。从2023年30项指数增长至2026年300+。非个案——系统性。资本已转向亚太/中东作为替代。'},
+     mood:'bearish'},
+    {d:'Jun 24',cat:'analysis',
+     src:'SK Hynix IR',srcUrl:'https://www.skhynix.com/',
+     t:{en:'SK Hynix 2026-2031 Product Roadmap: Full Stack AI Memory Creator',zh:'SK海力士2026-2031产品路线图：全线AI存储创造者'},
+     s:{en:'CEO unveiled vision to become "Full Stack AI Memory Creator". Roadmap: HBM4 16Hi, HBM4E 8/12/16Hi (standard + custom), LPDDR6, AI-DRAM (LPDDR6X SOCAMM2, MRRDIMM Gen2), LPDDR6-PIM (2028+).',zh:'CEO宣布转型"全线AI存储创造者"愿景。路线图：HBM4 16Hi、HBM4E 8/12/16Hi(标准+定制)、LPDDR6、AI-DRAM(LPDDR6X SOCAMM2、MRRDIMM Gen2)、LPDDR6-PIM(2028+)。'},
+     a:{en:'Deepens competitive moat. Custom HBM for key clients (Nvidia) locks in multi-year revenue. AI-DRAM and CXL products open new TAM beyond traditional memory.',zh:'加深竞争护城河。为关键客户(Nvidia)定制HBM锁定多年收入。AI-DRAM和CXL产品打开传统存储之外的新TAM。'},
+     mood:'bullish'}
+  ];
+  const catLabels={
+    earnings:{en:'Earnings',zh:'财报',color:'var(--blue)'},
+    ipo:{en:'IPO',zh:'上市',color:'var(--green)'},
+    analysis:{en:'Analysis',zh:'分析',color:'var(--purple)'},
+    macro:{en:'Macro',zh:'宏观',color:'var(--orange)'},
+    dc_deal:{en:'DC Deal',zh:'DC交易',color:'var(--blue)'},
+    regulation:{en:'Regulation',zh:'监管',color:'var(--red)'}
+  };
+  const moodLabels={bullish:{en:'BULLISH',zh:'利好',cls:'g'},bearish:{en:'BEARISH',zh:'利空',cls:'r'},neutral:{en:'NEUTRAL',zh:'中性',cls:'o'}};
+  const cats=['all',...new Set(intel.map(i=>i.cat))];
+  let activeCat='all';
+  function render(){
+    const list=document.getElementById('intel-list');
+    const filt=document.getElementById('intel-filter');
+    if(!list)return;
+    filt.innerHTML=cats.map(c=>{
+      const label=c==='all'?(isZh?'全部':'All'):catLabels[c][isZh?'zh':'en'];
+      return `<button class="${c===activeCat?'active':''}" onclick="window._intelFilter('${c}')">${label}</button>`;
+    }).join('');
+    const items=activeCat==='all'?intel:intel.filter(i=>i.cat===activeCat);
+    list.innerHTML=items.map(i=>{
+      const m=moodLabels[i.mood];
+      const cat=catLabels[i.cat];
+      return `<div class="intel-item">
+        <div class="intel-date">${i.d}</div>
+        <div class="intel-body">
+          <div class="intel-title">
+            ${i.t[isZh?'zh':'en']}
+            <a href="${i.srcUrl}" target="_blank" rel="noopener">${i.src} ↗</a>
+          </div>
+          <div class="intel-summary">${i.s[isZh?'zh':'en']}</div>
+          <div class="intel-analysis">🤖 ${i.a[isZh?'zh':'en']}</div>
+          <div class="intel-tags">
+            <span class="tag ${m.cls}">${m[isZh?'zh':'en']}</span>
+            <span class="tag b" style="font-size:10px">${cat[isZh?'zh':'en']}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  window._intelFilter=function(c){activeCat=c;render();};
+  render();
+}
+
 function drawAll(){drawFFO();drawRatio();drawTop20();drawRegion();}
 drawAll();
 </script>

@@ -14,7 +14,7 @@
       { "date": "2026-07-07", "version": "1.5", "note": "三星Q2业绩指引: 营业利润89.4万亿韩元(+1810%), 存储超级周期确认, 新增memory_company_earnings追踪" },
       { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" },
       { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" },
-      { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$26.5B创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据" }
+      { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$265亿创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据; 新增情报源tab" }
     ]
   },
     "capital_inflow": {
