@@ -114,7 +114,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .intel-title a{color:var(--blue);text-decoration:none;font-size:11px;font-weight:500;opacity:.7;transition:opacity .15s}
 .intel-title a:hover{opacity:1;text-decoration:underline}
 .intel-summary{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:6px}
-.intel-analysis{font-size:11px;color:var(--text3);line-height:1.5;padding:6px 10px;background:var(--bg);border-radius:6px;border-left:3px solid var(--blue)}
+.intel-analysis{font-size:11px;color:var(--text3);line-height:1.5;padding:6px 10px;background:var(--bg);border-left:3px solid var(--blue)}
 .intel-tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
 .intel-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .intel-filter button{padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
@@ -152,8 +152,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <div class="sidebar">
   <div class="logo">⚡ AI <span>Capital</span></div>
   <nav>
-    <a class="active" onclick="showSection('overview',this)"><span class="icon">📊</span><span class="ln" data-en="Dashboard" data-zh="看板">看板</span></a>
-    <a onclick="showSection('intel',this)"><span class="icon">📰</span><span class="ln" data-en="Intel" data-zh="情报">情报</span></a>
+    <a class="active" onclick="showSection('intel',this)"><span class="icon">📰</span><span class="ln" data-en="Intel" data-zh="情报">情报</span></a>
+    <a onclick="showSection('overview',this)"><span class="icon">📊</span><span class="ln" data-en="Dashboard" data-zh="看板">看板</span></a>
     <a onclick="showSection('inflow',this)"><span class="icon">💰</span><span class="ln" data-en="Inflow" data-zh="资金流入">资金流入</span></a>
     <a onclick="showSection('gpu',this)"><span class="icon">🔲</span><span class="ln" data-en="GPU Chips" data-zh="芯片供给">芯片供给</span></a>
     <a onclick="showSection('risk',this)"><span class="icon">⚠️</span><span class="ln" data-en="Risk" data-zh="风险信号">风险信号</span></a>
@@ -182,7 +182,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   </div>
 
   <!-- INTEL FEED -->
-  <div class="section" id="sec-intel">
+  <div class="section active" id="sec-intel">
     <div class="section-title">📰 <span class="ln" data-en="Intelligence Feed" data-zh="情报源">情报源</span></div>
     <div class="intel-filter" id="intel-filter"></div>
     <div class="card">
@@ -191,7 +191,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
   </div>
 
   <!-- OVERVIEW -->
-  <div class="section active" id="sec-overview">
+  <div class="section" id="sec-overview">
     <!-- Investment Recommendation with embedded data -->
     <div class="rec">
       <div>
@@ -1159,7 +1159,7 @@ function toggleLang(){
   const activeSection=document.querySelector('.section.active');
   if(activeSection){
     const id=activeSection.id.replace('sec-','');
-    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop20();drawRegion()},inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual()}};
+    const redrawMap={overview:()=>{drawFFO();drawRatio();drawTop20();drawRegion()},intel:drawIntel,inflow:()=>{drawCapex();drawDonut();drawSPV()},risk:()=>{drawMorat();drawRadar();drawTimeline()},storage:()=>{drawStorPrice();drawStorContract();drawGapMultiDim();drawGapTimeline();drawStorActual()}};
     if(redrawMap[id]) redrawMap[id]();
   }
 }
