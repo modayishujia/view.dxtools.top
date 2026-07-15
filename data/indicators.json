@@ -1,10 +1,10 @@
 {
   "meta": {
-    "last_updated": "2026-07-11",
-    "version": "1.8",
+    "last_updated": "2026-07-15",
+    "version": "1.9",
     "update_frequency": "weekly",
     "investment_stance": "Underweight Data Center REITs",
-    "rationale": "Capex仍在流入但落地率仅31%, 估值处历史高位(P/AFFO 25-28x vs 历史均值16x), 风险/回报不对称. 黑石连番撤退(QTS Digital Gateway终止+$35亿出售VA资产)新增警示信号. Meta Compute落地引发算力过剩担忧, 但分层分配策略表明高端算力仍紧缺",
+    "rationale": "Capex仍在流入但落地率仅31%, 估值处历史高位(P/AFFO 25-28x vs 历史均值16x), 风险/回报不对称. 纽约州正式全面暂停新DC建设, 禁令潮持续升级. 黑石连番撤退(QTS Digital Gateway终止+$35亿出售VA资产). Meta Compute落地引发算力过剩担忧, 但分层分配策略表明高端算力仍紧缺. TSMC 6月营收+68%确认AI芯片需求强劲",
     "update_log": [
       { "date": "2026-07-05", "version": "1.0", "note": "初始基线建立" },
       { "date": "2026-07-05", "version": "1.1", "note": "第一次周更新: Meta算力出售、禁令潮爆发、Capex上调至8300亿、利用率下降" },
@@ -14,7 +14,8 @@
       { "date": "2026-07-07", "version": "1.5", "note": "三星Q2业绩指引: 营业利润89.4万亿韩元(+1810%), 存储超级周期确认, 新增memory_company_earnings追踪" },
       { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" },
       { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" },
-      { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$265亿创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据; 新增情报源tab" }
+      { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$265亿创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据; 新增情报源tab" },
+      { "date": "2026-07-15", "version": "1.9", "note": "纽约州正式全面暂停新DC建设; Meta路易斯安那$500亿DC投资; TSMC 6月营收+68%; Reflection/Nebius $10亿算力协议; Trump放宽UAE出口管控; Helsing $18亿融资" }
     ]
   },
     "capital_inflow": {
@@ -92,7 +93,10 @@
         { "investor": "Anthropic/TeraWulf", "amount": 190, "unit": "亿美元", "target": "肯塔基州Justified Data园区401MW DC", "date": "2026-07-07", "note": "20年租约, 首批产能2027H2投运, 2028年初全面运营" },
         { "investor": "Anthropic", "amount": 150, "unit": "亿美元", "target": "澳大利亚1.4GW数据中心", "date": "2026-07-05", "note": "机密招标书, 拆分4-5个子合同, 2026年底前启用1GW" },
         { "investor": "黑石", "amount": 300, "unit": "亿美元", "target": "日本AI数据中心(3-5年)", "date": "2026-06-30", "note": "新增超1GW, 加上已有500MW共1.5GW; 同时放弃美国QTS Digital Gateway" },
-        { "investor": "Nscale", "amount": 9, "unit": "亿美元", "target": "欧美亚太DC扩建循环信贷", "date": "2026-07", "note": "英国AI基建企业" }
+        { "investor": "Nscale", "amount": 9, "unit": "亿美元", "target": "欧美亚太DC扩建循环信贷", "date": "2026-07", "note": "英国AI基建企业" },
+        { "investor": "Meta", "amount": 500, "unit": "亿美元", "target": "路易斯安那州数据中心(含州税收优惠)", "date": "2026-07-13", "note": "州政府提供税收优惠吸引DC投资, 对冲禁令趋势" },
+        { "investor": "Reflection/Nebius", "amount": 10, "unit": "亿美元", "target": "AI算力协议", "date": "2026-07-15", "note": "Reflection与Nebius签署$10亿算力合作协议" },
+        { "investor": "Helsing", "amount": 18, "unit": "亿美元", "target": "欧洲防务AI(估值$180亿)", "date": "2026-07-13", "note": "欧洲防务AI独角兽, 估值$180亿" }
       ],
       "ai_bond_market": {
         "label": "AI债券市场总规模",
@@ -141,7 +145,7 @@
       "regions": [
         { "region": "日本", "status": "全球第三大数据中心市场", "key_deals": "DigitalBridge收购NEC资产, Ares 24亿美元基金" },
         { "region": "东南亚", "status": "快速扩张", "key_deals": "Bridge Data Centres 700MW (马来/泰国), 阿里云马来西亚新区域" },
-        { "region": "中东", "status": "主权基金主导", "key_deals": "GCC AI数据中心投资2026年超50亿美元" },
+        { "region": "中东", "status": "主权基金主导, 出口管控放宽", "key_deals": "GCC AI数据中心投资2026年超50亿美元; Trump政府放宽对UAE出口管控, Stargate UAE等项目加速" },
         { "region": "中国", "status": "REITs规模化", "key_deals": "数据中心REITs潜在千亿级市场" },
         { "region": "印度", "status": "新增: 巨额入场", "key_deals": "AirTrunk/Blackstone $210亿 3GW (马哈拉施特拉邦), Meta与Reliance合作首个AI数据中心" },
         { "region": "欧洲", "status": "新增: 大规模扩张", "key_deals": "软银法国5GW $850亿, Pure DC $27亿融资, DC01UK £40亿获批" }
@@ -160,29 +164,29 @@
         "at_risk_pct": "30-50%",
         "q1_blocked_value_bn": 1300,
         "q1_blocked_unit": "亿美元",
-        "moratorium_total": 300,
-        "moratorium_2026_only": 275,
+        "moratorium_total": 305,
+        "moratorium_2026_only": 280,
         "formal_moratorium_counties": 69,
         "states_advancing_bills": 27,
         "states_with_moratorium": 12,
         "cancellations_2025": 25,
         "cancellations_2025_yoy": "+4x",
         "public_opposition_pct": 70,
-        "new_moratorium": "加州蒙特雷帕克市86%投票支持禁止数据中心 (首个选民通过的市级禁令)"
+        "new_moratorium": "纽约州2026-07-15正式全面暂停所有新DC建设; 加州蒙特雷帕克市86%投票支持禁止数据中心 (首个选民通过的市级禁令)"
       },
       "notable_cases": [
         "QTS Digital Gateway (Virginia, 2100+ acres, $1000亿+) - 彻底终止 (2026-07-02). Compass Datacenters 5月撤出; 法律诉讼+社区反对为主因",
         "Blackstone $35亿出售北弗吉尼亚3处DC + 2天后QTS退出千亿项目 — 外界质疑PE巨头($1.3万亿AUM)正收缩AI基建敞口",
         "Maine: 大型数据中心禁令至2027年",
         "西雅图: 2026-04通过一年全面暂停令,冻结5个拟建项目",
-        "纽约州: 一年期禁令法案等待州长签署",
+        "纽约州: 2026-07-15正式全面暂停所有新数据中心建设 (此前为一年期禁令法案等待州长签署)",
         "俄亥俄/伊利诺伊/亚利桑那: 暂停数据中心税收优惠",
         "Sanders+AOC: 联邦级AI数据中心暂停法案 (2026-03-25)",
         "加州蒙特雷帕克市: 86%投票支持禁止数据中心 (2026-07)"
       ],
       "counterpoint": "SemiAnalysis认为'半数取消'系信息误读,实际调整幅度仅1-5%; 12州管控法案仅针对早期规划项目",
       "source": "Sightline Climate / Data Center Watch / Bloomberg / Beating / 新浪财经 / Data Center Knowledge",
-      "last_verified": "2026-07-07"
+      "last_verified": "2026-07-15"
     },
     "utilization_rate": {
       "label": "超大规模数据中心平均上架率",
@@ -298,6 +302,16 @@
       "note": "AI Server总用电量2026年正式超越General Server",
       "source": "TrendForce 2026-05",
       "last_verified": "2026-07-07"
+    },
+    "tsmc_revenue": {
+      "label": "TSMC月度营收",
+      "june_2026": {
+        "yoy_change": "+68%",
+        "note": "AI芯片需求持续强劲的领先指标, 全球最大晶圆代工厂营收加速增长",
+        "date": "2026-07-13"
+      },
+      "source": "CNBC / TSMC IR",
+      "last_verified": "2026-07-15"
     },
     "memory_company_earnings": {
       "label": "存储厂商财报追踪",
@@ -474,12 +488,14 @@
         "存储股财报悖论: 三星Q2利润+1810%但股价跌 — 涨价预期price in, capex见顶恐惧price out",
         "亚马逊250亿发债引发AI债券全线抛售 — 利差骤扩7-13bps, 债券市场对AI债务融资的消化能力存疑",
         "AI债券H1规模2360亿(+357% YoY), 全年预测5700亿 — 债务驱动型增长的可持续性",
-        "Fable 5 / GPT-5.6发布, hybrid model(分层路由)趋势明确 — 可能降低对单一高端算力的需求强度"
+        "Fable 5 / GPT-5.6发布, hybrid model(分层路由)趋势明确 — 可能降低对单一高端算力的需求强度",
+        "Trump政府放宽对UAE出口管控 — 利好中东AI基建扩张, Stargate UAE等项目加速"
     ],
     "escalating": [
-      "社区反对: 70%美国成年人反对, 300+禁令, 27州推进法案",
+      "社区反对: 70%美国成年人反对, 305+禁令, 27州推进法案",
       "联邦级立法: Sanders+AOC提出全国暂停法案 (2026-03)",
-      "加州蒙特雷帕克市: 86%投票支持禁止数据中心 — 首个选民通过的市级禁令"
+      "加州蒙特雷帕克市: 86%投票支持禁止数据中心 — 首个选民通过的市级禁令",
+      "纽约州: 2026-07-15正式全面暂停所有新数据中心建设 — 全球金融中心加入禁令行列"
     ]
   },
   "institution_analysis": {
