@@ -1448,6 +1448,9 @@ function drawTimeline(){
   d3.select('#c-timeline').selectAll('*').remove();
   const isZh=lang==='zh';
   const ev=[
+    {d:'Jul 15',tag:{en:'CRITICAL',zh:'重大'},tagC:'#dc2626',
+     t:{en:'Fed Chair Warsh: Memory Chip Overcapacity Warning',zh:'美联储主席沃什警告AI存储芯片产能过剩'},
+     imp:{en:'First Fed warning on AI specifics. SK Hynix -9%+, Samsung -6%+, KOSPI sidecar triggered.',zh:'美联储首次对AI具体行业警告。SK海力士-9%+, 三星-6%+, KOSPI触发sidecar。'}},
     {d:'Jul 15',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
      t:{en:'NY State Halts All New DC Construction',zh:'纽约州正式全面暂停所有新DC建设'},
      imp:{en:'Global financial center joins moratorium wave. Total US moratoriums now 305+.',zh:'全球金融中心加入禁令潮。美国禁令总数升至305+。'}},
@@ -1630,6 +1633,9 @@ function drawTop20(){
   d3.select('#c-top20').selectAll('*').remove();
   const isZh=lang==='zh';
   const ev=[
+    {d:'Jul 15',tag:{en:'CRITICAL',zh:'重大'},tagC:'#dc2626',
+     t:{en:'Fed Chair Warsh: Memory Chip Overcapacity Warning',zh:'美联储主席沃什警告AI存储芯片产能过剩'},
+     imp:{en:'First Fed warning on AI. SK Hynix -9%+, Samsung -6%+, KOSPI sidecar.',zh:'美联储首次对AI行业警告。SK海力士-9%+, 三星-6%+, KOSPI触发sidecar。'}},
     {d:'Jul 15',tag:{en:'BEARISH',zh:'利空'},tagC:'#ef4444',
      t:{en:'NY State Halts All New DC Construction',zh:'纽约州正式全面暂停所有新DC建设'},
      imp:{en:'Global financial center joins moratorium wave. Total US moratoriums 305+.',zh:'全球金融中心加入禁令潮。美国禁令总数305+。'}},

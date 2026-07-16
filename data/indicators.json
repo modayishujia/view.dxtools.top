@@ -1,10 +1,10 @@
 {
   "meta": {
     "last_updated": "2026-07-15",
-    "version": "1.9",
+    "version": "2.0",
     "update_frequency": "weekly",
-    "investment_stance": "Underweight Data Center REITs",
-    "rationale": "Capex仍在流入但落地率仅31%, 估值处历史高位(P/AFFO 25-28x vs 历史均值16x), 风险/回报不对称. 纽约州正式全面暂停新DC建设, 禁令潮持续升级. 黑石连番撤退(QTS Digital Gateway终止+$35亿出售VA资产). Meta Compute落地引发算力过剩担忧, 但分层分配策略表明高端算力仍紧缺. TSMC 6月营收+68%确认AI芯片需求强劲",
+    "investment_stance": "Underweight Data Center REITs & Memory",
+    "rationale": "美联储主席沃什7/15国会听证明确警告AI基建'产能过剩早期迹象,特别是存储芯片',引发亚洲半导体暴跌(SK海力士-9%+, 三星-6%+, KOSPI-4.45%触发sidecar). Capex仍在流入但落地率仅31%, 估值处历史高位. 纽约州正式全面暂停新DC建设, 禁令潮持续升级. TSMC 6月营收+68%确认芯片需求但货币化速度远超需求增长",
     "update_log": [
       { "date": "2026-07-05", "version": "1.0", "note": "初始基线建立" },
       { "date": "2026-07-05", "version": "1.1", "note": "第一次周更新: Meta算力出售、禁令潮爆发、Capex上调至8300亿、利用率下降" },
@@ -15,7 +15,8 @@
       { "date": "2026-07-08", "version": "1.6", "note": "亚马逊250亿美元发债(AI债券遭抛售), 2026年累计发债890亿+, AI债券H1总规模2360亿美元(+357% YoY), Fable5/GPT-5.6发布引发hybrid model讨论" },
       { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" },
       { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$265亿创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据; 新增情报源tab" },
-      { "date": "2026-07-15", "version": "1.9", "note": "纽约州正式全面暂停新DC建设; Meta路易斯安那$500亿DC投资; TSMC 6月营收+68%; Reflection/Nebius $10亿算力协议; Trump放宽UAE出口管控; Helsing $18亿融资" }
+      { "date": "2026-07-15", "version": "1.9", "note": "纽约州正式全面暂停新DC建设; Meta路易斯安那$500亿DC投资; TSMC 6月营收+68%; Reflection/Nebius $10亿算力协议; Trump放宽UAE出口管控; Helsing $18亿融资" },
+      { "date": "2026-07-15", "version": "2.0", "note": "美联储主席沃什国会听证警告AI存储芯片产能过剩, 引发亚洲半导体暴跌(SK海力士-9%+, 三星-6%+, KOSPI-4.45%触发sidecar, 科创50-4.25%). 新增bubble_warnings升级为escalating" }
     ]
   },
     "capital_inflow": {
@@ -254,8 +255,8 @@
     },
     "bubble_warnings": {
       "label": "泡沫警告",
-      "risk_level": "medium",
-      "trend": "intensifying",
+      "risk_level": "high",
+      "trend": "critical",
       "warnings": [
         { "source": "Jeremy Grantham", "statement": "AI是历史性泡沫,破裂后果毁灭性", "date": "2026-04/05" },
         { "source": "BCA Research", "statement": "盈利泡沫,非估值泡沫", "date": "2026" },
@@ -264,9 +265,10 @@
         { "source": "Odaily", "statement": "1.8万亿美元表外敞口=定时炸弹", "date": "2026-06-15" },
         { "source": "70%美国成年人", "statement": "反对在当地建设AI数据中心", "date": "2026-06" },
         { "source": "加州蒙特雷帕克市", "statement": "86%投票支持禁止数据中心", "date": "2026-07" },
-        { "source": "AI债券市场", "statement": "H1发债2360亿美元(+357% YoY), 亚马逊250亿发债触发AI债全线抛售, 债券市场消化能力存疑", "date": "2026-07-08" }
+        { "source": "AI债券市场", "statement": "H1发债2360亿美元(+357% YoY), 亚马逊250亿发债触发AI债全线抛售, 债券市场消化能力存疑", "date": "2026-07-08" },
+        { "source": "美联储主席沃什 (Kevin Warsh)", "statement": "AI基建令人印象深刻,但已出现产能过剩早期迹象,特别是存储芯片及相关组件. 资本开支节奏远快于实际需求兑现速度", "date": "2026-07-15", "impact": "SK海力士-9%+, 三星-6%+, 闪迪-12%+, KOSPI-4.45%触发sidecar, 科创50-4.25%", "severity": "critical" }
       ],
-      "last_verified": "2026-07-07"
+      "last_verified": "2026-07-15"
     },
     "capex_cashflow_ratio": {
       "label": "Capex / 经营性现金流",
@@ -339,8 +341,9 @@
             "stock_ytd": "+165%",
             "sk_hynix_ytd": "+640% (首尔), Nasdaq首日+17%",
             "post_meta_compute_selloff": { "samsung": "-6.5%", "sk_hynix": "-7.7%", "kioxia": "-12.6%", "date": "2026-07-02" },
-            "paradox": "利润暴增但营收略低于预期, 叠加Meta算力过剩恐慌, 触发sell the news",
-            "key_tension": "涨价预期已price in, 但capex见顶恐惧还没有price out"
+            "fed_warsh_selloff": { "samsung": "-6%+", "sk_hynix": "-9%+", "sandisk": "-12%+", "kospi": "-4.45% (sidecar触发)", "star50": "-4.25%", "date": "2026-07-15", "trigger": "美联储主席沃什警告AI存储芯片产能过剩" },
+            "paradox": "利润暴增但营收略低于预期, 叠加Meta算力过剩恐慌+美联储主席产能过剩警告, 触发sell the news",
+            "key_tension": "涨价预期已price in, 但capex见顶恐惧+美联储主席明确警告还没有price out"
           },
           "source": "Samsung IR / 花旗",
           "last_verified": "2026-07-07"
@@ -495,7 +498,8 @@
       "社区反对: 70%美国成年人反对, 305+禁令, 27州推进法案",
       "联邦级立法: Sanders+AOC提出全国暂停法案 (2026-03)",
       "加州蒙特雷帕克市: 86%投票支持禁止数据中心 — 首个选民通过的市级禁令",
-      "纽约州: 2026-07-15正式全面暂停所有新数据中心建设 — 全球金融中心加入禁令行列"
+      "纽约州: 2026-07-15正式全面暂停所有新数据中心建设 — 全球金融中心加入禁令行列",
+      "美联储主席沃什: 2026-07-15国会听证警告AI存储芯片产能过剩 — 引发亚洲半导体暴跌, KOSPI触发sidecar"
     ]
   },
   "institution_analysis": {
