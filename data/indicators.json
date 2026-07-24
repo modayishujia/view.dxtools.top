@@ -1,10 +1,10 @@
 {
   "meta": {
-    "last_updated": "2026-07-15",
-    "version": "2.0",
+    "last_updated": "2026-07-24",
+    "version": "2.1",
     "update_frequency": "weekly",
     "investment_stance": "Underweight Data Center REITs & Memory",
-    "rationale": "美联储主席沃什7/15国会听证明确警告AI基建'产能过剩早期迹象,特别是存储芯片',引发亚洲半导体暴跌(SK海力士-9%+, 三星-6%+, KOSPI-4.45%触发sidecar). Capex仍在流入但落地率仅31%, 估值处历史高位. 纽约州正式全面暂停新DC建设, 禁令潮持续升级. TSMC 6月营收+68%确认芯片需求但货币化速度远超需求增长",
+    "rationale": "Q2财报季开启: Alphabet因capex上调至$85B股价大跌, Tesla盈利不及预期FCF转负. Intel乘AI热潮录得近15年最快增长. AMD投资Anthropic $50亿算力协议. AI科技公司隐藏债务达$1.65万亿(资产负债表外122%). OpenAI GPT-5.6 Sol越狱事件引发国会Kill Switch法案. 142场DC抗议覆盖42州. 风险评分维持8分, 财报季将决定短期方向",
     "update_log": [
       { "date": "2026-07-05", "version": "1.0", "note": "初始基线建立" },
       { "date": "2026-07-05", "version": "1.1", "note": "第一次周更新: Meta算力出售、禁令潮爆发、Capex上调至8300亿、利用率下降" },
@@ -16,7 +16,8 @@
       { "date": "2026-07-09", "version": "1.7", "note": "Anthropic+TeraWulf $190亿肯塔基DC租约(20年/401MW), Anthropic澳洲$150亿1.4GW计划, 黑石日本$300亿DC投资, Nscale $9亿循环信贷" },
       { "date": "2026-07-11", "version": "1.8", "note": "SK海力士7月10日纳斯达克上市(SKHY), 募资$265亿创美国外国公司IPO纪录, 首日涨17%, 市值$1.15T; 新增SK Hynix存储厂商数据; 新增情报源tab" },
       { "date": "2026-07-15", "version": "1.9", "note": "纽约州正式全面暂停新DC建设; Meta路易斯安那$500亿DC投资; TSMC 6月营收+68%; Reflection/Nebius $10亿算力协议; Trump放宽UAE出口管控; Helsing $18亿融资" },
-      { "date": "2026-07-15", "version": "2.0", "note": "美联储主席沃什国会听证警告AI存储芯片产能过剩, 引发亚洲半导体暴跌(SK海力士-9%+, 三星-6%+, KOSPI-4.45%触发sidecar, 科创50-4.25%). 新增bubble_warnings升级为escalating" }
+      { "date": "2026-07-15", "version": "2.0", "note": "美联储主席沃什国会听证警告AI存储芯片产能过剩, 引发亚洲半导体暴跌(SK海力士-9%+, 三星-6%+, KOSPI-4.45%触发sidecar, 科创50-4.25%). 新增bubble_warnings升级为escalating" },
+      { "date": "2026-07-24", "version": "2.1", "note": "Q2财报季开启: Alphabet capex上调至$85B股价跌, Tesla FCF转负, Intel近15年最快增长. AMD $50亿投资Anthropic. AI隐藏债务$1.65万亿. OpenAI越狱事件+Kill Switch法案. 142场DC抗议42州. 西班牙$34亿AI园区" }
     ]
   },
     "capital_inflow": {
@@ -97,7 +98,11 @@
         { "investor": "Nscale", "amount": 9, "unit": "亿美元", "target": "欧美亚太DC扩建循环信贷", "date": "2026-07", "note": "英国AI基建企业" },
         { "investor": "Meta", "amount": 500, "unit": "亿美元", "target": "路易斯安那州数据中心(含州税收优惠)", "date": "2026-07-13", "note": "州政府提供税收优惠吸引DC投资, 对冲禁令趋势" },
         { "investor": "Reflection/Nebius", "amount": 10, "unit": "亿美元", "target": "AI算力协议", "date": "2026-07-15", "note": "Reflection与Nebius签署$10亿算力合作协议" },
-        { "investor": "Helsing", "amount": 18, "unit": "亿美元", "target": "欧洲防务AI(估值$180亿)", "date": "2026-07-13", "note": "欧洲防务AI独角兽, 估值$180亿" }
+        { "investor": "Helsing", "amount": 18, "unit": "亿美元", "target": "欧洲防务AI(估值$180亿)", "date": "2026-07-13", "note": "欧洲防务AI独角兽, 估值$180亿" },
+        { "investor": "AMD/Anthropic", "amount": 50, "unit": "亿美元", "target": "Anthropic算力协议(AMD投资)", "date": "2026-07-22", "note": "AMD投资Anthropic用于算力采购, 挑战Nvidia在AI训练芯片垄断" },
+        { "investor": "Alphabet", "amount": 85, "unit": "亿美元(Q2 capex)", "target": "2026全年capex上调至$85B(原$75B)", "date": "2026-07-22", "note": "Q2财报后capex指引上调, Google Cloud客户支出+50%, 但股价因capex上调大跌" },
+        { "investor": "Spain", "amount": 34, "unit": "亿美元", "target": "AI数据中心园区(自备发电)", "date": "2026-07-21", "note": "西班牙$34亿AI园区采用现场发电绕过电网排队" },
+        { "investor": "IREN", "amount": 28, "unit": "亿美元", "target": "AI基础设施交易(新融资模式)", "date": "2026-07-21", "note": "IREN $28亿AI交易展示新型融资模式" }
       ],
       "ai_bond_market": {
         "label": "AI债券市场总规模",
@@ -266,7 +271,10 @@
         { "source": "70%美国成年人", "statement": "反对在当地建设AI数据中心", "date": "2026-06" },
         { "source": "加州蒙特雷帕克市", "statement": "86%投票支持禁止数据中心", "date": "2026-07" },
         { "source": "AI债券市场", "statement": "H1发债2360亿美元(+357% YoY), 亚马逊250亿发债触发AI债全线抛售, 债券市场消化能力存疑", "date": "2026-07-08" },
-        { "source": "美联储主席沃什 (Kevin Warsh)", "statement": "AI基建令人印象深刻,但已出现产能过剩早期迹象,特别是存储芯片及相关组件. 资本开支节奏远快于实际需求兑现速度", "date": "2026-07-15", "impact": "SK海力士-9%+, 三星-6%+, 闪迪-12%+, KOSPI-4.45%触发sidecar, 科创50-4.25%", "severity": "critical" }
+        { "source": "美联储主席沃什 (Kevin Warsh)", "statement": "AI基建令人印象深刻,但已出现产能过剩早期迹象,特别是存储芯片及相关组件. 资本开支节奏远快于实际需求兑现速度", "date": "2026-07-15", "impact": "SK海力士-9%+, 三星-6%+, 闪迪-12%+, KOSPI-4.45%触发sidecar, 科创50-4.25%", "severity": "critical" },
+        { "source": "Tom's Hardware / Industry Report", "statement": "AI科技公司隐藏债务达$1.65万亿, 为Alphabet/Amazon/Meta/Microsoft/Oracle资产负债表上债务的122%", "date": "2026-07-22", "severity": "high" },
+        { "source": "Congress (Bipartisan)", "statement": "OpenAI GPT-5.6 Sol在测试中越狱入侵Hugging Face生产服务器, 国会提出AI Kill Switch法案要求最强模型配备紧急关闭开关", "date": "2026-07-23", "severity": "high" },
+        { "source": "Tom's Hardware / Data Center Watch", "statement": "142场AI数据中心抗议覆盖42个州, 公众反对持续升级, 组织者称DC建设为'不可接受的自由侵犯'", "date": "2026-07-23", "severity": "high" }
       ],
       "last_verified": "2026-07-15"
     },
@@ -492,14 +500,28 @@
         "亚马逊250亿发债引发AI债券全线抛售 — 利差骤扩7-13bps, 债券市场对AI债务融资的消化能力存疑",
         "AI债券H1规模2360亿(+357% YoY), 全年预测5700亿 — 债务驱动型增长的可持续性",
         "Fable 5 / GPT-5.6发布, hybrid model(分层路由)趋势明确 — 可能降低对单一高端算力的需求强度",
-        "Trump政府放宽对UAE出口管控 — 利好中东AI基建扩张, Stargate UAE等项目加速"
+        "Trump政府放宽对UAE出口管控 — 利好中东AI基建扩张, Stargate UAE等项目加速",
+        "Alphabet Q2: capex上调至$85B(原$75B), 营收超预期但股价大跌 — 市场对AI投入回报耐心减弱",
+        "Google Cloud: 客户支出增长50% — AI需求端信号强劲",
+        "Tesla Q2: 盈利不及预期, FFC转负, 利润率下滑 — 消费端压力",
+        "Intel Q2: 乘AI热潮录得近15年最快增长 — AI芯片需求扩散至传统厂商",
+        "AMD投资Anthropic $50亿算力协议 — 挑战Nvidia AI训练芯片垄断",
+        "OpenAI GPT-5.6 Sol越狱入侵Hugging Face — AI安全风险升级, 国会Kill Switch法案",
+        "AI科技公司隐藏债务$1.65万亿 — 表外SPV/租赁义务风险首次被量化",
+        "中国考虑AI出口管控: 禁止国内公司使用TSMC — 中美AI脱钩风险升级",
+        "Meta采用定制AMD MI400(144GB HBM4) — 芯片采购多元化, 降低Nvidia依赖",
+        "西班牙$34亿AI园区自备发电 — 绕过电网排队成为新模式",
+        "Anthropic $15亿版权和解 — AI训练数据版权风险首次大规模落地"
     ],
     "escalating": [
       "社区反对: 70%美国成年人反对, 305+禁令, 27州推进法案",
       "联邦级立法: Sanders+AOC提出全国暂停法案 (2026-03)",
       "加州蒙特雷帕克市: 86%投票支持禁止数据中心 — 首个选民通过的市级禁令",
       "纽约州: 2026-07-15正式全面暂停所有新数据中心建设 — 全球金融中心加入禁令行列",
-      "美联储主席沃什: 2026-07-15国会听证警告AI存储芯片产能过剩 — 引发亚洲半导体暴跌, KOSPI触发sidecar"
+      "美联储主席沃什: 2026-07-15国会听证警告AI存储芯片产能过剩 — 引发亚洲半导体暴跌, KOSPI触发sidecar",
+      "AI隐藏债务: $1.65万亿表外债务(资产负债表上债务的122%) — 2026-07-22报告披露",
+      "OpenAI越狱事件: GPT-5.6 Sol入侵Hugging Face生产服务器 — 国会Kill Switch法案 2026-07-23",
+      "142场DC抗议覆盖42州: 公众反对持续升级 — 2026-07-23"
     ]
   },
   "institution_analysis": {

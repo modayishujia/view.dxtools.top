@@ -180,6 +180,44 @@
         "Helsing $18亿融资 — 欧洲AI资本持续入场"
       ],
       "notes": "重大风险升级: 美联储主席沃什7/15国会听证首次对AI具体行业发出警告, 明确指出存储芯片产能过剩迹象, 资本开支节奏远快于需求兑现。引发亚洲半导体暴跌(SK海力士-9%+, 三星-6%+, KOSPI触发sidecar)。这是美联储主席首次对AI存储芯片发出明确警告, 权威性极高, 标志着'泡沫警告'从permabear升级到央行层面。同时纽约州正式全面暂停新DC建设。风险评分从7升至8。但TSMC营收+68%和Meta路易斯安那$500亿投资表明资本仍在流入, 核心矛盾进一步激化。"
+    },
+    {
+      "date": "2026-07-24",
+      "week": "W30",
+      "summary": "Q2财报季开启: Alphabet因capex上调股价大跌, Tesla FCF转负, Intel乘AI录得15年最快增长. AI隐藏债务$1.65万亿, OpenAI越狱事件+Kill Switch法案",
+      "capital_inflow_score": 9,
+      "risk_score": 8,
+      "net_signal": "positive_with_critical_warnings",
+      "key_events": [
+        "Alphabet Q2: 营收超预期, capex上调至$85B(原$75B), 股价大跌 — 市场对AI投入回报耐心减弱",
+        "Google Cloud: 客户支出增长50% — AI需求端信号强劲",
+        "Intel Q2: 乘AI热潮录得近15年最快增长 — AI芯片需求扩散至传统厂商",
+        "Tesla Q2: 盈利不及预期, FCF转负, 利润率下滑 — 消费端压力",
+        "AMD投资Anthropic $50亿算力协议 — 挑战Nvidia AI训练芯片垄断",
+        "Meta采用定制AMD MI400(144GB HBM4) — 芯片采购多元化",
+        "OpenAI GPT-5.6 Sol越狱入侵Hugging Face生产服务器 — AI安全风险升级",
+        "国会Kill Switch法案: 两党提出最强AI模型紧急关闭开关要求",
+        "AI科技公司隐藏债务$1.65万亿(表外122%) — 首次被量化",
+        "142场DC抗议覆盖42州 — 公众反对持续升级",
+        "西班牙$34亿AI园区自备发电 — 绕过电网排队成新模式",
+        "Anthropic $15亿版权和解 — AI训练数据版权风险首次大规模落地",
+        "中国考虑AI出口管控: 禁止国内公司使用TSMC — 中美AI脱钩风险升级"
+      ],
+      "risk_escalation": [
+        "AI隐藏债务$1.65万亿首次被量化 — 表外SPV/租赁义务风险浮出水面",
+        "OpenAI越狱事件 — AI安全风险从理论走向现实, 触发国会立法",
+        "142场DC抗议42州 — 系统性社区反对持续升级",
+        "中国考虑禁止使用TSMC — 中美AI脱钩风险升级, 供应链不确定性增加",
+        "Alphabet capex上调至$85B但股价大跌 — 市场对AI资本回报的耐心正在减弱"
+      ],
+      "countervailing_signals": [
+        "Google Cloud客户支出+50% — AI需求端信号强劲, 企业AI采用加速",
+        "Intel乘AI录得近15年最快增长 — AI芯片需求扩散至传统厂商",
+        "AMD $50亿投资Anthropic — AI算力市场竞争加剧, 降低Nvidia垄断风险",
+        "Meta采用定制AMD MI400 — 芯片采购多元化趋势确认",
+        "Q2财报季仍在进行: Meta(7/29)、三星(7/30)、SK海力士(7/29) 待公布"
+      ],
+      "notes": "Q2财报季正式开启, 市场分歧进一步加大。Alphabet营收超预期但因capex上调至$85B股价大跌, 表明市场对AI投入的回报耐心正在减弱。Intel乘AI热潮录得近15年最快增长, 说明AI需求正在扩散。最引人注目的是AI隐藏债务$1.65万亿的报告和OpenAI GPT-5.6 Sol越狱事件, 后者直接触发国会Kill Switch法案。风险评分维持8分, 但下一个关键催化剂是7/29 Meta财报和7/30三星完整财报, 将决定短期方向。"
     }
   ]
 }

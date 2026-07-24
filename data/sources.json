@@ -50,7 +50,7 @@
       "frequency": "季度",
       "priority": "critical",
       "companies": ["MSFT", "GOOGL", "AMZN", "META", "ORCL"],
-      "next_earnings": "2026-07下旬 (Q2财报季)"
+      "next_earnings": "Meta 7/29, Samsung 7/30, SK Hynix 7/29"
     },
     {
       "name": "Financial Times - SPV/Structured Finance",
@@ -93,7 +93,7 @@
       "type": "REIT运营数据",
       "frequency": "季度",
       "priority": "medium",
-      "next_event": "DLR Q2财报 2026-07-23"
+      "next_event": "DLR Q2财报 2026-07-23 (已公布)"
     },
     {
       "name": "Samsung Electronics IR",
@@ -101,7 +101,7 @@
       "type": "存储/HBM/半导体财报",
       "frequency": "季度",
       "priority": "high",
-      "next_event": "三星Q2完整财报 2026-07-30"
+      "next_event": "三星Q2完整财报 2026-07-30 (业绩指引已公布: 营收171万亿韩元, OP 89.4万亿韩元)"
     },
     {
       "name": "CNBC - Amazon Bond Coverage",
